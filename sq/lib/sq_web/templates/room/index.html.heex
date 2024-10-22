@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SongGuesser - Salas</title>
+  <script>
+    async function createRoom() {
+      const roomCode = document.getElementById('create-room-code').value;
+      const password = document.getElementById('create-room-password').value;
+
+      const response = await fetch('/rooms', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ room_code: roomCode, password: password })
+      });
+
+      const result = await response.json();
+      alert('Sala criada com sucesso: ' + JSON.stringify(result));
+    }
+
+    async function joinRoom() {
+      const roomCode = document.getElementById('join-room-code').value;
+      const password = document.getElementById('join-room-password').value;
+
+      const response = await fetch('/rooms/join', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ room_code: roomCode, password: password })
+      });
+
+      const result = await response.json();
+      alert('Entrou na sala: ' + JSON.stringify(result));
+    }
+  </script>
+</head>
+<body>
+  <h1>SongGuesser - Salas</h1>
+
+  <div>
+    <h2>Criar Sala</h2>
+    <label for="create-room-code">Código da Sala:</label>
+    <input type="text" id="create-room-code" placeholder="Ex: 1234"><br>
+    <label for="create-room-password">Senha:</label>
+    <input type="password" id="create-room-password" placeholder="Digite uma senha"><br>
+    <button onclick="createRoom()">Criar Sala</button>
+  </div>
+
+  <div>
+    <h2>Entrar em Sala</h2>
+    <label for="join-room-code">Código da Sala:</label>
+    <input type="text" id="join-room-code" placeholder="Ex: 1234"><br>
+    <label for="join-room-password">Senha:</label>
+    <input type="password" id="join-room-password" placeholder="Digite a senha"><br>
+    <button onclick="joinRoom()">Entrar na Sala</button>
+  </div>
+</body>
+</html>
