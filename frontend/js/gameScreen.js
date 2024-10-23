@@ -47,9 +47,9 @@ function playSong(link, image, artist, song, isRight){
 
 
     let album_image = document.getElementById('album_image');
-    album_image.style.width = 100;
-    album_image.style.height = 100;
-    album_image.style.backgroundImage = `url(${image})`;
+    // album_image.style.width = 100;
+    // album_image.style.height = 100;
+    // album_image.style.backgroundImage = `url(${image})`;
 
     let artist_name = document.getElementById('artist_info');
     let song_name = document.getElementById('track_info');
@@ -58,35 +58,13 @@ function playSong(link, image, artist, song, isRight){
 
     let symbol = document.getElementById('symbol_isRight');
     if(isRight){
-        symbol.classList = 'fas fa-check-circle';
+        symbol.classList = 'fa fa-check-circle';
         document.getElementById('isRight').innerHTML = 'RIIIIGHT!';
     } else{
-        symbol.classList = 'fas fa-times-circle';
+        symbol.classList = 'fa fa-times-circle';
         document.getElementById('isRight').innerHTML = 'WROOOONG!';
     }
  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 link = "https://cdnt-preview.dzcdn.net/api/1/1/4/5/9/0/459c235b39ef8badd04c5ef181f58c24.mp3?hdnea=exp=1729648847~acl=/api/1/1/4/5/9/0/459c235b39ef8badd04c5ef181f58c24.mp3*~data=user_id=0,application_id=42~hmac=41b71fd4dd3bd0338c3b5510b46e60d7f0b81499ef1351e18bf49e1ca4f21e47"

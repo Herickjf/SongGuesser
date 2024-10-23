@@ -144,16 +144,23 @@
             </div> 
 
             <div id="between_rounds">
-                <p>For the word <span class="round_word">palavra</span></p>
-                <h1 id="isRight">RIGHTT</h1>
-                <p>Listen to a preview of this song on the player belowmix</p>
+                <div>
+                    <p>For the word <span class="round_word">palavra</span> you are...</p>
+                    <h1 id="isRight">RIGHTT</h1>
+                    <br>
+                    <p>Listen to a preview of this song on the player below</p>
+                </div>
 
                 <div id="music_player_box">
-                    <div id="album_image"></div>
-
                     <div id="song_information">
-                        <p id="artist_info">Artist name</p>
-                        <p id="track_info">Song title</p>
+                        <div id="album_image"></div>
+
+                        <div id="song_description">
+                            <h4 id="artist_info">Artist name</h4>
+                            <h6 id="track_info">Song title</h6>
+
+                            <i class="fa fa-check-circle" id="symbol_isRight"></i>
+                        </div>
                     </div>
                     
                     <div id="music_player">
@@ -162,10 +169,9 @@
                             <source src="#" type="audio/ogg">
                         </audio>
                     </div>
-                    <i class="fa fa-check-circle" id="symbol_isRight"></i>
                 </div>
 
-                <button class="btn" id="btn_nextRound">Next Round</button>
+                <button class="button" id="btn_nextRound">Next Round</button>
             </div>
 
             <div id="ranking_box" style="display: none">
