@@ -1,0 +1,238 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    color: #d9d9d9;
+}
+
+/* *************************** */
+/* BODY */
+body{
+    width: 100%;
+    overflow-y: hidden;
+    /* definição do background */
+    background-image: url(/assets/bg.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    
+}
+
+/* *************************** */
+/* HEADER */
+header{
+    /* tamanho */
+    max-width: 80%;
+    height: 200px;
+    /* espacamento */
+    margin: 0 auto;
+    /* posicao e display */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header>.menu{
+    backdrop-filter: blur(3px);
+    box-shadow: 0px 0px 25px rgba(191, 126, 255, .40);
+    border: 2px solid rgba(191, 126, 255, .30);
+    background-color: rgba(58, 52, 52, 0.150);
+    display: flex;
+    gap: 50px;
+
+    width: 340px;    
+    padding: 20px 30px;
+    border-radius: 10px;
+
+    justify-content: center;
+}
+header>.menu>a{
+    color: #d9d9d9;
+    text-decoration: none;
+}
+header>.menu>a:hover{
+    transition: .2s;
+    font-weight: 500;
+    color: #FFF;
+    transform: scale(1.05);
+    text-decoration: none;
+}
+header>.menu>a:active{
+    text-decoration: none;
+}
+header>.menu>a:visited{
+    text-decoration: none;
+}
+
+header>.logo>img{
+    max-width: 200px;
+}
+
+/* Content */
+.content{
+    margin: 0 auto;
+    max-width: 80%;
+}
+
+/* Box */
+.content>#input_box{
+    backdrop-filter: blur(3px);
+    box-shadow: 0px 0px 20px rgba(141, 132, 142, 0.454);
+    border: 2px solid rgba(191, 126, 255, .20);
+    background-color: rgba(58, 52, 52, 0.150);
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: 450px;
+    
+    color: #FFF;
+}
+
+/* Credentials */
+.content>#input_box>#enter-room,
+.content>#input_box>#create-room,
+.content>#input_box>#credentials{
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    color: #FFF;
+}
+
+.content>#input_box>#credentials>h1{
+    font-weight: 500;
+    text-align: center;
+    padding-bottom: 40px;
+    color: #FFF;
+    font-size: 25px;
+}
+
+.input{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-bottom: 20px;
+}
+
+.input>label{
+    color: #FFF;
+    font-size: 15px;
+}
+
+.input>input{
+    backdrop-filter: blur(3px);
+    border: 2px solid rgba(255, 255, 255, 0.01);
+    background-color: rgba(255, 255, 255, 0.311);
+    border-radius: 10px;
+    text-decoration: none;
+    
+    padding: 15px 15px;
+    color: #FFF;
+    font-size: 18px;
+}
+
+.input>input::placeholder{
+    color: #d9d9d977;
+}
+
+.input>input:focus{
+    outline: none;
+    border: 2px solid rgba(191, 126, 255, .40);
+    box-shadow: 0 0 15px rgba(191, 126, 255, .40);
+}
+
+.btns{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+}
+
+.button{
+    background-color: #834DB8;
+    border: none;
+    
+    padding: 12px 15px;
+    border-radius: 10px;
+    
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.button:hover{
+    background-color: rgba(191, 126, 255, 1);
+    box-shadow: 0 0 10px rgba(191, 126, 255, .50);
+    border: none;
+    
+    padding: 12px 15px;
+    border-radius: 10px;
+    
+    font-size: 15px;
+    font-weight: 700;
+    
+    cursor: pointer;
+    
+    transform: scale(1.05);
+    transition: .3s;
+}
+
+/* enter room */
+.content>#input_box>#enter-room>.exibitions>h1{
+    font-weight: 500;
+    text-align: center;
+    padding-bottom: 10px;
+    color: #FFF;
+    font-size: 25px;
+}
+.content>#input_box>#enter-room>.exibitions>h3{
+    text-align: center;
+    font-size: 18px;
+    font-weight: 400;
+    padding-bottom: 40px;
+}
+
+.language{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    align-items: center;
+    justify-content: center;
+}
+
+.language>.imgs{
+    display: flex;
+    gap: 40px;
+}
+
+.language>.imgs>.selected{
+    border: 2px solid rgba(191, 126, 255, 1);
+    border-radius: 5px;
+    padding: 0 3px;
+}
+
+.language>.imgs>img{
+    width: 40px;
+}
+
+/* create room */
+.content>#input_box>#create-room>h1{
+    font-weight: 500;
+    text-align: center;
+    padding-bottom: 15px;
+    color: #FFF;
+    font-size: 25px;
+}
+
+.content>#input_box>#create-room>.double_input{
+    display: flex;
+    justify-content: space-between;
+}
+
+.content>#input_box>#create-room>.double_input>.last_input{
+    padding-bottom: 5px;
+}

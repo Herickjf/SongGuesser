@@ -5,7 +5,7 @@ defmodule SqWeb.RoomController do
     render(conn, "index.html")
   end
 
-  def create(conn, %{"room_code" => room_code, "password" => password}) do
+  def create(conn, %{"password" => password}) do
     # Lógica para criar sala com senha
     json(conn, %{"message" => "Sala criada", "room_code" => room_code})
   end

@@ -95,6 +95,11 @@ section > #creators_box > .creator_box > .creator_img{
     background-size: cover;
 }
 
+#creator_img_3{
+    background-image: url(/assets/creators/kaique.webp);
+    background-size: cover;
+}
+
 #creator_img_4{
     background-image: url(/assets/creators/lucas.png);
     background-size: cover;

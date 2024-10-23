@@ -1,3 +1,3 @@
 defmodule SqWeb.RoomView do
-  # use SqWeb, :view
+  use SqWeb, :view
 end
