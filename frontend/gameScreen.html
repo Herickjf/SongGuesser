@@ -6,6 +6,7 @@
 
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/gameStyle.css">
+
     <link rel="shortcut icon" href="/assets/logo.png" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,7 +19,7 @@
     <!-- inicio da logo -->
     <div class="logo">
         <!-- img logo -->
-        <img src="/assets/logo.png" alt="logotipo do Song Guesser">
+        <img src="/SongGuesser/assets/logo.png" alt="logotipo do Song Guesser">
     </div>
     <!-- inicio da logo -->
 
@@ -106,7 +107,7 @@
         <!-- fim de players -->
         
         <!-- inicio de round -->
-        <div id="round_box">
+        <div id="round_box" >
             <div id="word_box">
                 <h1>WORD</h1>
             </div>
@@ -143,7 +144,7 @@
 
             </div> 
 
-            <div id="between_rounds">
+            <div id="between_rounds" style="display: none">
                 <div>
                     <p>For the word <span class="round_word">palavra</span> you are...</p>
                     <h1 id="isRight">RIGHTT</h1>
@@ -156,8 +157,10 @@
                         <div id="album_image"></div>
 
                         <div id="song_description">
-                            <h4 id="artist_info">Artist name</h4>
-                            <h6 id="track_info">Song title</h6>
+                            <div>
+                                <h5 id="track_info">Song Title</h5>
+                                <h6 id="artist_info">Artist</h6>
+                            </div>
 
                             <i class="fa fa-check-circle" id="symbol_isRight"></i>
                         </div>
@@ -174,7 +177,7 @@
                 <button class="button" id="btn_nextRound">Next Round</button>
             </div>
 
-            <div id="ranking_box" style="display: none">
+            <div id="ranking_box">
                 <div id="playersCards_box">
                     <div class="playerCard" id="second_place">
                         <div class="playerCard_img" id="second_place_img"></div>
@@ -195,8 +198,10 @@
                     </div>
                 </div>
 
-                <p><span id="winner_name"></span> won with <span id="winner_points"></span> points!</p>
-                <p id="congrat_msg">Congratulations!</p>
+                <div>
+                    <p><span id="winner_name"></span> won with <span id="winner_points"></span> points!</p>
+                    <p id="congrat_msg">Congratulations!</p>
+                </div>
             </div>
 
         </div>
@@ -204,7 +209,113 @@
         
         <!-- inicio de songsInfo -->
         <div id="songs_box">
-            <h1>Which song?</h1>
+            
+            <div id="didntFound" style="display: none">
+                <h1>No music found</h1>
+            </div>
+            
+            <div id="while_playing" style="display: none">
+                <h1>Which song?</h1>
+
+                <div id="songs">
+
+                    <div class="song_found">
+                        <div class="cover"></div>
+                        <div class="info">
+                            <h2>Song title</h2>
+                            <p>Artist name</p>
+                        </div>
+                    </div>
+                    
+                    <div class="song_found song_selected">
+                        <div class="cover"></div>
+                        <div class="info">
+                            <h2>Song title</h2>
+                            <p>Artist name</p>
+                        </div>
+                    </div>
+                    <div class="song_found">
+                        <div class="cover"></div>
+                        <div class="info">
+                            <h2>Song title</h2>
+                            <p>Artist name</p>
+                        </div>
+                    </div>
+                    <div class="song_found">
+                        <div class="cover"></div>
+                        <div class="info">
+                            <h2>Song title</h2>
+                            <p>Artist name</p>
+                        </div>
+                    </div>
+                    <div class="song_found">
+                        <div class="cover"></div>
+                        <div class="info">
+                            <h2>Song title</h2>
+                            <p>Artist name</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="btns">
+                    <button class="button">Get Out</button>
+                </div>
+
+            </div>
+            
+            <div id="between_rounds" style="display: none;">
+                <h1>Answers: </h1>
+
+                <div id="songs">
+
+                    <div class="song_found correct_song">
+                        <div class="cover"></div>
+                        <div class="info">
+                            <h6>Fulano e beltrano</h6>
+                            <h2>I Think They Call This Love</h2>
+                            <p>Sei lá o nome</p>
+                        </div>
+                    </div>
+                    <div class="song_found wrong_song">
+                        <div class="cover"></div>
+                        <div class="info">
+                            <h6>Fulano e beltrano</h6>
+                            <h2>Hair</h2>
+                            <p>Suriel Hess</p>
+                        </div>
+                    </div>
+                    <div class="song_found correct_song">
+                        <div class="cover"></div>
+                        <div class="info">
+                            <h6>Fulano e beltrano</h6>
+                            <h2>Believer</h2>
+                            <p>Imagine Dragons</p>
+                        </div>
+                    </div>
+                    <div class="song_found correct_song">
+                        <div class="cover"></div>
+                        <div class="info">
+                            <h6>Fulano e beltrano</h6>
+                            <h2>Roses</h2>
+                            <p>Shawn Mendes</p>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="btns">
+                    <button class="button">Get Out</button>
+                </div>
+            </div>
+
+            <div id="ranking_box">
+                <div id="last_buttons">
+                    <button class="button" id="btn_restart">Restart</button>
+                    <button class="button" id="btn_exit">Exit</button>
+                </div>
+            </div>
         </div>
         <!-- fim de songsInfo -->
 

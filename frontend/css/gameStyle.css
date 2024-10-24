@@ -1,3 +1,9 @@
+*{
+    white-space: nowrap;     
+    overflow: hidden;          
+    text-overflow: ellipsis;
+}
+
 body{
     margin: 0;
     padding: 0;
@@ -7,7 +13,7 @@ body{
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    background-image: url(/assets/bg.jpg);
+    background-image: url(/SongGuesser/assets/bg.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     color: #fff;
@@ -51,22 +57,131 @@ body{
     width: 24%;
     height: 100%;
     border-radius: 10px;
-
-    justify-content: space-between;
     
     background-color: rgba(76, 60, 97, 1);
     border: 2px solid rgba(191, 126, 255, .1);
     /* box-shadow: 0 0 20px rgba(191, 126, 255, .5); */
 }
 #room > #players_box > h1,
-#room > #songs_box > h1{    
+#room > #songs_box > #didntFound > h1,    
+#room > #songs_box > #while_playing > h1,    
+#room > #songs_box > #between_rounds > h1,    
+#room > #songs_box > #ranking_box > h1{    
     text-align: center;
     padding: 15px 0;
     
     font-size: 25px;
     font-weight: 600;
-
+    
 }
+
+/* SONGS */
+#room > #songs_box > #between_rounds,
+#room > #songs_box > #while_playing {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+    height: 100%;
+
+    align-items: center;
+    justify-content: space-between;
+}   
+#room > #songs_box > #while_playing > .btns,
+#room > #songs_box > #between_rounds > .btns{
+    overflow: visible;
+}
+#room > #songs_box > #between_rounds > #songs,
+#room > #songs_box > #while_playing > #songs {
+    /* background-color: rgba(255, 0, 0, 0.2); */
+    
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    
+    min-width: 90%;
+    max-width: 90%;
+    max-height: 380px;
+    
+    overflow-y: auto;
+}
+#room > #songs_box > #between_rounds > #songs::-webkit-scrollbar,
+#room > #songs_box > #while_playing > #songs::-webkit-scrollbar {
+    width: 10px; 
+}
+#room > #songs_box > #between_rounds > #songs::-webkit-scrollbar-track,
+#room > #songs_box > #while_playing > #songs::-webkit-scrollbar-track {
+    background: rgba(143, 72, 213, 0.4); 
+    border-radius: 10px; 
+}
+#room > #songs_box > #between_rounds > #songs::-webkit-scrollbar-thumb,
+#room > #songs_box > #while_playing > #songs::-webkit-scrollbar-thumb {
+    background: rgba(143, 72, 213, 0.8); 
+    border-radius: 10px; 
+}
+#room > #songs_box > #between_rounds > #songs::-webkit-scrollbar-thumb:hover,
+#room > #songs_box > #while_playing > #songs::-webkit-scrollbar-thumb:hover {
+    background: rgba(143, 72, 213, 1); 
+}
+#room > #songs_box > #between_rounds > #songs > *,
+#room > #songs_box > #while_playing > #songs > *{
+    flex-shrink: 0;
+}
+
+#room > #songs_box > #between_rounds > #songs > .song_found,
+#room > #songs_box > #while_playing > #songs > .song_found{
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    
+    padding: 10px;
+    margin: 0 8px;
+    
+    /* background-color: rgba(255, 0, 0, 0.2); */
+    border-radius: 10px;
+}
+#room > #songs_box > #while_playing > #songs > .song_found:hover{
+    background-color: rgba(205, 154, 255, .2);
+    cursor: pointer;
+    transition: .15s;
+}
+#room > #songs_box > #while_playing > #songs > .song_selected{
+    background-color: rgba(256, 256, 256, .2);
+}
+#room > #songs_box > #between_rounds > #songs > .song_found > .cover,
+#room > #songs_box > #while_playing > #songs > .song_found > .cover{
+    background-image: url(/SongGuesser/assets/songCovers/coverTemplate.png);
+    width: 70px;
+    height: 70px;
+    border-radius: 2px;
+}
+#room > #songs_box > #between_rounds > #songs > .song_found > .info,
+#room > #songs_box > #while_playing > #songs > .song_found > .info{
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    max-width: 60%;
+}
+#room > #songs_box > #between_rounds > #songs > .song_found > .info > h2,
+#room > #songs_box > #while_playing > #songs > .song_found > .info > h2{
+    font-size: 21px;
+    font-weight: 600;
+}
+#room > #songs_box > #between_rounds > #songs > .song_found > .info > p,
+#room > #songs_box > #while_playing > #songs > .song_found > .info > p{
+    font-size: 14px;
+}
+#room > #songs_box > #between_rounds > #songs > .song_found > .info > h6{
+    font-size: 12px;
+    font-weight: 600;
+}
+#room > #songs_box > #between_rounds > #songs > .correct_song{
+    background-color: rgb(0, 236, 75, .2);
+}
+#room > #songs_box > #between_rounds > #songs > .wrong_song{
+    background-color: rgb(255, 0, 0, .2);
+}
+
 /* PLAYERS */
 /* PLAYERS > ROOM_LINK */
 #room > #players_box > #room_link{
@@ -119,6 +234,7 @@ body{
     position: relative;
     display: flex;
     gap: 5px;
+    overflow: visible;
     
     width: 95%;
 
@@ -139,6 +255,7 @@ body{
 }
 #room > #players_box > #players > .player > .info{
     background-color: rgb(122, 87, 160);
+    overflow: hidden;
     
     position: relative;
     display: flex;
@@ -258,46 +375,92 @@ body{
 
 #room > #round_box > #between_rounds{
     display: flex;
+    height: 100%;
+    width: 80%;
     flex-direction: column;
-    text-align: center;
     align-items: center;
     justify-content: space-around;
-    width: 100%;
-    height: 100%;
+    /* background-color: white; */
 }
 
-#room > #round_box > #between_rounds > #music_player_box > #song_information > #album_image{
-    width: 150px;
-    height: 150px;
-    background-color: rgba(143, 72, 213, 0.2);
-    border-radius: 10px;
-    border-style: solid;
-    border-color: black;
-    background: url(/assets/creators/lucas.png);
-    background-size: cover;
+#room > #round_box > #between_rounds > div{
+    text-align: center;
 }
 
 #room > #round_box > #between_rounds > #music_player_box{
     display: flex;
+    width: 80%;
     flex-direction: column;
-    align-items: center;
     gap: 10px;
-    justify-content: center;
 }
 
 #room > #round_box > #between_rounds > #music_player_box > #song_information{
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
     gap: 20px;
-    width: 100%;
+    width: 50%;
+    margin: 0 auto;
+}
+
+#room > #round_box > #between_rounds > #music_player_box > #song_information > #album_image{
+    height: 100px;
+    width: 100px;
+    margin: 0 auto;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: rgba(76, 60, 97, .7);
+    background: url(/SongGuesser/assets/creators/lucas.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 #room > #round_box > #between_rounds > #music_player_box > #song_information > #song_description{
+    width: 100%;
+    display: flex;
+    flex-direction: inline;
+    justify-content: space-around;
+    align-items: center;
+    gap: 5px;
+}
+
+#room > #round_box > #between_rounds > #music_player_box > #song_information > #song_description > div{
+    text-align: left;
+    width: 75%;
+}
+
+#room > #round_box > #between_rounds > #music_player_box > #song_information > #song_description > div > h5{
+    font-size: 13px;
+    font-weight: bold;
+}
+
+#room > #round_box > #between_rounds > #music_player_box > #song_information > #song_description > div > h6{
+    font-size: 9px;
+    font-weight: normal;
+}
+
+#room > #round_box > #ranking_box{
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 7px;
-    width: 50%;
-    font-size: 18px;
+    justify-content: space-around;
+}
+
+#room > #round_box > #ranking_box > div{
+    margin: 0 auto;
+}
+
+#room > #round_box > #ranking_box > #playersCards_box{
+    width: 80%;
+    height: 70%;
+    background: white;
+    display: flex;
+    gap: 5px;
+    flex-direction: inline;
+}
+
+#room > #round_box > #ranking_box > #playersCards_box > .playerCard{
+    background: black;
+    flex: 1;
 }
