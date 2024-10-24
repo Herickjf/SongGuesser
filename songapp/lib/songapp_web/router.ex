@@ -27,6 +27,9 @@ defmodule SongappWeb.Router do
 
   scope "/api", SongappWeb do
     pipe_through :api
+    options "/search", PageController, :search
+    options "/validate", PageController, :validate
+    options "/getWord", PageController, :getWord
     post "/search", PageController, :search
     post "/validate", PageController, :validate
     post "/getWord", PageController, :getWord

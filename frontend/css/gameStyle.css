@@ -63,10 +63,11 @@ body{
     /* box-shadow: 0 0 20px rgba(191, 126, 255, .5); */
 }
 #room > #players_box > h1,
-#room > #songs_box > #didntFound > h1,    
-#room > #songs_box > #while_playing > h1,    
-#room > #songs_box > #between_rounds > h1,    
-#room > #songs_box > #ranking_box > h1{    
+#room > #songs_box > #waiting_for_song > h1,    
+#room > #songs_box > #didnt_found > h1,    
+#room > #songs_box > #while_playing_song > h1,    
+#room > #songs_box > #between_rounds_song > h1,    
+#room > #songs_box > #ranking_box_song > h1{    
     text-align: center;
     padding: 15px 0;
     
@@ -76,23 +77,30 @@ body{
 }
 
 /* SONGS */
-#room > #songs_box > #between_rounds,
-#room > #songs_box > #while_playing {
+#room > #songs_box > #waiting_for_song,
+#room > #songs_box > #ranking_box_song,
+#room > #songs_box > #didnt_found,
+#room > #songs_box > #between_rounds_song,
+#room > #songs_box > #while_playing_song {
     display: flex;
     flex-direction: column;
     gap: 30px;
     width: 100%;
     height: 100%;
-
+    
     align-items: center;
     justify-content: space-between;
 }   
-#room > #songs_box > #while_playing > .btns,
-#room > #songs_box > #between_rounds > .btns{
+#room > #songs_box > #didnt_found{
+    justify-content: space-between;
+    margin-bottom: 20px;
     overflow: visible;
 }
-#room > #songs_box > #between_rounds > #songs,
-#room > #songs_box > #while_playing > #songs {
+.btns{
+    overflow: visible;
+}
+#room > #songs_box > #between_rounds_song > #songs,
+#room > #songs_box > #while_playing_song > #songs {
     /* background-color: rgba(255, 0, 0, 0.2); */
     
     display: flex;
@@ -105,31 +113,31 @@ body{
     
     overflow-y: auto;
 }
-#room > #songs_box > #between_rounds > #songs::-webkit-scrollbar,
-#room > #songs_box > #while_playing > #songs::-webkit-scrollbar {
+#room > #songs_box > #between_rounds_song > #songs::-webkit-scrollbar,
+#room > #songs_box > #while_playing_song > #songs::-webkit-scrollbar {
     width: 10px; 
 }
-#room > #songs_box > #between_rounds > #songs::-webkit-scrollbar-track,
-#room > #songs_box > #while_playing > #songs::-webkit-scrollbar-track {
+#room > #songs_box > #between_rounds_song > #songs::-webkit-scrollbar-track,
+#room > #songs_box > #while_playing_song > #songs::-webkit-scrollbar-track {
     background: rgba(143, 72, 213, 0.4); 
     border-radius: 10px; 
 }
-#room > #songs_box > #between_rounds > #songs::-webkit-scrollbar-thumb,
-#room > #songs_box > #while_playing > #songs::-webkit-scrollbar-thumb {
+#room > #songs_box > #between_rounds_song > #songs::-webkit-scrollbar-thumb,
+#room > #songs_box > #while_playing_song > #songs::-webkit-scrollbar-thumb {
     background: rgba(143, 72, 213, 0.8); 
     border-radius: 10px; 
 }
-#room > #songs_box > #between_rounds > #songs::-webkit-scrollbar-thumb:hover,
-#room > #songs_box > #while_playing > #songs::-webkit-scrollbar-thumb:hover {
+#room > #songs_box > #between_rounds_song > #songs::-webkit-scrollbar-thumb:hover,
+#room > #songs_box > #while_playing_song > #songs::-webkit-scrollbar-thumb:hover {
     background: rgba(143, 72, 213, 1); 
 }
-#room > #songs_box > #between_rounds > #songs > *,
-#room > #songs_box > #while_playing > #songs > *{
+#room > #songs_box > #between_rounds_song > #songs > *,
+#room > #songs_box > #while_playing_song > #songs > *{
     flex-shrink: 0;
 }
 
-#room > #songs_box > #between_rounds > #songs > .song_found,
-#room > #songs_box > #while_playing > #songs > .song_found{
+#room > #songs_box > #between_rounds_song > #songs > .song_results,
+#room > #songs_box > #while_playing_song > #songs > .song_found{
     display: flex;
     gap: 15px;
     align-items: center;
@@ -140,45 +148,45 @@ body{
     /* background-color: rgba(255, 0, 0, 0.2); */
     border-radius: 10px;
 }
-#room > #songs_box > #while_playing > #songs > .song_found:hover{
+#room > #songs_box > #while_playing_song > #songs > .song_found:hover{
     background-color: rgba(205, 154, 255, .2);
     cursor: pointer;
     transition: .15s;
 }
-#room > #songs_box > #while_playing > #songs > .song_selected{
+#room > #songs_box > #while_playing_song > #songs > .song_selected{
     background-color: rgba(256, 256, 256, .2);
 }
-#room > #songs_box > #between_rounds > #songs > .song_found > .cover,
-#room > #songs_box > #while_playing > #songs > .song_found > .cover{
+#room > #songs_box > #between_rounds_song > #songs > .song_results > .cover,
+#room > #songs_box > #while_playing_song > #songs > .song_found > .cover{
     background-image: url(/SongGuesser/assets/songCovers/coverTemplate.png);
     width: 70px;
     height: 70px;
     border-radius: 2px;
 }
-#room > #songs_box > #between_rounds > #songs > .song_found > .info,
-#room > #songs_box > #while_playing > #songs > .song_found > .info{
+#room > #songs_box > #between_rounds_song > #songs > .song_results > .info,
+#room > #songs_box > #while_playing_song > #songs > .song_found > .info{
     display: flex;
     flex-direction: column;
     gap: 3px;
     max-width: 60%;
 }
-#room > #songs_box > #between_rounds > #songs > .song_found > .info > h2,
-#room > #songs_box > #while_playing > #songs > .song_found > .info > h2{
+#room > #songs_box > #between_rounds_song > #songs > .song_results > .info > h2,
+#room > #songs_box > #while_playing_song > #songs > .song_found > .info > h2{
     font-size: 21px;
     font-weight: 600;
 }
-#room > #songs_box > #between_rounds > #songs > .song_found > .info > p,
-#room > #songs_box > #while_playing > #songs > .song_found > .info > p{
+#room > #songs_box > #between_rounds_song > #songs > .song_results > .info > p,
+#room > #songs_box > #while_playing_song > #songs > .song_found > .info > p{
     font-size: 14px;
 }
-#room > #songs_box > #between_rounds > #songs > .song_found > .info > h6{
+#room > #songs_box > #between_rounds_song > #songs > .song_results > .info > h6{
     font-size: 12px;
     font-weight: 600;
 }
-#room > #songs_box > #between_rounds > #songs > .correct_song{
+#room > #songs_box > #between_rounds_song > #songs > .correct_song{
     background-color: rgb(0, 236, 75, .2);
 }
-#room > #songs_box > #between_rounds > #songs > .wrong_song{
+#room > #songs_box > #between_rounds_song > #songs > .wrong_song{
     background-color: rgb(255, 0, 0, .2);
 }
 
@@ -305,6 +313,13 @@ body{
     text-align: center;
 }
 /* ROUND > WHILE PLAYING */
+#room > #round_box > #waiting_for{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 #room > #round_box > #while_playing{
     /* background-color: rgba(255, 0, 0, 0.311); */
     width: 100%;
@@ -454,13 +469,72 @@ body{
 #room > #round_box > #ranking_box > #playersCards_box{
     width: 80%;
     height: 70%;
-    background: white;
     display: flex;
-    gap: 5px;
+    gap: 10px;
     flex-direction: inline;
+    justify-content: center;
+    align-items: center;
 }
 
 #room > #round_box > #ranking_box > #playersCards_box > .playerCard{
-    background: black;
-    flex: 1;
+    height: 70%;
+    width: 30%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#room > #round_box > #ranking_box > #playersCards_box > .playerCard > .playerCard_img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 0 auto;
+    margin-bottom: 5px;
+}
+
+#room > #round_box > #ranking_box > #playersCards_box > .playerCard > .playerCard_name{
+    height: 12%;
+    font-weight: bold;
+    font-size: 25px;
+    align-items: center;
+    text-align: center;
+}
+
+#room > #round_box > #ranking_box > #playersCards_box > .playerCard > .playerCard_points{
+    height: 10%;
+    font-weight: normal;
+    font-size: 15px;
+    text-align: center;
+}
+
+#room > #round_box > #ranking_box > #playersCards_box > #second_place{
+    justify-content: center;
+}
+
+#room > #round_box > #ranking_box > #playersCards_box > #first_place{
+    justify-content: start;
+}
+
+#room > #round_box > #ranking_box > #playersCards_box > #third_place{
+    justify-content: center;
+}
+
+#first_place_img{
+    background-image: url(/SongGuesser/assets/creators/luis.png);
+    border: 5px solid gold;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#second_place_img{
+    background-image: url(/SongGuesser/assets/creators/herick.png);
+    border: 5px solid silver;
+    background-size: cover;
+}
+
+#third_place_img{
+    background-image: url(/SongGuesser/assets/creators/jmarcos.jpg);
+    background-size: cover;
+    border: 5px solid rgb(190, 101, 37);
 }

@@ -7,6 +7,7 @@ defmodule Songapp.Repo.Migrations.CreatePlayers do
       add :photo_id, :integer
       add :score, :integer, default: 0
       add :status, :string, default: "ready"
+      add :is_admin, :boolean, default: false
       add :game_id, references(:rooms, on_delete: :delete_all) # Foreign key to the game (rooms)
 
       timestamps(type: :utc_datetime)
