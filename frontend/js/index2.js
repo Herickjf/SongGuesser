@@ -195,11 +195,20 @@ createRoom.addEventListener('click', ()=>{
 
 updatePencilFunctions()
 
-fetch("http://localhost:4000/api/search", {
+fetch("http://localhost:4000/api/validate", {
     method: "POST",
-    body: JSON.stringify({"artist": "Bruno", "song": "it will rain"})
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        "word": "morte",
+        "chosen": {"artist": "Billie Eilish", "song": "happier than ever"}
+    })
 })
 .then(response => response.json())
 .then(data => {
-    console.log(data)
+    console.log(data);
 })
+.catch(error => {
+    console.error("Erro:", error);
+});
