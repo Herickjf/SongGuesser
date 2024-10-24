@@ -86,32 +86,32 @@ section > #creators_box > .creator_box > .creator_img{
 /* PICTURES */
 
 #creator_img_1{
-    background-image: url(/assets/creators/herick.png);
+    background-image: url(/SongGuesser/assets/creators/herick.png);
     background-size: cover;
 }
 
 #creator_img_2{
-    background-image: url(/assets/creators/jmarcos.jpg);
+    background-image: url(/SongGuesser/assets/creators/jmarcos.jpg);
     background-size: cover;
 }
 
 #creator_img_3{
-    background-image: url(/assets/creators/kaique.webp);
+    background-image: url(/SongGuesser/assets/creators/kaique.webp);
     background-size: cover;
 }
 
 #creator_img_4{
-    background-image: url(/assets/creators/lucas.png);
+    background-image: url(/SongGuesser/assets/creators/lucas.png);
     background-size: cover;
 }
 
 #creator_img_5{
-    background-image: url(/assets/creators/luis.png);
+    background-image: url(/SongGuesser/assets/creators/luis.png);
     background-size: cover;
 }
 
 #creator_img_6{
-    background-image: url(/assets/creators/rafael.jpg);
+    background-image: url(/SongGuesser/assets/creators/rafael.jpg);
     background-size: cover;
 }
 

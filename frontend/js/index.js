@@ -19,6 +19,7 @@ const id = urlParams.get('id');
 
 function fillCode(id){
     if(id !== ""){
+        // tratar ids maiores que 6
         inputCode.value = id;
     }
 }

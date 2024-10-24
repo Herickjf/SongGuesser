@@ -18,7 +18,7 @@ function copyLink(code){
     alert(`Código ${code} copiado para área de transferência!`);
 }
 linkButton.addEventListener('click', () =>{
-    copyLink('123456');
+    copyLink('12345678');
 })
 
 
@@ -47,9 +47,6 @@ function playSong(link, image, artist, song, isRight){
 
 
     let album_image = document.getElementById('album_image');
-    // album_image.style.width = 100;
-    // album_image.style.height = 100;
-    // album_image.style.backgroundImage = `url(${image})`;
 
     let artist_name = document.getElementById('artist_info');
     let song_name = document.getElementById('track_info');

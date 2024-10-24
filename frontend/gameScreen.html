@@ -6,7 +6,7 @@
 
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/gameStyle.css">
-    
+
     <link rel="shortcut icon" href="/assets/logo.png" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,7 +19,7 @@
     <!-- inicio da logo -->
     <div class="logo">
         <!-- img logo -->
-        <img src="/assets/logo.png" alt="logotipo do Song Guesser">
+        <img src="/SongGuesser/assets/logo.png" alt="logotipo do Song Guesser">
     </div>
     <!-- inicio da logo -->
 
@@ -107,7 +107,7 @@
         <!-- fim de players -->
         
         <!-- inicio de round -->
-        <div id="round_box">
+        <div id="round_box" >
             <div id="word_box">
                 <h1>WORD</h1>
             </div>
@@ -160,7 +160,7 @@
                             <h4 id="artist_info">Artist name</h4>
                             <h6 id="track_info">Song title</h6>
 
-                            <i class="fa fa-check-circle" id="symbol_isRight"></i>
+                            <i class="fa fa-check-circle" style="color: #F04949" id="symbol_isRight"></i>
                         </div>
                     </div>
                     
@@ -205,7 +205,47 @@
         
         <!-- inicio de songsInfo -->
         <div id="songs_box">
-            <h1>Which song?</h1>
+            
+            <div id="didntFound" style="display: none">
+                <h1>No music found</h1>
+            </div>
+            
+            <div id="while_playing">
+                <h1>Which song?</h1>
+
+                <div id="songs">
+
+                    <div class="song_found">
+                        <div class="cover"></div>
+                        <div class="info">
+                            <h2>Song title</h2>
+                            <p>Artist name</p>
+                        </div>
+                    </div>
+    
+                    <div class="song_found" id="song_selected">
+                        <div class="cover"></div>
+                        <div class="info">
+                            <h2>Song title</h2>
+                            <p>Artist name</p>
+                        </div>
+                    </div>
+                    
+                </div>
+
+            </div>
+            
+            <div id="between_rounds" style="display: none">
+                <h1>Answers: </h1>
+
+            </div>
+
+            <div id="ranking_box" style="display: none">
+                <div id="last_buttons">
+                    <button class="button" id="btn_restart">Restart</button>
+                    <button class="button" id="btn_exit">Exit</button>
+                </div>
+            </div>
         </div>
         <!-- fim de songsInfo -->
 
