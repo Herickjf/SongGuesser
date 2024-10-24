@@ -21,6 +21,7 @@ defmodule Songapp.Game do
     Repo.all(Room)
   end
 
+
   @doc """
   Gets a single room.
 
@@ -36,6 +37,8 @@ defmodule Songapp.Game do
 
   """
   def get_room!(id), do: Repo.get!(Room, id)
+
+def get_room_by_code!(code), do: Repo.get_by(Songapp.Game.Room, code: code)
 
   @doc """
   Creates a room.

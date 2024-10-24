@@ -10,39 +10,68 @@ defmodule SongappWeb.RoomChannel do
   end
 
   @impl true
-  def join("room:" <> room_code, %{"password" => password, "nickname" => nickname, "photo_id" => photo_id}, socket) do
-    # case RoomsManager.join_room(room_code, password, nickname, photo_id) do
-    #   {:ok, room} ->
-    #     {:ok, assign(socket, :room, room)}
-    #   {:error, reason} ->
-    #     {:error, %{reason: reason}}
-    # end
+  def join(
+        "room:" <> room_code,
+        %{"password" => password, "nickname" => nickname, "photo_id" => photo_id},
+        socket
+      ) do
+    case RoomsManager.join_room(room_code, password, nickname, photo_id) do
+      {:ok, player, room} ->
+        {:ok, assign(socket, :room, room) |> assign(:player, player)}
 
-      # {:ok, assign(socket, :room, room_code)}
+      {:error, reason} ->
+        {:error, %{reason: reason}}
+    end
   end
 
   @impl true
-  def handle_in("create_room", %{"password" => password, "rounds" => rounds, "max_players" => max_players, "language" => language}, socket) do
-    IO.puts("Socket ID do admim: #{socket.id}")
-    room_code = RoomsManager.create_room(%{
-      password: password,
-      rounds: rounds,
-      max_players: max_players,
-      language: language,
-      player_admin_id: socket.id
-    })
+  def handle_in(
+        "create_room",
+        %{
+          "password" => password,
+          "rounds" => rounds,
+          "max_players" => max_players,
+          "language" => language
+        },
+        socket
+      ) do
+    case RoomsManager.create_room(%{
+           password: password,
+           max_rounds: rounds,
+           max_players: max_players,
+           language: language,
+           player_admin_id: 0
+         }) do
+      {:error, reason} ->
+IO.inspect(reason)
+        {:reply, {:error, reason}, socket}
 
-    # Responder para o cliente com o código da sala
-    {:reply, {:ok, %{room_code: room_code}}, socket}
+      {:ok, room_code} ->
+        {:reply, {:ok, %{room_code: room_code}}, socket}
+    end
   end
 
-  @impl true
-  def handle_in("shout", %{"body" => body}, socket) do
-    broadcast(socket, "shout", %{
-      body: body,
-      room: socket.assigns[:room]
-    })
+ # Função para enviar mensagens (shout) apenas para a sala correta
+ @impl true
+ def handle_in("shout", %{"body" => body, "room_code" => room_code}, socket) do
+  #  player = socket.assigns[:player]
+  #  room = socket.assigns[:room]
 
-    {:noreply, socket}
-  end
+   # Verifica se o player está atribuído corretamente
+  #  if player == nil do
+  #    IO.puts("Player not assigned to socket!")
+  #  else
+  #    IO.inspect(socket.assigns)
+  #  end
+
+  #  room_code = room.code
+
+   # Broadcast apenas para usuários na mesma sala (room_code)
+   broadcast!(socket, "room:#{room_code}:shout", %{
+     body: body,
+    #  player: player.nickname  # Inclui o nickname do jogador na mensagem
+   })
+
+   {:noreply, socket}
+ end
 end
