@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/gameStyle.css">
 
-    <link rel="shortcut icon" href="/assets/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/SongGuesser/assets/logo.png" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">    <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -112,11 +112,14 @@
                 <h1>WORD</h1>
             </div>
 
+            <div id="waiting_for">
+                <p>message</p>
+            </div>
+
             <div id="while_playing" style="display: none">
                 <div id="content">
                     <p>Enter a song with the word <span class="round_word">WORD</span><p>
-                    
-                    
+
                     <div id="inputs">
                         <div class="input">
                             <label for="artist_name">Artist name:</label>
@@ -151,17 +154,17 @@
                     <br>
                     <p>Listen to a preview of this song on the player below</p>
                 </div>
-
+                
                 <div id="music_player_box">
                     <div id="song_information">
                         <div id="album_image"></div>
-
+                        
                         <div id="song_description">
                             <div>
                                 <h5 id="track_info">Song Title</h5>
                                 <h6 id="artist_info">Artist</h6>
                             </div>
-
+                            
                             <i class="fa fa-check-circle" id="symbol_isRight"></i>
                         </div>
                     </div>
@@ -176,49 +179,58 @@
 
                 <button class="button" id="btn_nextRound">Next Round</button>
             </div>
-
-            <div id="ranking_box">
+            
+            <div id="ranking_box" style="display: none;">
                 <div id="playersCards_box">
                     <div class="playerCard" id="second_place">
                         <div class="playerCard_img" id="second_place_img"></div>
-                        <div class="playerCard_name" id="second_place_name"></div>
-                        <div class="playerCard_points" id="second_place_points"></div>
+                        <div class="playerCard_name" id="second_place_name">Herick</div>
+                        <div class="playerCard_points" id="second_place_points">0 points</div>
                     </div>
-
+                    
                     <div class="playerCard" id="first_place">
                         <div class="playerCard_img" id="first_place_img"></div>
-                        <div class="playerCard_name" id="first_place_name"></div>
-                        <div class="playerCard_points" id="first_place_points"></div>
+                        <div class="playerCard_name" id="first_place_name">Luis</div>
+                        <div class="playerCard_points" id="first_place_points">10 points</div>
                     </div>
-
+                    
                     <div class="playerCard" id="third_place">
                         <div class="playerCard_img" id="third_place_img"></div>
-                        <div class="playerCard_name" id="third_place_name"></div>
-                        <div class="playerCard_points" id="third_place_points"></div>
+                        <div class="playerCard_name" id="third_place_name">Alguem</div>
+                        <div class="playerCard_points" id="third_place_points">-10 points</div>
                     </div>
                 </div>
-
+                
                 <div>
-                    <p><span id="winner_name"></span> won with <span id="winner_points"></span> points!</p>
+                    <p><span id="winner_name">Player</span> won with <span id="winner_points">n</span> points!</p>
                     <p id="congrat_msg">Congratulations!</p>
                 </div>
             </div>
-
+            
         </div>
-
+        
         
         <!-- inicio de songsInfo -->
         <div id="songs_box">
             
-            <div id="didntFound" style="display: none">
+            <div id="waiting_for_song" style="display: none;">
+                <h1>Start the Game!</h1>
+                <div class="btns">
+                    <button class="button btn_start">Start</button>
+                    <button class="button btn_exit">Exit</button>
+                </div>
+            </div>
+
+            <div id="didnt_found" style="display: none;">
                 <h1>No music found</h1>
+                <button class="button btn_exit">Exit</button>
             </div>
             
-            <div id="while_playing" style="display: none">
+            <div id="while_playing_song"  style="display: none;">
                 <h1>Which song?</h1>
-
+                
                 <div id="songs">
-
+                    
                     <div class="song_found">
                         <div class="cover"></div>
                         <div class="info">
@@ -227,7 +239,7 @@
                         </div>
                     </div>
                     
-                    <div class="song_found song_selected">
+                    <div class="song_found">
                         <div class="cover"></div>
                         <div class="info">
                             <h2>Song title</h2>
@@ -259,17 +271,17 @@
                 </div>
 
                 <div class="btns">
-                    <button class="button">Get Out</button>
+                    <button class="button btn_exit">Exit</button>
                 </div>
 
             </div>
             
-            <div id="between_rounds" style="display: none;">
+            <div id="between_rounds_song" >
                 <h1>Answers: </h1>
 
                 <div id="songs">
 
-                    <div class="song_found correct_song">
+                    <div class="song_results correct_song">
                         <div class="cover"></div>
                         <div class="info">
                             <h6>Fulano e beltrano</h6>
@@ -277,7 +289,7 @@
                             <p>Sei lá o nome</p>
                         </div>
                     </div>
-                    <div class="song_found wrong_song">
+                    <div class="song_results wrong_song">
                         <div class="cover"></div>
                         <div class="info">
                             <h6>Fulano e beltrano</h6>
@@ -285,7 +297,7 @@
                             <p>Suriel Hess</p>
                         </div>
                     </div>
-                    <div class="song_found correct_song">
+                    <div class="song_results correct_song">
                         <div class="cover"></div>
                         <div class="info">
                             <h6>Fulano e beltrano</h6>
@@ -293,7 +305,7 @@
                             <p>Imagine Dragons</p>
                         </div>
                     </div>
-                    <div class="song_found correct_song">
+                    <div class="song_results correct_song">
                         <div class="cover"></div>
                         <div class="info">
                             <h6>Fulano e beltrano</h6>
@@ -306,14 +318,17 @@
                 </div>
 
                 <div class="btns">
-                    <button class="button">Get Out</button>
+                    <button class="button btn_next_round">Next round</button>
+                    <button class="button btn_exit">Exit</button>
                 </div>
             </div>
 
-            <div id="ranking_box">
-                <div id="last_buttons">
+            <div id="ranking_box_song" style="display: none;">
+                <h1>Check the Results</h1>
+
+                <div class="btns">
                     <button class="button" id="btn_restart">Restart</button>
-                    <button class="button" id="btn_exit">Exit</button>
+                    <button class="button btn_exit">Exit</button>
                 </div>
             </div>
         </div>
