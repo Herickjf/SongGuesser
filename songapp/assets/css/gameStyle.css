@@ -538,3 +538,13 @@ body{
     background-size: cover;
     border: 5px solid rgb(190, 101, 37);
 }
+/* host crown */
+#host{
+    /* position: relative; */
+    background-color: red;
+}
+#host > i{
+    position: absolute;
+    z-index: 3;
+    color: gold;
+}

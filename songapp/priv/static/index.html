@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="shortcut icon" href="/images/logo.png" type="image/x-icon">
-    <link rel="stylesheet" href="assets/style.css">
+    <link rel="shortcut icon" href="/songapp/priv/static/images/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="/songapp/priv/static/css/app.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -64,11 +64,11 @@
         <!-- início do menu -->
         <div class="menu">
             <!-- botao de voltar ao inicio -->
-            <a href="index">Home</a>
+            <a href="index.html">Home</a>
             <!-- botao que direciona a um tutorial em texto -->
-            <a href="howToPlay">How To Play</a>
+            <a href="howToPlay.html">How To Play</a>
             <!-- botao que direciona a uma pagina que nos apresenta -->
-            <a href="about">About Us</a>
+            <a href="aboutUs.html">About Us</a>
         </div>
         <!-- fim do menu -->
 
@@ -76,7 +76,7 @@
         <!-- inicio da logo -->
         <div class="logo">
             <!-- img logo -->
-            <img src="/images/logo.png" alt="logotipo do Song Guesser">
+            <img src="/songapp/priv/static/images/logo.png" alt="logotipo do Song Guesser">
         </div>
         <!-- inicio da logo -->
 
@@ -123,7 +123,7 @@
                 </div>
 
                 <div class="imageSelection_box">
-                    <div class="user_image">
+                    <div class="user_image" id="player_avatar">
                         <i class="fa fa-pencil change_image"></i>
                     </div>
                 </div>
@@ -138,7 +138,7 @@
                 <!-- <div class="language">
                     <p>Language:</p>
                     <div class="imgs selected">
-                        <img src="images/flags/brasil.png">
+                        <img src="/songapp/priv/static/images/flags/brasil.png">
                     </div>
                 </div> -->
 
@@ -156,7 +156,7 @@
                 <h1>Creating room</h1>
 
                 <div class="imageSelection_box">
-                    <div class="user_image">
+                    <div class="user_image" id="host_avatar">
                         <div class="fa fa-pencil change_image"></div>
                     </div>
                 </div>
@@ -185,9 +185,9 @@
                 <div class="language">
                     <p>Language:</p>
                     <div class="imgs">
-                        <img class="flag" src="images/flags/eua.png" alt="US flag">
-                        <img class="flag" src="images/flags/brasil.png" alt="Brasil flag">
-                        <img class="flag" src="images/flags/spain.png" alt="Spain flag">
+                        <img class="flag" src="/songapp/priv/static/images/flags/eua.png" alt="US flag">
+                        <img class="flag" src="/songapp/priv/static/images/flags/brasil.png" alt="Brasil flag">
+                        <img class="flag" src="/songapp/priv/static/images/flags/spain.png" alt="Spain flag">
                     </div>
                 </div>
 
@@ -202,6 +202,6 @@
         <!-- Fim da area de input -->
     </div>
      
-    <script src="/assets/index.js"></script>
+    <script src="/songapp/priv/static/js/index.js"></script>
 </body>
 </html>

@@ -12,7 +12,7 @@ body{
     width: 100%;
     overflow-y: hidden;
     /* definição do background */
-    background-image: url(/SongGuesser/assets/bg.jpg);
+    background-image: url(/frontend/assets/bg.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     
@@ -204,7 +204,7 @@ header>.logo>img{
     margin-bottom: 10px;
     border: 5px solid lightblue;
     margin-top: 10px;
-    background-image: url(/SongGuesser/assets/avatars/1.png);
+    background-image: url(/frontend/assets/avatars/1.png);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat
@@ -306,41 +306,41 @@ header>.logo>img{
     transition: .15s
 }
 
-#selection_images > #images div:nth-child(1){ background-image: url(/SongGuesser/assets/avatars/1.png)}
-#selection_images > #images div:nth-child(2){ background-image: url(/SongGuesser/assets/avatars/2.png)}
-#selection_images > #images div:nth-child(3){ background-image: url(/SongGuesser/assets/avatars/3.png)}
-#selection_images > #images div:nth-child(4){ background-image: url(/SongGuesser/assets/avatars/4.png)}
-#selection_images > #images div:nth-child(5){ background-image: url(/SongGuesser/assets/avatars/5.png)}
-#selection_images > #images div:nth-child(6){ background-image: url(/SongGuesser/assets/avatars/6.png)}
-#selection_images > #images div:nth-child(7){ background-image: url(/SongGuesser/assets/avatars/7.png)}
-#selection_images > #images div:nth-child(8){ background-image: url(/SongGuesser/assets/avatars/8.png)}
-#selection_images > #images div:nth-child(9){ background-image: url(/SongGuesser/assets/avatars/9.png)}
-#selection_images > #images div:nth-child(10){ background-image: url(/SongGuesser/assets/avatars/10.png)}
-#selection_images > #images div:nth-child(11){ background-image: url(/SongGuesser/assets/avatars/11.png)}
-#selection_images > #images div:nth-child(12){ background-image: url(/SongGuesser/assets/avatars/12.png)}
-#selection_images > #images div:nth-child(13){ background-image: url(/SongGuesser/assets/avatars/13.png)}
-#selection_images > #images div:nth-child(14){ background-image: url(/SongGuesser/assets/avatars/14.png)}
-#selection_images > #images div:nth-child(15){ background-image: url(/SongGuesser/assets/avatars/15.png)}
-#selection_images > #images div:nth-child(16){ background-image: url(/SongGuesser/assets/avatars/16.png)}
-#selection_images > #images div:nth-child(17){ background-image: url(/SongGuesser/assets/avatars/17.png)}
-#selection_images > #images div:nth-child(18){ background-image: url(/SongGuesser/assets/avatars/18.png)}
-#selection_images > #images div:nth-child(19){ background-image: url(/SongGuesser/assets/avatars/19.png)}
-#selection_images > #images div:nth-child(20){ background-image: url(/SongGuesser/assets/avatars/20.png)}
-#selection_images > #images div:nth-child(21){ background-image: url(/SongGuesser/assets/avatars/21.png)}
-#selection_images > #images div:nth-child(22){ background-image: url(/SongGuesser/assets/avatars/22.png)}
-#selection_images > #images div:nth-child(23){ background-image: url(/SongGuesser/assets/avatars/23.png)}
-#selection_images > #images div:nth-child(24){ background-image: url(/SongGuesser/assets/avatars/24.png)}
-#selection_images > #images div:nth-child(25){ background-image: url(/SongGuesser/assets/avatars/25.png)}
-#selection_images > #images div:nth-child(26){ background-image: url(/SongGuesser/assets/avatars/26.png)}
-#selection_images > #images div:nth-child(27){ background-image: url(/SongGuesser/assets/avatars/27.png)}
-#selection_images > #images div:nth-child(28){ background-image: url(/SongGuesser/assets/avatars/28.png)}
-#selection_images > #images div:nth-child(29){ background-image: url(/SongGuesser/assets/avatars/29.png)}
-#selection_images > #images div:nth-child(30){ background-image: url(/SongGuesser/assets/avatars/30.png)}
-#selection_images > #images div:nth-child(31){ background-image: url(/SongGuesser/assets/avatars/31.png)}
-#selection_images > #images div:nth-child(32){ background-image: url(/SongGuesser/assets/avatars/32.png)}
-#selection_images > #images div:nth-child(33){ background-image: url(/SongGuesser/assets/avatars/33.png)}
-#selection_images > #images div:nth-child(34){ background-image: url(/SongGuesser/assets/avatars/34.png)}
-#selection_images > #images div:nth-child(35){ background-image: url(/SongGuesser/assets/avatars/35.png)}
+#selection_images > #images div:nth-child(1){ background-image: url(/frontend/assets/avatars/1.png)}
+#selection_images > #images div:nth-child(2){ background-image: url(/frontend/assets/avatars/2.png)}
+#selection_images > #images div:nth-child(3){ background-image: url(/frontend/assets/avatars/3.png)}
+#selection_images > #images div:nth-child(4){ background-image: url(/frontend/assets/avatars/4.png)}
+#selection_images > #images div:nth-child(5){ background-image: url(/frontend/assets/avatars/5.png)}
+#selection_images > #images div:nth-child(6){ background-image: url(/frontend/assets/avatars/6.png)}
+#selection_images > #images div:nth-child(7){ background-image: url(/frontend/assets/avatars/7.png)}
+#selection_images > #images div:nth-child(8){ background-image: url(/frontend/assets/avatars/8.png)}
+#selection_images > #images div:nth-child(9){ background-image: url(/frontend/assets/avatars/9.png)}
+#selection_images > #images div:nth-child(10){ background-image: url(/frontend/assets/avatars/10.png)}
+#selection_images > #images div:nth-child(11){ background-image: url(/frontend/assets/avatars/11.png)}
+#selection_images > #images div:nth-child(12){ background-image: url(/frontend/assets/avatars/12.png)}
+#selection_images > #images div:nth-child(13){ background-image: url(/frontend/assets/avatars/13.png)}
+#selection_images > #images div:nth-child(14){ background-image: url(/frontend/assets/avatars/14.png)}
+#selection_images > #images div:nth-child(15){ background-image: url(/frontend/assets/avatars/15.png)}
+#selection_images > #images div:nth-child(16){ background-image: url(/frontend/assets/avatars/16.png)}
+#selection_images > #images div:nth-child(17){ background-image: url(/frontend/assets/avatars/17.png)}
+#selection_images > #images div:nth-child(18){ background-image: url(/frontend/assets/avatars/18.png)}
+#selection_images > #images div:nth-child(19){ background-image: url(/frontend/assets/avatars/19.png)}
+#selection_images > #images div:nth-child(20){ background-image: url(/frontend/assets/avatars/20.png)}
+#selection_images > #images div:nth-child(21){ background-image: url(/frontend/assets/avatars/21.png)}
+#selection_images > #images div:nth-child(22){ background-image: url(/frontend/assets/avatars/22.png)}
+#selection_images > #images div:nth-child(23){ background-image: url(/frontend/assets/avatars/23.png)}
+#selection_images > #images div:nth-child(24){ background-image: url(/frontend/assets/avatars/24.png)}
+#selection_images > #images div:nth-child(25){ background-image: url(/frontend/assets/avatars/25.png)}
+#selection_images > #images div:nth-child(26){ background-image: url(/frontend/assets/avatars/26.png)}
+#selection_images > #images div:nth-child(27){ background-image: url(/frontend/assets/avatars/27.png)}
+#selection_images > #images div:nth-child(28){ background-image: url(/frontend/assets/avatars/28.png)}
+#selection_images > #images div:nth-child(29){ background-image: url(/frontend/assets/avatars/29.png)}
+#selection_images > #images div:nth-child(30){ background-image: url(/frontend/assets/avatars/30.png)}
+#selection_images > #images div:nth-child(31){ background-image: url(/frontend/assets/avatars/31.png)}
+#selection_images > #images div:nth-child(32){ background-image: url(/frontend/assets/avatars/32.png)}
+#selection_images > #images div:nth-child(33){ background-image: url(/frontend/assets/avatars/33.png)}
+#selection_images > #images div:nth-child(34){ background-image: url(/frontend/assets/avatars/34.png)}
+#selection_images > #images div:nth-child(35){ background-image: url(/frontend/assets/avatars/35.png)}
 
 .language{
     display: flex;

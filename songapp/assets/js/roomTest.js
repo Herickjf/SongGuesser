@@ -38,24 +38,23 @@ const Rooms = {
     },
 
     addEventsInputs: function () {
-        document.getElementById("btn-create-room").addEventListener("click", () => {
-            // const roomPW = document.getElementById("room-password").value;
-            // const roomRounds = document.getElementById("room-rounds").value;
-            // const roomMaxPlayers = document.getElementById("room-max-players").value;
-            // const roomLanguage = document.getElementById("room-language").value;
-            // const nickname = document.getElementById("nickname").value;
-            // const photoId = document.getElementById("photo-id").value;
+        document.getElementById("createRoom").addEventListener("click", () => {
+            const roomPW = document.getElementById("create_password").value;
+            const roomRounds = document.getElementById("rounds").value;
+            const roomMaxPlayers = document.getElementById("max_players").value;
+            const roomLanguage = document.getElementById("room-language").value;
+            const nickname = document.getElementById("nickname_input").value;
+            const photoId = document.getElementById("photo-id").value;
 
-            // const data = createRoom()
-
-            // {
-            //     room_password: string;
-            //     room_rounds: number;
-            //     room_max_players: number;
-            //     room_language: string;
-            //     nickname: string;
-            //     photo_id: number;
-            // }
+            // nickname_input
+            // [23:48]
+            // create_password
+            // [23:48]
+            // max_players
+            // [23:48]
+            // rounds
+            // [23:48]
+            // createRoom  (botão q pra criar)
 
             console.log("Creating room", roomPW, roomRounds, roomMaxPlayers, roomLanguage, nickname, photoId);
 
@@ -81,21 +80,10 @@ const Rooms = {
 
         // Entrar em uma sala existente
         document.getElementById("btn-join-room").addEventListener("click", () => {
-            // const roomCode = document.getElementById("room-code").value;
-            // const roomPW = document.getElementById("join-room-password").value;
-            // const nickname = document.getElementById("nickname").value;
-            // const photoId = document.getElementById("photo-id").value;
-
-            // const data = luisvaimedar()
-
-            // {
-            //     room_code: string
-            //     room_password: string
-            //     photo_id: number
-            //     nickname: string
-            // }
-
-
+            const roomCode = document.getElementById("room-code").value;
+            const roomPW = document.getElementById("join-room-password").value;
+            const nickname = document.getElementById("nickname").value;
+            const photoId = document.getElementById("photo-id").value;
 
             this.joinRoom(roomCode, roomPW, nickname, photoId);
         });
@@ -131,4 +119,4 @@ const Rooms = {
     }
 };
 
-export default Rooms;
+export default RoomsTest;
