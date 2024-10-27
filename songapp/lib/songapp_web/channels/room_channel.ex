@@ -72,4 +72,62 @@ defmodule SongappWeb.RoomChannel do
 
     {:noreply, socket}
   end
+
+  @impl true
+  def handle_in("next_round_order", _params, socket) do
+    room = socket.assigns[:room]
+
+    case RoomsManager.next_round_order(room) do
+      {:ok, updated_room} ->
+        broadcast!(socket, "next_round_order", %{order: updated_room.order})
+        {:noreply, assign(socket, :room, updated_room)}
+
+      {:error, reason} ->
+        {:reply, {:error, reason}, socket}
+    end
+  end
+
+  @impl true
+  def handle_in("music_form", %{"title" => title, "artist" => artist, "album" => album}, socket) do
+    player = socket.assigns[:player]
+    room = socket.assigns[:room]
+
+    case RoomsManager.submit_music_form(room, player, %{
+           title: title,
+           artist: artist,
+           album: album
+         }) do
+      {:ok, updated_room} ->
+        broadcast!(socket, "music_form", %{
+          title: title,
+          artist: artist,
+          album: album,
+          nickname: player.nickname
+        })
+        {:noreply, assign(socket, :room, updated_room)}
+
+      {:error, reason} ->
+        {:reply, {:error, reason}, socket}
+    end
+  end
+
+
+  @impl true
+  def handle_in("music_selection", %{"music_id" => music_id}, socket) do
+    player = socket.assigns[:player]
+    room = socket.assigns[:room]
+
+    case RoomsManager.select_music(room, player, music_id) do
+      {:ok, updated_room} ->
+        broadcast!(socket, "music_selection", %{
+          music_id: music_id,
+          nickname: player.nickname
+        })
+        {:noreply, assign(socket, :room, updated_room)}
+
+      {:error, reason} ->
+        {:reply, {:error, reason}, socket}
+    end
+  end
+
 end

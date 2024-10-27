@@ -71,7 +71,8 @@ const Rooms = {
                 );
                 this.joinRoom(resp.room_code, roomPW, nickname, photoId);
 
-                // # Esconder a seção de criação de sala e mostrar a seção de chat
+                // retunr room code
+                // resp = {room_code: "room_code"}
 
 
             }).receive("error", (resp) => alert("Unable to create room"));
@@ -99,7 +100,7 @@ const Rooms = {
         }
 
         this.joinRoom(roomCode, roomPW, nickname, photoId);
-
+        // returna ok ou error retorn {:ok, socket: {object} } ou {:error, reason: "error pra dar alert"}
 
 
     },
@@ -124,13 +125,15 @@ const Rooms = {
 
     sendMusicForm: function (musicName, musicArtist) {
         if (this.currentChannel) {
-            this.currentChannel.push("music-form", { name: musicName, artist: musicArtist });
+            this.currentChannel.push("music_form", { name: musicName, artist: musicArtist });
         }
+
+        // retorna lista de msucias para o jogador, da api
     },
 
     sendMusicSelection: function (musicId) {
         if (this.currentChannel) {
-            this.currentChannel.push("music-selection", { id: musicId });
+            this.currentChannel.push("music_selection", { id: musicId });
         }
     },
 
@@ -150,6 +153,9 @@ const Rooms = {
 
                 console.log("Received message", payload);
                 func(payload);
+
+                // mensagem de alguem da sala 
+                // payload = {body: "message", nickname: "nickname"}
             });
         }
 
@@ -162,6 +168,8 @@ const Rooms = {
 
                 console.log("Received game", payload);
                 func(payload);
+
+                // estado atualizado do jogo 
             });
         }
     },
@@ -173,30 +181,22 @@ const Rooms = {
 
                 console.log("Received players", payload);
                 func(payload);
-
-            });
-        }
-    },
-
-    setListenMusicSearch: function (func) {
-        if (this.currentChannel) {
-            console.log("Listening to musics events");
-            this.currentChannel.on("musics", payload => {
-
-                console.log("Received musics", payload);
-                func(payload);
-
+                // lista de playes na sala
             });
         }
     },
 
     setListenMusicQuesses: function (func) {
+
         if (this.currentChannel) {
             console.log("Listening to music quesses events");
             this.currentChannel.on("music_quesses", payload => {
 
                 console.log("Received music quesses", payload);
                 func(payload);
+
+                // recebe o palpite de music dos outros jogadores,
+                // em uma lista de musicas
 
             });
         }
