@@ -7,7 +7,7 @@ defmodule SongappWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_songapp_key",
-    signing_salt: "8RiNemYa",
+    signing_salt: "GfomouM+",
     same_site: "Lax"
   ]
 
@@ -18,9 +18,6 @@ defmodule SongappWeb.Endpoint do
   socket "/live", Phoenix.LiveView.Socket,
     websocket: [connect_info: [session: @session_options]],
     longpoll: [connect_info: [session: @session_options]]
-
-
-
 
   # Serve at "/" the static files from "priv/static" directory.
   #

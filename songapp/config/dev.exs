@@ -23,7 +23,7 @@ config :songapp, SongappWeb.Endpoint,
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "NVkqJQFz2pzW40p5iYc5vT2UQwOa1PbLD9za/SdofHcZKj4Rr7Na/QrE0y1Bo0uG",
+  secret_key_base: "QfgbNrGp4Z8/qShjzC5Y9mhrVCPkZBUjPnb6Mc3oAIUDxCoKeVzV60xJMNhNiRCu",
   watchers: [
     esbuild: {Esbuild, :install_and_run, [:songapp, ~w(--sourcemap=inline --watch)]},
     tailwind: {Tailwind, :install_and_run, [:songapp, ~w(--watch)]}

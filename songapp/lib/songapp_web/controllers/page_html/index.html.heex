@@ -1,10 +1,12 @@
-<!DOCTYPE html>
+<.flash_group flash={@flash} />
+
+<%!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="shortcut icon" href="/songapp/priv/static/images/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/songapp/songapp/priv/static/images/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="/songapp/assets/css/app.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +15,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">    <link rel="preconnect" href="https://fonts.googleapis.com">
 
     <title>Song Guesser</title>
-</head>
+</head> --%>
 <body>
     
         <div id="selection_images">
@@ -64,11 +66,11 @@
         <!-- início do menu -->
         <div class="menu">
             <!-- botao de voltar ao inicio -->
-            <a href="index.html">Home</a>
+            <a href="">Home</a>
             <!-- botao que direciona a um tutorial em texto -->
-            <a href="howToPlay.html">How To Play</a>
+            <a href="howToPlay">How To Play</a>
             <!-- botao que direciona a uma pagina que nos apresenta -->
-            <a href="aboutUs.html">About Us</a>
+            <a href="about">About Us</a>
         </div>
         <!-- fim do menu -->
 
@@ -76,7 +78,7 @@
         <!-- inicio da logo -->
         <div class="logo">
             <!-- img logo -->
-            <img src="/songapp/priv/static/images/logo.png" alt="logotipo do Song Guesser">
+            <img src="/images/logo.png" alt="logotipo do Song Guesser">
         </div>
         <!-- inicio da logo -->
 
@@ -107,6 +109,7 @@
                 <div class="btns">
                     <!-- Botao para entrar na sala -->
                     <button class="button" id="goto_enterRoom">Enter room</button>
+                    <a href="gameScreen" class="button">Go to Game Screen</a>
                     <!-- Botao para criar uma sala -->
                     <button class="button" id="goto_createRoom">Create room</button>
                 </div>
@@ -138,7 +141,7 @@
                 <!-- <div class="language">
                     <p>Language:</p>
                     <div class="imgs selected">
-                        <img src="/songapp/priv/static/images/flags/brasil.png">
+                        <img src="/songapp/songapp/priv/static/images/flags/brasil.png">
                     </div>
                 </div> -->
 
@@ -185,9 +188,9 @@
                 <div class="language">
                     <p>Language:</p>
                     <div class="imgs">
-                        <img class="flag" src="/songapp/priv/static/images/flags/eua.png" alt="US flag">
-                        <img class="flag" src="/songapp/priv/static/images/flags/brasil.png" alt="Brasil flag">
-                        <img class="flag" src="/songapp/priv/static/images/flags/spain.png" alt="Spain flag">
+                        <img class="flag" src="/images/flags/eua.png" alt="US flag">
+                        <img class="flag" src="/images/flags/brasil.png" alt="Brasil flag">
+                        <img class="flag" src="/images/flags/spain.png" alt="Spain flag">
                     </div>
                 </div>
 
@@ -202,6 +205,5 @@
         <!-- Fim da area de input -->
     </div>
      
-    <script src="/songapp/assets/js/index.js"></script>
 </body>
-</html>
+<%!-- </html> --%>

@@ -1,0 +1,540 @@
+*{
+    white-space: nowrap;     
+    overflow: hidden;          
+    text-overflow: ellipsis;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-image: url(/images/bg.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: #fff;
+}
+
+/* logo */
+.logo{
+    display: flex;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    z-index: 10;
+}
+.logo>img{
+    max-width: 200px;
+}
+
+/* room */
+#room{
+    display: flex;
+    min-width: 85%;
+    height: 80%;
+    
+    
+    align-items: center;
+    justify-content: space-between;
+    
+    backdrop-filter: blur(1px);
+    background-color: rgba(76, 60, 97, 0.4);
+    box-shadow: 0 0 20px rgba(191, 126, 255, .5);
+    border: 2px solid rgba(191, 126, 255, .2);
+    border-radius: 10px;
+}
+
+#room > #players_box,
+#room > #songs_box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    width: 24%;
+    height: 100%;
+    border-radius: 10px;
+    
+    background-color: rgba(76, 60, 97, 1);
+    border: 2px solid rgba(191, 126, 255, .1);
+    /* box-shadow: 0 0 20px rgba(191, 126, 255, .5); */
+}
+#room > #players_box > h1,
+#room > #songs_box > #waiting_for_song > h1,    
+#room > #songs_box > #didnt_found > h1,    
+#room > #songs_box > #while_playing_song > h1,    
+#room > #songs_box > #between_rounds_song > h1,    
+#room > #songs_box > #ranking_box_song > h1{    
+    text-align: center;
+    padding: 15px 0;
+    
+    font-size: 25px;
+    font-weight: 600;
+    
+}
+
+/* SONGS */
+#room > #songs_box > #waiting_for_song,
+#room > #songs_box > #ranking_box_song,
+#room > #songs_box > #didnt_found,
+#room > #songs_box > #between_rounds_song,
+#room > #songs_box > #while_playing_song {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+    height: 100%;
+    
+    align-items: center;
+    justify-content: space-between;
+}   
+#room > #songs_box > #didnt_found{
+    justify-content: space-between;
+    margin-bottom: 20px;
+    overflow: visible;
+}
+.btns{
+    overflow: visible;
+}
+#room > #songs_box > #between_rounds_song > #songs,
+#room > #songs_box > #while_playing_song > #songs {
+    /* background-color: rgba(255, 0, 0, 0.2); */
+    
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    
+    min-width: 90%;
+    max-width: 90%;
+    max-height: 380px;
+    
+    overflow-y: auto;
+}
+#room > #songs_box > #between_rounds_song > #songs::-webkit-scrollbar,
+#room > #songs_box > #while_playing_song > #songs::-webkit-scrollbar {
+    width: 10px; 
+}
+#room > #songs_box > #between_rounds_song > #songs::-webkit-scrollbar-track,
+#room > #songs_box > #while_playing_song > #songs::-webkit-scrollbar-track {
+    background: rgba(143, 72, 213, 0.4); 
+    border-radius: 10px; 
+}
+#room > #songs_box > #between_rounds_song > #songs::-webkit-scrollbar-thumb,
+#room > #songs_box > #while_playing_song > #songs::-webkit-scrollbar-thumb {
+    background: rgba(143, 72, 213, 0.8); 
+    border-radius: 10px; 
+}
+#room > #songs_box > #between_rounds_song > #songs::-webkit-scrollbar-thumb:hover,
+#room > #songs_box > #while_playing_song > #songs::-webkit-scrollbar-thumb:hover {
+    background: rgba(143, 72, 213, 1); 
+}
+#room > #songs_box > #between_rounds_song > #songs > *,
+#room > #songs_box > #while_playing_song > #songs > *{
+    flex-shrink: 0;
+}
+
+#room > #songs_box > #between_rounds_song > #songs > .song_results,
+#room > #songs_box > #while_playing_song > #songs > .song_found{
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    
+    padding: 10px;
+    margin: 0 8px;
+    
+    /* background-color: rgba(255, 0, 0, 0.2); */
+    border-radius: 10px;
+}
+#room > #songs_box > #while_playing_song > #songs > .song_found:hover{
+    background-color: rgba(205, 154, 255, .2);
+    cursor: pointer;
+    transition: .15s;
+}
+#room > #songs_box > #while_playing_song > #songs > .song_selected{
+    background-color: rgba(256, 256, 256, .2);
+}
+#room > #songs_box > #between_rounds_song > #songs > .song_results > .cover,
+#room > #songs_box > #while_playing_song > #songs > .song_found > .cover{
+    background-image: url(/images/songCovers/coverTemplate.png);
+    width: 70px;
+    height: 70px;
+    border-radius: 2px;
+}
+#room > #songs_box > #between_rounds_song > #songs > .song_results > .info,
+#room > #songs_box > #while_playing_song > #songs > .song_found > .info{
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    max-width: 60%;
+}
+#room > #songs_box > #between_rounds_song > #songs > .song_results > .info > h2,
+#room > #songs_box > #while_playing_song > #songs > .song_found > .info > h2{
+    font-size: 21px;
+    font-weight: 600;
+}
+#room > #songs_box > #between_rounds_song > #songs > .song_results > .info > p,
+#room > #songs_box > #while_playing_song > #songs > .song_found > .info > p{
+    font-size: 14px;
+}
+#room > #songs_box > #between_rounds_song > #songs > .song_results > .info > h6{
+    font-size: 12px;
+    font-weight: 600;
+}
+#room > #songs_box > #between_rounds_song > #songs > .correct_song{
+    background-color: rgb(0, 236, 75, .2);
+}
+#room > #songs_box > #between_rounds_song > #songs > .wrong_song{
+    background-color: rgb(255, 0, 0, .2);
+}
+
+/* PLAYERS */
+/* PLAYERS > ROOM_LINK */
+#room > #players_box > #room_link{
+    background-color: #3d2d53;
+    padding: 10px;
+    width: 40%;
+    text-align: center;
+    border-radius: 0 0 10px 10px;
+}
+#room > #players_box > #room_link > p{
+    font-weight: 600;
+}
+#room > #players_box > #room_link > p > a > i{
+    color: #BF7EFF;
+    font-weight: 600px;
+    font-size: 20px;
+}
+/* PLAYERS > PLAYERSBOX */
+#room > #players_box > #players{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 15px;
+    
+    width: 90%;
+    min-height: 80%;
+    max-height: 80%;
+    overflow-y: auto;
+    
+    /* background-color: rgba(255, 0, 0, 0.311); */
+    
+}
+#room > #players_box > #players::-webkit-scrollbar {
+    width: 10px; 
+}
+#room > #players_box > #players::-webkit-scrollbar-track {
+    background: rgba(143, 72, 213, 0.4); 
+    border-radius: 10px; 
+}
+#room > #players_box > #players::-webkit-scrollbar-thumb {
+    background: rgba(143, 72, 213, 0.8); 
+    border-radius: 10px; 
+}
+#room > #players_box > #players::-webkit-scrollbar-thumb:hover {
+    background: rgba(143, 72, 213, 1); 
+}
+#room > #players_box > #players > .player{
+    /* background-color: rgba(255, 0, 0, 0.263); */
+    
+    position: relative;
+    display: flex;
+    gap: 5px;
+    overflow: visible;
+    
+    width: 95%;
+
+    padding: 5px;
+    border-radius: 20px;
+}
+#room > #players_box > #players > .player > .profile{
+    background-color: rgb(207, 181, 232);
+
+    position: absolute;
+    top: 5%;
+    left: 0;
+    z-index: 2;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    border: 3px solid #d9d9d9;
+}
+#room > #players_box > #players > .player > .info{
+    background-color: rgb(122, 87, 160);
+    overflow: hidden;
+    
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 12px;
+    margin-left: 15px;
+    padding-left: 60px;
+    width: 90%;
+    
+    border-radius: 20px;
+}
+#room > #players_box > #players > .player > .info > h2{
+    font-size: 18px;
+    font-weight: 500;
+}
+#room > #players_box > #players > .player > .info > p{
+    font-size: 13px;
+    font-weight: 600;
+    color: #CD9AFF;
+}
+
+
+/* ROUND */
+#room > #round_box{
+    display: flex;
+    flex-direction: column;
+    
+    width: 45%;
+    height: 95%;
+    
+    border-radius: 10px;
+    align-items: center;
+    
+    background-color: rgba(76, 60, 97, .7);
+    border: 2px solid rgba(191, 126, 255, .1);
+    /*box-shadow: 0 0 15px rgba(191, 126, 255, .2); */
+}
+#room > #round_box > #word_box{
+    background-color: rgba(142, 72, 213, 0.2);
+    width: 90%;
+    margin: 10px;
+    /* margin-bottom: 20px; */
+    padding: 15px 0;
+    border-radius: 10px;
+    
+    text-align: center;
+}
+/* ROUND > WHILE PLAYING */
+#room > #round_box > #waiting_for{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#room > #round_box > #while_playing{
+    /* background-color: rgba(255, 0, 0, 0.311); */
+    width: 100%;
+    height: 100%;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+#room > #round_box > #while_playing > #content{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+#room > #round_box > #while_playing > #content > #inputs{
+    width: 55%;
+    /* background-color: rgba(255, 0, 0, 0.311); */
+}
+
+#room > #round_box > #while_playing > #timer_box{
+    position: relative;
+    padding: 20px 0;    
+    width: 75%;
+}
+#room > #round_box > #while_playing > #timer_box > #timer_clock{
+    background-color: rgba(143, 66, 213, 1);
+    position: absolute;
+    left: 0;
+    top: 22%;
+    z-index: 2;
+
+    width: 30px;
+    height: 30px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+}
+#room > #round_box > #while_playing > #timer_box > #timer_clock > i{
+    font-size: 25px;
+}
+#room > #round_box > #while_playing > #timer_box > #timer_counter{
+    position: relative;
+    background-color: rgba(143, 72, 213, .6);
+    width: 100%;
+    height: 12px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+#room > #round_box > #while_playing > #timer_box > #timer_counter > #timer_run{
+    background-color: #BF7EFF;
+    /* background-color: rgba(143, 72, 213, .6); */
+    position: absolute;
+    left: 0; 
+    z-index: 1;
+    width: 100%; 
+    height: 100%;
+    border-radius: 20px;
+    transition: width 1s linear; 
+}
+
+#room > #round_box > #between_rounds{
+    display: flex;
+    height: 100%;
+    width: 80%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    /* background-color: white; */
+}
+
+#room > #round_box > #between_rounds > div{
+    text-align: center;
+}
+
+#room > #round_box > #between_rounds > #music_player_box{
+    display: flex;
+    width: 80%;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#room > #round_box > #between_rounds > #music_player_box > #song_information{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 50%;
+    margin: 0 auto;
+}
+
+#room > #round_box > #between_rounds > #music_player_box > #song_information > #album_image{
+    height: 100px;
+    width: 100px;
+    margin: 0 auto;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: rgba(76, 60, 97, .7);
+    background: url(/images/creators/lucas.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#room > #round_box > #between_rounds > #music_player_box > #song_information > #song_description{
+    width: 100%;
+    display: flex;
+    flex-direction: inline;
+    justify-content: space-around;
+    align-items: center;
+    gap: 5px;
+}
+
+#room > #round_box > #between_rounds > #music_player_box > #song_information > #song_description > div{
+    text-align: left;
+    width: 75%;
+}
+
+#room > #round_box > #between_rounds > #music_player_box > #song_information > #song_description > div > h5{
+    font-size: 13px;
+    font-weight: bold;
+}
+
+#room > #round_box > #between_rounds > #music_player_box > #song_information > #song_description > div > h6{
+    font-size: 9px;
+    font-weight: normal;
+}
+
+#room > #round_box > #ranking_box{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+#room > #round_box > #ranking_box > div{
+    margin: 0 auto;
+}
+
+#room > #round_box > #ranking_box > #playersCards_box{
+    width: 80%;
+    height: 70%;
+    display: flex;
+    gap: 10px;
+    flex-direction: inline;
+    justify-content: center;
+    align-items: center;
+}
+
+#room > #round_box > #ranking_box > #playersCards_box > .playerCard{
+    height: 70%;
+    width: 30%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#room > #round_box > #ranking_box > #playersCards_box > .playerCard > .playerCard_img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 0 auto;
+    margin-bottom: 5px;
+}
+
+#room > #round_box > #ranking_box > #playersCards_box > .playerCard > .playerCard_name{
+    height: 12%;
+    font-weight: bold;
+    font-size: 25px;
+    align-items: center;
+    text-align: center;
+}
+
+#room > #round_box > #ranking_box > #playersCards_box > .playerCard > .playerCard_points{
+    height: 10%;
+    font-weight: normal;
+    font-size: 15px;
+    text-align: center;
+}
+
+#room > #round_box > #ranking_box > #playersCards_box > #second_place{
+    justify-content: center;
+}
+
+#room > #round_box > #ranking_box > #playersCards_box > #first_place{
+    justify-content: start;
+}
+
+#room > #round_box > #ranking_box > #playersCards_box > #third_place{
+    justify-content: center;
+}
+
+#first_place_img{
+    background-image: url(/images/creators/luis.png);
+    border: 5px solid gold;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#second_place_img{
+    background-image: url(/images/creators/herick.png);
+    border: 5px solid silver;
+    background-size: cover;
+}
+
+#third_place_img{
+    background-image: url(/images/creators/jmarcos.jpg);
+    background-size: cover;
+    border: 5px solid rgb(190, 101, 37);
+}

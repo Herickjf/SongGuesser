@@ -37,19 +37,23 @@ defmodule Songapp.RoomsManager do
         {:error, "Room not found on database"}
 
       room ->
-        case Game.create_player(%{
-               nickname: nickname,
-               photo_id: photo_id,
-               game_id: room.id,
-               score: 0,
-               status: "waiting"
-             }) do
-          {:ok, player} ->
-            {:ok, player, room}
+              if room.password != password do
+                {:error, "Incorrect password"}
+              else
+                case Game.create_player(%{
+                       nickname: nickname,
+                       photo_id: photo_id,
+                       game_id: room.id,
+                       score: 0,
+                       status: "waiting"
+                     }) do
+                  {:ok, player} ->
+                    {:ok, player, room}
 
-          {:error, _reason} ->
-            {:error, "Failed to join room"}
-        end
+                  {:error, _reason} ->
+                    {:error, "Failed to join room"}
+                end
+              end
     end
   end
 

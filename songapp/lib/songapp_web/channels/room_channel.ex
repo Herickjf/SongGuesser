@@ -60,7 +60,7 @@ defmodule SongappWeb.RoomChannel do
   @impl true
   def handle_in("shout", %{"body" => body}, socket) do
     player = socket.assigns[:player]
-    room = socket.assigns[:room]
+    # room = socket.assigns[:room]
 
     IO.inspect(body, label: "Received shout")
 

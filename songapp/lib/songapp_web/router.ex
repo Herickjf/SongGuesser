@@ -1,3 +1,4 @@
+# lib/songapp_web/router.ex
 defmodule SongappWeb.Router do
   use SongappWeb, :router
 
@@ -5,35 +6,42 @@ defmodule SongappWeb.Router do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_live_flash
-    plug :put_root_layout, html: {SongappWeb.Layouts, :root}
+    plug :put_root_layout, {SongappWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-  end
-
-  pipeline :api do
-    plug :accepts, ["json"]
-    plug CORSPlug, origin: "*"  # Habilita CORS para qualquer origem
   end
 
   scope "/", SongappWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
-    get "/index", PageController, :index
-    get "/about", PageController, :about
-    get "/howToPlay", PageController, :howToPlay
+    live "/home", HomeLive, :show
+    live "/about", AboutLive, :show
+    live "/game", GameLive, :show
+    live "/how", HowLive, :show
   end
 
+  scope "/test" do
+    pipe_through :browser
 
-  scope "/api", SongappWeb do
-    pipe_through :api
-    options "/search", PageController, :search
-    options "/validate", PageController, :validate
-    options "/getWord", PageController, :getWord
-    post "/search", PageController, :search
-    post "/validate", PageController, :validate
-    post "/getWord", PageController, :getWord
+    get "/home", PageController, :homePhoenix
+    get "/rooms", PageController, :roomstest
   end
+
+  # scope "/", SongappWeb do
+  #   pipe_through :browser
+
+  #   live "/room", RoomtestLive.Index, :index
+  #   live "/room/new", RoomtestLive.Index, :new
+  #   live "/room/:id/edit", RoomtestLive.Index, :edit
+
+  #   live "/room/:id", RoomtestLive.Show, :show
+  #   live "/room/:id/show/edit", RoomtestLive.Show, :edit
+  # end
+
+  # Other scopes may use custom stacks.
+  # scope "/api", SongappWeb do
+  #   pipe_through :api
+  # end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:songapp, :dev_routes) do

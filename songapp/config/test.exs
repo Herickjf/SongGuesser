@@ -17,7 +17,7 @@ config :songapp, Songapp.Repo,
 # you can enable the server option below.
 config :songapp, SongappWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
-  secret_key_base: "XN7FW+KbBpwdqgeEQniRukrOgc4Lp7OajL2gfHpNN4YNJ2sPXMB5FJqFkAqzsUGC",
+  secret_key_base: "98GaxLVsOriM8WF2lUPEKDhO6evjinRU/5JrmmuxDKsLIXLlAg+spqwPr6g8m7gy",
   server: false
 
 # In test we don't send emails

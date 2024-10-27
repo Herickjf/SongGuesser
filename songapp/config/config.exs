@@ -20,7 +20,7 @@ config :songapp, SongappWeb.Endpoint,
     layout: false
   ],
   pubsub_server: Songapp.PubSub,
-  live_view: [signing_salt: "bqfPx0x6"]
+  live_view: [signing_salt: "wFaQYkTQ"]
 
 # Configures the mailer
 #

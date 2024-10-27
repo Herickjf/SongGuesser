@@ -1,0 +1,73 @@
+
+<.flash_group flash={@flash} />
+
+<main class="container mx-auto p-4 overflow-y-auto" style="max-height: 100vh;">
+    <div class="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg">
+        <h2 class="text-2xl font-semibold text-center mb-6">Multiplayer Room</h2>
+
+        <div class="mb-4">
+            <label for="nickname-input" class="block text-sm font-medium text-gray-700">Nickname</label>
+            <input id="nickname-input" type="text" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" />
+        </div>
+        <div class="mb-4">
+            <label for="photo-id-input" class="block text-sm font-medium text-gray-700">Photo ID</label>
+            <input id="photo-id-input" type="text" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" />
+        </div>
+
+        <!-- Formulário para criação de sala -->
+        <div id="create-room-section" class="mb-8">
+            <h3 class="text-xl font-semibold mb-4">Create a Room</h3>
+            <div class="mb-4">
+                <label for="room-password" class="block text-sm font-medium text-gray-700">Room Password</label>
+                <input id="room-password" type="password" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" />
+            </div>
+            <div class="mb-4">
+                <label for="room-max-rounds" class="block text-sm font-medium text-gray-700">Rounds</label>
+                <input id="room-max-rounds" type="number" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" />
+            </div>
+            <div class="mb-4">
+                <label for="room-max-players" class="block text-sm font-medium text-gray-700">Max Players</label>
+                <input id="room-max-players" type="number" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" />
+            </div>
+            <div class="mb-4">
+                <label for="room-language" class="block text-sm font-medium text-gray-700">Language</label>
+                <input id="room-language" type="text" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" />
+            </div>
+            <button id="btn-create-room" class="w-full bg-green-500 text-white p-2 rounded-md hover:bg-green-600">
+                Create Room
+            </button>
+        </div>
+
+        <!-- Formulário para entrar em uma sala -->
+        <div id="join-room-section" class="mb-8">
+            <h3 class="text-xl font-semibold mb-4">Join a Room</h3>
+            <div class="mb-4">
+                <label for="room-code" class="block text-sm font-medium text-gray-700">Room Code</label>
+                <input id="room-code" type="text" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" />
+            </div>
+            <div class="mb-4">
+                <label for="join-room-password" class="block text-sm font-medium text-gray-700">Room Password</label>
+                <input id="join-room-password" type="password" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" />
+            </div>
+
+            <button id="btn-join-room" class="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600">
+                Join Room
+            </button>
+        </div>
+
+        <!-- Chat -->
+        <div id="chat-section" class="">
+            <h3 class="text-xl font-semibold mb-4">Chat Room</h3>
+            <div id="chat-box" class="h-64 overflow-y-auto mb-4 p-4 border border-gray-300 rounded-md bg-gray-100">
+                <!-- Messages will appear here -->
+            </div>
+            <div class="flex">
+                <input id="chat-input" type="text" placeholder="Type your message..." class="flex-grow w-full p-2 border border-gray-300 rounded-l-md" />
+                <button id="btn-send-msg" class="bg-blue-500 text-white p-2 rounded-r-md hover:bg-blue-600">
+                    Send
+                </button>
+            </div>
+        </div>
+    </div>
+</main>
+

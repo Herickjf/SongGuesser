@@ -28,87 +28,97 @@ const Rooms = {
     },
 
     init: function (socket) {
-        this.socket = socket;
-        this.joinRoom("lobby", document.getElementById("room-password").value, document.getElementById("nickname").value, document.getElementById("photo-id").value);
 
-        if (!this.eventsAdded) {
-            this.addEventsInputs();
-            this.eventsAdded = true; // Marcar como eventos adicionados
+
+        console.log("init room");
+        this.socket = socket;
+        this.joinRoom("lobby", '', '', '');
+
+    },
+
+    createRoom: function (roomPW, roomRounds, roomMaxPlayers, roomLanguage, nickname, photoId) {
+
+        if (!roomPW) {
+            alert("Password cannot be empty");
+            return;
+        }
+        if (!roomRounds || isNaN(roomRounds) || Number(roomRounds) <= 0) {
+            alert("Rounds must be a valid number greater than 0");
+            return;
+        }
+        if (!roomMaxPlayers || isNaN(roomMaxPlayers) || Number(roomMaxPlayers) <= 0) {
+            alert("Max players must be a valid number greater than 0");
+            return;
+        }
+        if (!roomLanguage) {
+            alert("Language cannot be empty");
+            return;
+        }
+        if (!nickname) {
+            alert("Nickname cannot be empty");
+            return;
+        }
+        if (!photoId) {
+            alert("Photo ID cannot be empty");
+            return;
+        }
+
+        console.log("Creating room", roomPW, roomRounds, roomMaxPlayers, roomLanguage, nickname, photoId);
+
+        if (this.currentChannel) {
+            this.currentChannel.push("create_room", {
+                password: roomPW,
+                rounds: Number(roomRounds),
+                max_players: Number(roomMaxPlayers),
+                language: roomLanguage,
+                nickname: nickname,
+                photo_id: photoId
+            }).receive("ok", (resp) => {
+                alert(`Room created with code: ${resp.room_code}`,
+                );
+                this.joinRoom(resp.room_code, roomPW, nickname, photoId);
+
+                // # Esconder a seção de criação de sala e mostrar a seção de chat
+
+
+            }).receive("error", (resp) => alert("Unable to create room"));
+        }
+
+    },
+
+    enterRoom: function (roomCode, roomPW, nickname, photoId) {
+
+        if (!roomCode) {
+            alert("Room code cannot be empty");
+            return;
+        }
+        if (!roomPW) {
+            alert("Password cannot be empty");
+            return;
+        }
+        if (!nickname) {
+            alert("Nickname cannot be empty");
+            return;
+        }
+        if (!photoId) {
+            alert("Photo ID cannot be empty");
+            return;
+        }
+
+        this.joinRoom(roomCode, roomPW, nickname, photoId);
+
+
+
+    },
+
+    sendMessage: function (message) {
+
+        if (this.currentChannel) {
+            this.currentChannel.push("shout", { body: msg });
+            document.getElementById("chat-input").value = "";
         }
     },
 
-    addEventsInputs: function () {
-        document.getElementById("btn-create-room").addEventListener("click", () => {
-            // const roomPW = document.getElementById("room-password").value;
-            // const roomRounds = document.getElementById("room-rounds").value;
-            // const roomMaxPlayers = document.getElementById("room-max-players").value;
-            // const roomLanguage = document.getElementById("room-language").value;
-            // const nickname = document.getElementById("nickname").value;
-            // const photoId = document.getElementById("photo-id").value;
-
-            // const data = createRoom()
-
-            // {
-            //     room_password: string;
-            //     room_rounds: number;
-            //     room_max_players: number;
-            //     room_language: string;
-            //     nickname: string;
-            //     photo_id: number;
-            // }
-
-            console.log("Creating room", roomPW, roomRounds, roomMaxPlayers, roomLanguage, nickname, photoId);
-
-            if (this.currentChannel) {
-                this.currentChannel.push("create_room", {
-                    password: roomPW,
-                    rounds: Number(roomRounds),
-                    max_players: Number(roomMaxPlayers),
-                    language: roomLanguage,
-                    nickname: nickname,
-                    photo_id: photoId
-                }).receive("ok", (resp) => {
-                    alert(`Room created with code: ${resp.room_code}`,
-                    );
-                    this.joinRoom(resp.room_code, roomPW, nickname, photoId);
-
-                    // # Esconder a seção de criação de sala e mostrar a seção de chat
-
-
-                }).receive("error", (resp) => alert("Unable to create room"));
-            }
-        });
-
-        // Entrar em uma sala existente
-        document.getElementById("btn-join-room").addEventListener("click", () => {
-            // const roomCode = document.getElementById("room-code").value;
-            // const roomPW = document.getElementById("join-room-password").value;
-            // const nickname = document.getElementById("nickname").value;
-            // const photoId = document.getElementById("photo-id").value;
-
-            // const data = luisvaimedar()
-
-            // {
-            //     room_code: string
-            //     room_password: string
-            //     photo_id: number
-            //     nickname: string
-            // }
-
-
-
-            this.joinRoom(roomCode, roomPW, nickname, photoId);
-        });
-
-        document.getElementById("btn-send-msg").addEventListener("click", (e) => {
-            console.log("clicked");
-            const msg = document.getElementById("chat-input").value;
-            if (this.currentChannel) {
-                this.currentChannel.push("shout", { body: msg });
-                document.getElementById("chat-input").value = "";
-            }
-        });
-    },
 
     listenEvents: function () {
 
@@ -120,7 +130,6 @@ const Rooms = {
                 chatContainer.innerText += `${payload.nickname}: ${payload.body}\n`;
             });
         }
-
 
     },
 
