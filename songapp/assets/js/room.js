@@ -6,12 +6,7 @@ const Rooms = {
 
     joinRoom: function (roomCode, password, nickname, photoId) {
         console.log("Joining room: ", this.currentChannel, this.socket);
-        if (this.currentChannel) {
-            this.removeListeners(); // Remove eventos do canal atual
-            this.currentChannel.leave()
-                .receive("ok", () => console.log(`Left room: ${roomCode}`))
-                .receive("error", () => console.log(`Failed to leave room: ${roomCode}`));
-        }
+
 
         // Criar um novo canal para o roomCode fornecido
         const channel = this.socket.channel(`room:${roomCode}`, { password: password, nickname: nickname, photo_id: photoId });
@@ -20,7 +15,6 @@ const Rooms = {
             .receive("ok", resp => {
                 console.log("Joined room successfully", resp);
                 this.currentChannel = channel; // Atualizar o canal atual para o novo
-                this.listenEvents(); // Adiciona eventos do canal atual
 
                 console.log("current Channel", this.currentChannel);
             })
@@ -28,7 +22,6 @@ const Rooms = {
     },
 
     init: function (socket) {
-
 
         console.log("init room");
         this.socket = socket;
@@ -111,33 +104,118 @@ const Rooms = {
 
     },
 
+    getOut: function () {
+
+        if (this.currentChannel) {
+            this.removeListeners(); // Remove eventos do canal atual
+            this.currentChannel.leave()
+                .receive("ok", () => console.log(`Left room: ${roomCode}`))
+                .receive("error", () => console.log(`Failed to leave room: ${roomCode}`));
+        }
+        this.joinRoom("lobby", '', '', '');
+    },
+
+    sendNextRoundOrder: function () {
+        // envia ordem para o servidor para iniciar a próxima rodada, se o jogador for o líder
+        if (this.currentChannel) {
+            this.currentChannel.push("next_round_order", {});
+        }
+    },
+
+    sendMusicForm: function (musicName, musicArtist) {
+        if (this.currentChannel) {
+            this.currentChannel.push("music-form", { name: musicName, artist: musicArtist });
+        }
+    },
+
+    sendMusicSelection: function (musicId) {
+        if (this.currentChannel) {
+            this.currentChannel.push("music-selection", { id: musicId });
+        }
+    },
+
     sendMessage: function (message) {
 
         if (this.currentChannel) {
-            this.currentChannel.push("shout", { body: msg });
-            document.getElementById("chat-input").value = "";
+            this.currentChannel.push("shout", { body: message });
         }
     },
 
 
-    listenEvents: function () {
+    setListenShout: function (func) {
 
         if (this.currentChannel) {
             console.log("Listening to shout events");
             this.currentChannel.on("shout", payload => {
+
                 console.log("Received message", payload);
-                const chatContainer = document.getElementById("chat-box");
-                chatContainer.innerText += `${payload.nickname}: ${payload.body}\n`;
+                func(payload);
             });
         }
 
     },
 
+    setListenGame: function (func) {
+        if (this.currentChannel) {
+            console.log("Listening to game events");
+            this.currentChannel.on("game", payload => {
+
+                console.log("Received game", payload);
+                func(payload);
+            });
+        }
+    },
+
+    setListenPlayers: function (func) {
+        if (this.currentChannel) {
+            console.log("Listening to players events");
+            this.currentChannel.on("players", payload => {
+
+                console.log("Received players", payload);
+                func(payload);
+
+            });
+        }
+    },
+
+    setListenMusicSearch: function (func) {
+        if (this.currentChannel) {
+            console.log("Listening to musics events");
+            this.currentChannel.on("musics", payload => {
+
+                console.log("Received musics", payload);
+                func(payload);
+
+            });
+        }
+    },
+
+    setListenMusicQuesses: function (func) {
+        if (this.currentChannel) {
+            console.log("Listening to music quesses events");
+            this.currentChannel.on("music_quesses", payload => {
+
+                console.log("Received music quesses", payload);
+                func(payload);
+
+            });
+        }
+    },
+
     removeListeners: function () {
         if (this.currentChannel) {
-            this.currentChannel.off("shout"); // Remove listeners do canal
+            this.currentChannel.off("shout");
+            this.currentChannel.off("game");
+            this.currentChannel.off("players");
+            this.currentChannel.off("musics");
+            this.currentChannel.off("music_quesses");
         }
-    }
+    },
+
+    testlog: function () {
+        console.log("Test log");
+        console.log(this.currentChannel);
+    },
 };
 
 export default Rooms;

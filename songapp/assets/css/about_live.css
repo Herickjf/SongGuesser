@@ -1,0 +1,141 @@
+*{
+    padding: 0;
+}
+
+body{
+    overflow-y: scroll;
+}
+
+/* header{
+     background-color: rgba(255, 0, 0, 0.34); 
+    height: 150px;
+    align-items: center;
+} 
+*/
+
+/* INFORMATIONS */
+section{
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    max-width: 80%;
+    padding: 25px;
+    /* margin-top: 30px; */
+    margin-bottom: 30px;
+    
+    backdrop-filter: blur(1px);
+    box-shadow: 0 0 10px rgba(191, 126, 255, .40);
+    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0.01);
+}
+
+section > #creators_box{
+    width: 22%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+section > #creators_box > .creator_box{
+    backdrop-filter: blur(2px);
+    background-color: rgba(191, 126, 255, .30);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    
+    padding: 10px;
+    border-radius: 10px;
+    
+}
+section > #creators_box > .creator_box:hover{
+    background-color: rgba(191, 126, 255, .70);
+    box-shadow: 0 0 15px rgba(191, 126, 255, .40);
+    transform: scale(1.05);
+    cursor: default;
+    
+    transition: .3s;
+}
+section > #creators_box > .creator_box:hover > .creator_info:hover > .socialmedia_links:hover > a:hover > i:hover{
+    color: rgba(191, 126, 255, 1);
+    cursor: pointer;
+    font-size: 18px;
+    transition: .3s;
+}
+
+section > #creators_box > .creator_box > .creator_info{
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+section > #creators_box > .creator_box > .creator_info > h2{
+    font-size: 16px;    
+    font-weight: 500;
+
+}
+section > #creators_box > .creator_box > .creator_info > p{
+    font-size: 12px;
+}
+
+section > #creators_box > .creator_box > .creator_img{
+    background-color: #fff;
+    border-radius: 50%;
+    min-width: 50px;
+    min-height: 50px;
+}
+
+/* PICTURES */
+
+#creator_img_1{
+    background-image: url(/images/creators/herick.png);
+    background-size: cover;
+}
+
+#creator_img_2{
+    background-image: url(/images/creators/jmarcos.jpg);
+    background-size: cover;
+}
+
+#creator_img_3{
+    background-image: url(/images/creators/kaique.webp);
+    background-size: cover;
+}
+
+#creator_img_4{
+    background-image: url(/images/creators/lucas.png);
+    background-size: cover;
+}
+
+#creator_img_5{
+    background-image: url(/images/creators/luis.png);
+    background-size: cover;
+}
+
+#creator_img_6{
+    background-image: url(/images/creators/rafael.jpg);
+    background-size: cover;
+}
+
+section > #text_box{
+    /* background-color: rgba(255, 0, 0, 0.2); */
+    max-width: 70%;    
+    text-align: justify;
+}
+
+section > #text_box > h1{
+    text-align: center;
+    font-size: 25px;
+    font-weight: 500;
+    
+}
+
+section > #text_box > p > span{
+    color: rgba(191, 126, 255, 1);
+}
+
+section > #text_box > b{
+    text-align: center;
+}
+
+section > #text_box > .final_text{
+    text-align: center;
+}

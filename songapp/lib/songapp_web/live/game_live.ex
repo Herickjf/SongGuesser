@@ -364,8 +364,6 @@ defmodule SongappWeb.GameLive do
 
     </div>
     <!-- final classe da sala -->
-
-    <script src="/songapp/assets/js/gameScreen.js"></script>
 </body>
 </html>
 

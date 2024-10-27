@@ -25,6 +25,7 @@ import topbar from "../vendor/topbar"
 // Importa o WebSocket e módulos específicos do projeto
 import socket from "./user_socket.js"
 import room from "./room.js"
+window.Rooms = room;
 
 // Defina os hooks, incluindo o LoadSpecificJs
 let Hooks = {};
@@ -58,4 +59,4 @@ liveSocket.connect();
 window.liveSocket = liveSocket;
 
 // Inicializa o WebSocket de sala do arquivo room.js
-room.init(socket);
+window.Rooms.init(socket);
