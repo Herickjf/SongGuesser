@@ -10,7 +10,415 @@
     color: #d9d9d9;
 }
 
+/* *************************** */@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* This file is for your main application CSS */
+*{
+    padding: 0;
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    color: #d9d9d9;
+}
+
 /* *************************** */
+/* BODY */
+body{
+    position: relative;
+    width: 100%;
+    overflow-y: hidden;
+    /* definição do background */
+    background-image: url(/frontend/assets/bg.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    
+}
+
+/* *************************** */
+/* HEADER */
+header{
+    /* tamanho */
+    max-width: 80%;
+    height: 200px;
+    /* espacamento */
+    margin: 0 auto;
+    /* posicao e display */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header>.menu{
+    backdrop-filter: blur(3px);
+    box-shadow: 0px 0px 25px rgba(191, 126, 255, .40);
+    border: 2px solid rgba(191, 126, 255, .30);
+    background-color: rgba(58, 52, 52, 0.150);
+    display: flex;
+    gap: 50px;
+
+    width: 340px;    
+    padding: 20px 30px;
+    border-radius: 10px;
+
+    justify-content: center;
+}
+header>.menu>a{
+    color: #d9d9d9;
+    text-decoration: none;
+}
+header>.menu>a:hover{
+    transition: .2s;
+    font-weight: 500;
+    color: #FFF;
+    transform: scale(1.05);
+    text-decoration: none;
+}
+header>.menu>a:active{
+    text-decoration: none;
+}
+header>.menu>a:visited{
+    text-decoration: none;
+}
+
+header>.logo>img{
+    max-width: 200px;
+}
+
+/* Content */
+.content{
+    margin: 0 auto;
+    max-width: 80%;
+}
+
+/* Box */
+.content>#input_box{
+    backdrop-filter: blur(3px);
+    box-shadow: 0px 0px 20px rgba(141, 132, 142, 0.454);
+    border: 2px solid rgba(191, 126, 255, .20);
+    background-color: rgba(58, 52, 52, 0.150);
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: 450px;
+    
+    color: #FFF;
+}
+
+/* Credentials */
+.content>#input_box>#enter-room,
+.content>#input_box>#create-room,
+.content>#input_box>#credentials{
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    color: #FFF;
+}
+
+.content>#input_box>#credentials>h1{
+    font-weight: 500;
+    text-align: center;
+    padding-bottom: 40px;
+    color: #FFF;
+    font-size: 25px;
+}
+
+.input{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-bottom: 20px;
+}
+
+.input>label{
+    color: #FFF;
+    font-size: 15px;
+}
+
+.input>input{
+    backdrop-filter: blur(3px);
+    border: 2px solid rgba(255, 255, 255, 0.01);
+    background-color: rgba(255, 255, 255, 0.311);
+    border-radius: 10px;
+    text-decoration: none;
+    
+    padding: 15px 15px;
+    color: #FFF;
+    font-size: 17px;
+}
+
+.input>input::placeholder{
+    color: #d9d9d977;
+}
+
+.input>input:focus{
+    outline: none;
+    border: 2px solid rgba(191, 126, 255, .40);
+    box-shadow: 0 0 15px rgba(191, 126, 255, .40);
+}
+
+.btns{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+}
+
+.button{
+    background-color: #834DB8;
+    border: none;
+    
+    padding: 12px 15px;
+    border-radius: 10px;
+    
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.button:hover{
+    background-color: rgba(191, 126, 255, 1);
+    box-shadow: 0 0 10px rgba(191, 126, 255, .50);
+    border: none;
+    
+    padding: 12px 15px;
+    border-radius: 10px;
+    
+    font-size: 15px;
+    font-weight: 700;
+    
+    cursor: pointer;
+    
+    transform: scale(1.05);
+    transition: .3s;
+}
+
+/* enter room */
+.content>#input_box>#enter-room>.exibitions>h1{
+    font-weight: 500;
+    text-align: center;
+    padding-bottom: 10px;
+    color: #FFF;
+    font-size: 25px;
+}
+.content>#input_box>#enter-room>.exibitions>h3{
+    text-align: center;
+    font-size: 18px;
+    font-weight: 400;
+    padding-bottom: 40px;
+}
+
+.user_image{
+    position: relative;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    border: 5px solid lightblue;
+    margin-top: 10px;
+    background-image: url(/frontend/assets/avatars/1.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat
+}
+.user_image > .change_image{
+    position: absolute;
+    top: 5%;
+    left: 80%;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    
+    background-color: #454545f1;
+}
+.user_image > .change_image:hover{
+    background-color: #834db8fa;
+    transform: scale(1.07);
+    cursor: pointer;
+    transition: .2s;
+}
+.user_image > i{
+    font-size: 20px;
+    font-weight: 300;
+    color: #fff;
+}
+
+#selection_images {
+    backdrop-filter: blur(3px);
+    background-color: rgb(131, 77, 184, .5);
+    /* flex-wrap: wrap; */
+    display: block;
+    visibility: hidden;
+    margin: 0 auto;
+    position: absolute;
+    top: 12.5%;
+    left: 27.5%;
+    padding: 15px;
+    z-index: 2;
+    width: 45%;
+    height: 75%;
+    border-radius: 20px;
+}
+
+#selection_images > h1{
+    text-align: center;
+    padding: 10px;
+}
+
+#selection_images > #images{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+
+    margin: 0 auto;
+    padding: 20px;
+    gap: 15px;
+
+    width: 90%;
+    max-height: 75%;
+    overflow-y: auto;
+
+    justify-content: center;
+
+    background-color: #00000025;
+    border-radius: 15px;
+}
+
+#selection_images > #images::-webkit-scrollbar {
+    width: 10px; 
+}
+#selection_images > #images::-webkit-scrollbar-track {
+    background: rgba(169, 110, 228, 0.4); 
+    border-radius: 10px; 
+}
+#selection_images > #images::-webkit-scrollbar-thumb {
+    background: rgba(143, 72, 213, 0.8); 
+    border-radius: 10px; 
+}
+#selection_images > #images::-webkit-scrollbar-thumb:hover {
+    background: rgba(143, 72, 213, 1); 
+}
+
+#selection_images > #images > div{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+#selection_images > #images > div:hover{
+    /* position: absolute; */
+    cursor: pointer;
+    transform: scale(1.05);
+    transition: .15s
+}
+
+#selection_images > #images div:nth-child(1){ background-image: url(/frontend/assets/avatars/1.png)}
+#selection_images > #images div:nth-child(2){ background-image: url(/frontend/assets/avatars/2.png)}
+#selection_images > #images div:nth-child(3){ background-image: url(/frontend/assets/avatars/3.png)}
+#selection_images > #images div:nth-child(4){ background-image: url(/frontend/assets/avatars/4.png)}
+#selection_images > #images div:nth-child(5){ background-image: url(/frontend/assets/avatars/5.png)}
+#selection_images > #images div:nth-child(6){ background-image: url(/frontend/assets/avatars/6.png)}
+#selection_images > #images div:nth-child(7){ background-image: url(/frontend/assets/avatars/7.png)}
+#selection_images > #images div:nth-child(8){ background-image: url(/frontend/assets/avatars/8.png)}
+#selection_images > #images div:nth-child(9){ background-image: url(/frontend/assets/avatars/9.png)}
+#selection_images > #images div:nth-child(10){ background-image: url(/frontend/assets/avatars/10.png)}
+#selection_images > #images div:nth-child(11){ background-image: url(/frontend/assets/avatars/11.png)}
+#selection_images > #images div:nth-child(12){ background-image: url(/frontend/assets/avatars/12.png)}
+#selection_images > #images div:nth-child(13){ background-image: url(/frontend/assets/avatars/13.png)}
+#selection_images > #images div:nth-child(14){ background-image: url(/frontend/assets/avatars/14.png)}
+#selection_images > #images div:nth-child(15){ background-image: url(/frontend/assets/avatars/15.png)}
+#selection_images > #images div:nth-child(16){ background-image: url(/frontend/assets/avatars/16.png)}
+#selection_images > #images div:nth-child(17){ background-image: url(/frontend/assets/avatars/17.png)}
+#selection_images > #images div:nth-child(18){ background-image: url(/frontend/assets/avatars/18.png)}
+#selection_images > #images div:nth-child(19){ background-image: url(/frontend/assets/avatars/19.png)}
+#selection_images > #images div:nth-child(20){ background-image: url(/frontend/assets/avatars/20.png)}
+#selection_images > #images div:nth-child(21){ background-image: url(/frontend/assets/avatars/21.png)}
+#selection_images > #images div:nth-child(22){ background-image: url(/frontend/assets/avatars/22.png)}
+#selection_images > #images div:nth-child(23){ background-image: url(/frontend/assets/avatars/23.png)}
+#selection_images > #images div:nth-child(24){ background-image: url(/frontend/assets/avatars/24.png)}
+#selection_images > #images div:nth-child(25){ background-image: url(/frontend/assets/avatars/25.png)}
+#selection_images > #images div:nth-child(26){ background-image: url(/frontend/assets/avatars/26.png)}
+#selection_images > #images div:nth-child(27){ background-image: url(/frontend/assets/avatars/27.png)}
+#selection_images > #images div:nth-child(28){ background-image: url(/frontend/assets/avatars/28.png)}
+#selection_images > #images div:nth-child(29){ background-image: url(/frontend/assets/avatars/29.png)}
+#selection_images > #images div:nth-child(30){ background-image: url(/frontend/assets/avatars/30.png)}
+#selection_images > #images div:nth-child(31){ background-image: url(/frontend/assets/avatars/31.png)}
+#selection_images > #images div:nth-child(32){ background-image: url(/frontend/assets/avatars/32.png)}
+#selection_images > #images div:nth-child(33){ background-image: url(/frontend/assets/avatars/33.png)}
+#selection_images > #images div:nth-child(34){ background-image: url(/frontend/assets/avatars/34.png)}
+#selection_images > #images div:nth-child(35){ background-image: url(/frontend/assets/avatars/35.png)}
+
+.language{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    align-items: center;
+    justify-content: center;
+}
+
+.language>.imgs{
+    display: flex;
+    gap: 40px;
+}
+
+.language>.imgs>.selected{
+    border: 2px solid rgba(191, 126, 255, 1);
+    border-radius: 5px;
+    padding: 0 3px;
+}
+
+.language>.imgs>img{
+    width: 40px;
+}
+
+/* create room */
+.content>#input_box>#create-room{
+    overflow: auto;
+}
+.content>#input_box>#create-room::-webkit-scrollbar {
+    width: 10px; 
+}
+.content>#input_box>#create-room::-webkit-scrollbar-track {
+    background: rgba(169, 110, 228, 0.4); 
+    border-radius: 10px; 
+}
+.content>#input_box>#create-room::-webkit-scrollbar-thumb {
+    background: rgba(143, 72, 213, 0.8); 
+    border-radius: 10px; 
+}
+.content>#input_box>#create-room::-webkit-scrollbar-thumb:hover {
+    background: rgba(143, 72, 213, 1); 
+}
+
+.content>#input_box>#create-room>h1{
+    font-weight: 500;
+    text-align: center;
+    padding-bottom: 15px;
+    color: #FFF;
+    font-size: 25px;
+}   
+
+.content>#input_box>#create-room>.double_input{
+    display: flex;
+    justify-content: space-between;
+}
+
+.content>#input_box>#create-room>.double_input>.last_input{
+    padding-bottom: 5px;
+}
 /* BODY */
 body{
     position: relative;

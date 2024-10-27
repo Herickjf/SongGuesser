@@ -110,7 +110,7 @@ apenas
 beijo
 último
 deixar
-esquerda[
+esquerda
 deixado
 vida
 luz
@@ -266,6 +266,5 @@ faria
 gostaria
 ano
 ainda
-contudo
 você
 jovem

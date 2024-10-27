@@ -7,6 +7,7 @@ defmodule SongappWeb.PageController do
     render(conn, :home, layout: false)
   end
 
+  # Funcoes para acessar as paginas: index, about e howToPlay
   def index(conn, _params) do
     conn
     |> put_resp_content_type("text/html")
@@ -25,6 +26,10 @@ defmodule SongappWeb.PageController do
     |> send_file(200, "priv/static/howToPlay.html")
   end
 
+
+
+
+  # Funcoes para utilizar as APIs
   def search(conn, params) do
     %{"artist" => artist_name, "song" => song_name} = params
     result = buscar_musicas_deezer(artist_name, song_name)
@@ -76,7 +81,7 @@ defmodule SongappWeb.PageController do
   @api_key "e0abe525994c81dee72054d2ebc34370"
 
   # Função para validar parâmetros de entrada
-  def validar_parametros(artista, musica) do
+  defp validar_parametros(artista, musica) do
     cond do
       artista == nil or artista == "" ->
         {:error, %{"valid" => false, "message" => "artist input is invalid, try to be more precise"}}
@@ -88,7 +93,7 @@ defmodule SongappWeb.PageController do
     end
   end
 
-  def buscar_musicas_deezer(nome_artista, nome_musica) do
+  defp buscar_musicas_deezer(nome_artista, nome_musica) do
     case validar_parametros(nome_artista, nome_musica) do
       :ok ->
         query = URI.encode("#{nome_artista} #{nome_musica}")
@@ -142,7 +147,7 @@ defmodule SongappWeb.PageController do
   end
 
   # Função para buscar a letra da música no Vagalume
-  def buscar_letra_no_vagalume(nome_artista, nome_musica, tentativas \\ 3) do
+  defp buscar_letra_no_vagalume(nome_artista, nome_musica, tentativas \\ 3) do
     url = "#{@url_vagalume}?art=#{URI.encode(nome_artista)}&mus=#{URI.encode(nome_musica)}&apikey=#{@api_key}"
 
     case HTTPoison.get(url) do
@@ -174,7 +179,7 @@ defmodule SongappWeb.PageController do
   end
 
   # Função para verificar se uma palavra está na letra da música (com correspondência exata)
-  def verificar_palavra_na_letra(artista, musica, palavra) do
+  defp verificar_palavra_na_letra(artista, musica, palavra) do
     # Buscar a letra da música no Vagalume
     case buscar_letra_no_vagalume(artista, musica) do
       # Decodificar a resposta JSON

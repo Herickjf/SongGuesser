@@ -145,5 +145,7 @@ songs.forEach((el) => {
 })
 
 
+
+
 link = "https://cdnt-preview.dzcdn.net/api/1/1/4/5/9/0/459c235b39ef8badd04c5ef181f58c24.mp3?hdnea=exp=1729648847~acl=/api/1/1/4/5/9/0/459c235b39ef8badd04c5ef181f58c24.mp3*~data=user_id=0,application_id=42~hmac=41b71fd4dd3bd0338c3b5510b46e60d7f0b81499ef1351e18bf49e1ca4f21e47"
 playSong(link, "https:\/\/api.deezer.com\/artist\/75491\/image", "Lady Gaga", "Die with a smile", false);

@@ -1,8 +1,6 @@
 /*
 JavaScript configurations for the frontend file 'index.html'
 */
-console.log("da zoom nessa bct")
-
 const nickname          = document.getElementById('nickname_input');
 const roomCode          = document.getElementById('roomCode_input');
 const password          = document.getElementById('create_password');
@@ -320,4 +318,4 @@ images.forEach((el, i) => {
 
 // /////////////////////////////////////
 // Exportando as funcoes 
-export { create_room_params, join_room_params };
+// export { create_room_params, join_room_params };
