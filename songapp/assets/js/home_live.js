@@ -69,7 +69,8 @@ goto_enterRoom.addEventListener('click', () => {
 goto_createRoom.addEventListener('click', () => {
     
         console.log("indo fazer o log")
-        window.Rooms.testlog()
+
+        window.Rooms.createRoom(edrgerg, hweowed, wqiehoiwqed)
     /*
         Redirects the user to the 'createRoom' page.
         If the name is empty, it will alert the user.
@@ -86,7 +87,7 @@ goto_createRoom.addEventListener('click', () => {
 enterRoom.addEventListener('click', () => {
 
     
-
+    let enter_password = document.getElementById('password_input')
 
     /*
         Redirects the user to the 'room' page, if the password of the room is correct.
@@ -105,9 +106,9 @@ enterRoom.addEventListener('click', () => {
         alert("Choose a nickname with letters and numbers only!")
         return;
     }
-    if(!passwordRegex.test(password.value)){
-        console.log(password.value)
-        password.value = ""
+    if(!passwordRegex.test(enter_password.value)){
+        console.log(enter_password.value)
+        enter_password.value = ""
         alert("Fill the password with letters, numbers and valid simbols only!")
         return;
     }
@@ -120,39 +121,10 @@ enterRoom.addEventListener('click', () => {
         alert("Invalid Code!")
         return;
     }
-    
-    // let route = '';
-    // fetch(route, {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify({
-    //         'roomCode': roomCode.value,
-    //         'password': password.value,
-    //         'nickname': nickname.value,
-    //     })
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //     if (data.valid == true) {
-    //         // To be implemented
-    //     } else {
-    //         // If it's not valid, it will alert the user and redirect to the credentials inputs.
-    //         alert(data.message);
-    //         document.getElementById('credentials').style.display = 'block'
-    //         document.getElementById('enter-room').style.display = 'none'
-    //     }
-    // })
-    // .catch(error => {
-    //     console.error('Error:', error);
-    // });
-
-   
 
 });
 
-const create_room_params = () => {
+createRoom.addEventListener('clicked', () => {
     /*
     Redirects the user to the new 'room' page, if all the data are correct.
     */
@@ -240,17 +212,19 @@ const create_room_params = () => {
     avatar = avatar.split('/'); 
     avatar = avatar[avatar.length - 1];  
     avatar = parseInt(avatar.split('.')[0])
+
+    window.Rooms.createRoom(password.value, nRounds, max_players, language, nickname.value, avatar)
     
-    return {
-        "success": true,
-        "room_password": password.value,
-        "room_rounds": nRounds,
-        "room_max_players": max_players,
-        "room_language": language,
-        "nickname": nickname.value,
-        "photo_id": avatar
-    }
-}
+    // return {
+    //     "success": true,
+    //     "room_password": password.value,
+    //     "room_rounds": nRounds,
+    //     "room_max_players": max_players,
+    //     "room_language": language,
+    //     "nickname": nickname.value,
+    //     "photo_id": avatar
+    // }
+});
 
 const join_room_params = () => {
     // verificar se a senha e o nickname foram preenchidos
@@ -326,8 +300,8 @@ changeImg.forEach((el) => {
 
 images.forEach((el, i) => {
     el.addEventListener('click', ()=>{
-        userImg[0].style.backgroundImage = `url(/frontend/assets/avatars/${i+1}.png)`
-        userImg[1].style.backgroundImage = `url(/frontend/assets/avatars/${i+1}.png)`
+        userImg[0].style.backgroundImage = `url(/images/avatars/${i+1}.png)`
+        userImg[1].style.backgroundImage = `url(/images/avatars/${i+1}.png)`
         selectImages.style.visibility = "hidden";
     })
 })

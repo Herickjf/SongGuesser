@@ -75,16 +75,35 @@ defmodule SongappWeb.RoomChannel do
 
   @impl true
   def handle_in("next_round_order", _params, socket) do
+    case socket.assigns[:player].is_admin do
+      true ->
+        room = socket.assigns[:room]
+
+        case RoomsManager.next_round_order(room) do
+          {:ok, updated_room} ->
+            broadcast!(socket, "next_round_order", %{order: updated_room.order})
+            {:noreply, assign(socket, :room, updated_room)}
+
+          {:error, reason} ->
+            {:reply, {:error, reason}, socket}
+        end
+
+        broadcast!(socket, "game", %{})
+        {:ok, game: room}
+
+      false ->
+        {:reply, {:error, "You are not the admin"}, socket}
+    end
     room = socket.assigns[:room]
 
-    case RoomsManager.next_round_order(room) do
-      {:ok, updated_room} ->
-        broadcast!(socket, "next_round_order", %{order: updated_room.order})
-        {:noreply, assign(socket, :room, updated_room)}
+    # case RoomsManager.next_round_order(room) do
+    #   {:ok, updated_room} ->
+    #     broadcast!(socket, "next_round_order", %{order: updated_room.order})
+    #     {:noreply, assign(socket, :room, updated_room)}
 
-      {:error, reason} ->
-        {:reply, {:error, reason}, socket}
-    end
+    #   {:error, reason} ->
+    #     {:reply, {:error, reason}, socket}
+    # end
   end
 
   @impl true

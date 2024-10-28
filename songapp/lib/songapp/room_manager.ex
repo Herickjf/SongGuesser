@@ -1,5 +1,6 @@
 defmodule Songapp.RoomsManager do
   alias Songapp.Game
+  alias Songapp.SongsApi
 
   def create_room(params) do
     IO.inspect(params)
@@ -56,5 +57,11 @@ defmodule Songapp.RoomsManager do
               end
     end
   end
+
+  def search_songs(artist, track) do
+    SongsApi.search_songs(artist, track)
+  end
+
+
 
 end

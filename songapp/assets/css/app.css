@@ -1,10 +1,8 @@
-/* @import "tailwindcss/base";
+/* /* /* @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities"; */
 
 /* This file is for your main application CSS */
-
-
 *{
     padding: 0;
     margin: 0;
@@ -605,7 +603,7 @@ header>.logo>img{
     border-radius: 50%;
     margin: 0 auto;
     margin-bottom: 10px;
-    border: 5px solid lightblue;
+    border: 5px solid #834DB8;
     margin-top: 10px;
     background-image: url(/images/avatars/1.png);
     background-size: cover;
@@ -709,7 +707,7 @@ header>.logo>img{
     transition: .15s
 }
 
-#selection_images > #images div:nth-child(1){ background-image: url(/images/avatars/1.png)}
+#selection_images > #images div:nth-child(1){ background-image: url(/1.png)}
 #selection_images > #images div:nth-child(2){ background-image: url(/images/avatars/2.png)}
 #selection_images > #images div:nth-child(3){ background-image: url(/images/avatars/3.png)}
 #selection_images > #images div:nth-child(4){ background-image: url(/images/avatars/4.png)}
@@ -804,4 +802,4 @@ header>.logo>img{
 
 .content>#input_box>#create-room>.double_input>.last_input{
     padding-bottom: 5px;
-}
+} 

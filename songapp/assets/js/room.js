@@ -17,8 +17,12 @@ const Rooms = {
                 this.currentChannel = channel; // Atualizar o canal atual para o novo
 
                 console.log("current Channel", this.currentChannel);
+                return {"failed": false}
             })
-            .receive("error", resp => { console.log("Unable to join room", resp) });
+            .receive("error", resp => { 
+                console.log("Unable to join room", resp) 
+                return {"failed": true, "message": resp}
+            });
     },
 
     init: function (socket) {
@@ -71,13 +75,16 @@ const Rooms = {
                 );
                 this.joinRoom(resp.room_code, roomPW, nickname, photoId);
 
-                // retunr room code
+                return {"failed": false, "roomCode":resp.room_code}
                 // resp = {room_code: "room_code"}
 
 
-            }).receive("error", (resp) => alert("Unable to create room"));
+                }).receive("error", (resp) => {
+                    alert("Unable to create room")
+                    return {"failed": true, "message": resp}
+                });
         }
-
+ 
     },
 
     enterRoom: function (roomCode, roomPW, nickname, photoId) {

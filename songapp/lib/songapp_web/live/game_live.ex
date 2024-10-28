@@ -8,7 +8,7 @@ defmodule SongappWeb.GameLive do
 
   def render(assigns) do
     ~H"""
-    <div id="game_live" data-page="game_live" phx-hook="LoadSpecificJs">
+    <div id="game_live" data-page="game_live" phx-hook="LoadSpecificJs"/>
       <%!-- <h1>Game Page</h1> --%>
       <%!-- <nav> --%>
         <%!-- <a href="#" phx-click="navigate" phx-value-page="home">Home</a> --%>
@@ -24,20 +24,20 @@ defmodule SongappWeb.GameLive do
 
 
 
-      <!DOCTYPE html>
+<%!-- <!DOCTYPE html> --%>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="/songapp/assets/css/app.css">
-    <link rel="stylesheet" href="/songapp/assets/css/gameStyle.css">
+    <%!-- <link rel="stylesheet" href="/songapp/assets/css/app.css">
+    <link rel="stylesheet" href="/songapp/assets/css/game_live.css"> --%>
 
-    <link rel="shortcut icon" href="/SongGuesser/assets/logo.png" type="image/x-icon">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="shortcut icon" href="/SongGuesser/assets/logo.png" type="image/x-icon">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">    <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 
     <title>Song Guesser</title>
@@ -59,72 +59,14 @@ defmodule SongappWeb.GameLive do
 
             <!-- link pra outra sala -->
             <div id="room_link">
-                <p>12TF9M &#8594; <a href="" id="link_button" alt="Copiar Link"><i class="fa fa-clone"></i></a></p>
+                <p><span id="room_code_exib">12TF9M</span> &#8594; <a href="" id="link_button" alt="Copiar Link"><i class="fa fa-clone"></i></a></p>
             </div>
 
-            <h1>Players (<span id="players_min"></span> / <span id="players_max"></span>)</h1>
+            <h1>Players (<span id="players_min"></span>/<span id="players_max"></span>)</h1>
 
             <div id="players">
                 <div class="player">
-                    <div class="profile">
-                    </div>
-                    <div class="info">
-                        <h2>Nickname</h2>
-                        <p>10 points</p>
-                    </div>
-                </div>
-                <div class="player">
-                    <div class="profile" id="host">
-                        <i class="fas fa-crown"></i>
-                    </div>
-                    <div class="info">
-                        <h2>Nickname</h2>
-                        <p>10 points</p>
-                    </div>
-                </div>
-                <div class="player">
-                    <div class="profile">
-                    </div>
-                    <div class="info">
-                        <h2>Nickname</h2>
-                        <p>10 points</p>
-                    </div>
-                </div>
-                <div class="player">
-                    <div class="profile">
-                    </div>
-                    <div class="info">
-                        <h2>Nickname</h2>
-                        <p>10 points</p>
-                    </div>
-                </div>
-                <div class="player">
-                    <div class="profile">
-                    </div>
-                    <div class="info">
-                        <h2>Nickname</h2>
-                        <p>10 points</p>
-                    </div>
-                </div>
-                <div class="player">
-                    <div class="profile">
-                    </div>
-                    <div class="info">
-                        <h2>Nickname</h2>
-                        <p>10 points</p>
-                    </div>
-                </div>
-                <div class="player">
-                    <div class="profile ">
-                    </div>
-                    <div class="info">
-                        <h2>Nickname</h2>
-                        <p>10 points</p>
-                    </div>
-                </div>
-                <div class="player">
-                    <div class="profile">
-                    </div>
+                    <div class="profile"></div>
                     <div class="info">
                         <h2>Nickname</h2>
                         <p>10 points</p>
@@ -374,7 +316,7 @@ defmodule SongappWeb.GameLive do
 
 
 
-    </div>
+    <%!-- </div> --%>
     """
   end
 

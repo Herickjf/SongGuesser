@@ -1,22 +1,24 @@
+defmodule Songapp.SongsApi do
 
+  use Phoenix.Controller
   # Funcoes para utilizar as APIs
-  def search(conn, params) do
-    %{"artist" => artist_name, "song" => song_name} = params
-    result = buscar_musicas_deezer(artist_name, song_name)
-    json(conn, result)
-  end
+  # def search(conn, params) do
+  #   %{"artist" => artist_name, "song" => song_name} = params
+  #   result = buscar_musicas_deezer(artist_name, song_name)
+  #   json(conn, result)
+  # end
 
-  def validate(conn, %{"chosen" => chosen, "word" => word}) do
-    result = verificar_palavra_na_letra(chosen["artist"], chosen["song"], word)
-    json(conn, result)
-  end
+  # def validate(conn, %{"chosen" => chosen, "word" => word}) do
+  #   result = verificar_palavra_na_letra(chosen["artist"], chosen["song"], word)
+  #   json(conn, result)
+  # end
 
-  def getWord(conn, %{"language" => lg, "alreadyReceived" => alreadyReceived}) do
-    result = buscar_palavra_aleatoria(lg, alreadyReceived)
-    json(conn, %{message: "Busca realizada", result: result})
-  end
+  # def getWord(conn, %{"language" => lg, "alreadyReceived" => alreadyReceived}) do
+  #   result = buscar_palavra_aleatoria(lg, alreadyReceived)
+  #   json(conn, %{message: "Busca realizada", result: result})
+  # end
 
-  defp buscar_palavra_aleatoria(linguagem, palavras_usadas) do
+  def buscar_palavra_aleatoria(linguagem, palavras_usadas) do
     caminho_arquivo = "/songapp/priv/dados/#{linguagem}.txt"
 
     case File.read(caminho_arquivo) do
@@ -51,7 +53,7 @@
   @api_key "e0abe525994c81dee72054d2ebc34370"
 
   # Função para validar parâmetros de entrada
-  defp validar_parametros(artista, musica) do
+  def validar_parametros(artista, musica) do
     cond do
       artista == nil or artista == "" ->
         {:error, %{"valid" => false, "message" => "artist input is invalid, try to be more precise"}}
@@ -63,7 +65,7 @@
     end
   end
 
-  defp buscar_musicas_deezer(nome_artista, nome_musica) do
+  def buscar_musicas_deezer(nome_artista, nome_musica) do
     case validar_parametros(nome_artista, nome_musica) do
       :ok ->
         query = URI.encode("#{nome_artista} #{nome_musica}")
@@ -117,7 +119,7 @@
   end
 
   # Função para buscar a letra da música no Vagalume
-  defp buscar_letra_no_vagalume(nome_artista, nome_musica, tentativas \\ 3) do
+  def buscar_letra_no_vagalume(nome_artista, nome_musica, tentativas \\ 3) do
     url = "#{@url_vagalume}?art=#{URI.encode(nome_artista)}&mus=#{URI.encode(nome_musica)}&apikey=#{@api_key}"
 
     case HTTPoison.get(url) do
@@ -149,7 +151,7 @@
   end
 
   # Função para verificar se uma palavra está na letra da música (com correspondência exata)
-  defp verificar_palavra_na_letra(artista, musica, palavra) do
+  def verificar_palavra_na_letra(artista, musica, palavra) do
     # Buscar a letra da música no Vagalume
     case buscar_letra_no_vagalume(artista, musica) do
       # Decodificar a resposta JSON
@@ -195,3 +197,4 @@
         Jason.encode!(%{error: "Formato inesperado ao buscar letra no Vagalume"})
     end
   end
+end
