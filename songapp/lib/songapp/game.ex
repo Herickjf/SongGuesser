@@ -225,17 +225,36 @@ def get_room_by_code!(code), do: Repo.get_by(Songapp.Game.Room, code: code)
       iex> list_guesses()
       [%Guess{}, ...]
 
-  """
-  def list_guesses do
-    Repo.all(Guess)
-  end
+      """
+      def list_guesses do
+        Repo.all(Guess)
+      end
 
-  @doc """
-  Gets a single guess.
+      @doc """
+      Returns the list of guesses filtered by player_id, game_id, and round_number.
 
-  Raises `Ecto.NoResultsError` if the Guess does not exist.
+      ## Examples
 
-  ## Examples
+      iex> list_guesses_by_filters(player_id, game_id, round_number)
+      [%Guess{}, ...]
+
+      """
+      def list_guesses_by_filters(player_id, game_id, round_number) do
+        from(g in Guess, where: g.player_id == ^player_id and g.game_id == ^game_id and g.round_number == ^round_number)
+        |> Repo.all()
+      end
+
+      def list_guesses_by_game_and_round(game_id, round_number) do
+        from(g in Guess, where: g.game_id == ^game_id and g.round_number == ^round_number)
+        |> Repo.all()
+      end
+
+      @doc """
+      Gets a single guess.
+
+      Raises `Ecto.NoResultsError` if the Guess does not exist.
+
+      ## Examples
 
       iex> get_guess!(123)
       %Guess{}
@@ -289,17 +308,33 @@ def get_room_by_code!(code), do: Repo.get_by(Songapp.Game.Room, code: code)
 
       iex> delete_guess(guess)
       {:ok, %Guess{}}
-
       iex> delete_guess(guess)
       {:error, %Ecto.Changeset{}}
 
-  """
-  def delete_guess(%Guess{} = guess) do
-    Repo.delete(guess)
-  end
+      """
+      def delete_guess(%Guess{} = guess) do
+        Repo.delete(guess)
+      end
 
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking guess changes.
+      @doc """
+      Deletes guesses by game_id, player_id, and round_number.
+
+      ## Examples
+
+      iex> delete_guesses_by_filters(game_id, player_id, round_number)
+      {:ok, %{}}
+
+      iex> delete_guesses_by_filters(game_id, player_id, round_number)
+      {:error, %Ecto.Changeset{}}
+
+      """
+      def delete_guesses_by_filters(game_id, player_id, round_number) do
+        from(g in Guess, where: g.game_id == ^game_id and g.player_id == ^player_id and g.round_number == ^round_number)
+        |> Repo.delete_all()
+      end
+
+      @doc """
+      Returns an `%Ecto.Changeset{}` for tracking guess changes.
 
   ## Examples
 

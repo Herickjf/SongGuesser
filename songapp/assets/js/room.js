@@ -6,28 +6,39 @@ const Rooms = {
     player: null, 
     game: null,
     players: null,
-    musics: null,
-    quess: null,
+    guesses: null,
 
-    joinRoom: function (roomCode, password, nickname, photoId) {
+    getPlayers: function () {
+        return this.players;
+    },
+    getPlayer: function () {
+        return this.player;
+    },
+    getGame: function () {
+        return this.game;
+    },
+
+    joinRoom: async function (roomCode, password, nickname, photoId) {
         console.log("Joining room: ", this.currentChannel, this.socket);
-
-
-        // Criar um novo canal para o roomCode fornecido
-        const channel = this.socket.channel(`room:${roomCode}`, { password: password, nickname: nickname, photo_id: photoId });
-
-        channel.join()
-            .receive("ok", resp => {
-                console.log("Joined room successfully", resp);
-                this.currentChannel = channel; // Atualizar o canal atual para o novo
-
-                console.log("current Channel", this.currentChannel);
-                return {"failed": false}
-            })
-            .receive("error", resp => { 
-                console.log("Unable to join room", resp) 
-                return {"failed": true, "message": resp}
-            });
+    
+        // Create a new channel for the provided roomCode
+        const channel = this.socket.channel(`room:${roomCode}`, { password, nickname, photo_id: photoId });
+    
+        return new Promise((resolve, reject) => {
+            channel.join()
+                .receive("ok", resp => {
+                    this.currentChannel = channel; // Update the current channel to the new one
+                    console.log("Joined room", resp);
+                    this.player = JSON.parse(resp.player)
+                    this.game = JSON.parse(resp.room)
+                    this.players = JSON.parse(resp.players)
+                    resolve(resp); // Resolve with the response data on success
+                })
+                .receive("error", resp => {
+                    console.log("Unable to join room", resp);
+                    reject({ "failed": true, "message": resp }); // Reject with an error object on failure
+                });
+        });
     },
 
     init: function (socket) {
@@ -80,7 +91,9 @@ const Rooms = {
                 this.joinRoom(resp.room_code, roomPW, nickname, photoId);
 
                 return {"failed": false, "roomCode":resp.room_code}
-                // resp = {room_code: "room_code"}
+                this.player = JSON.parse(resp.player)
+                this.game = JSON.parse(resp.room)
+                this.players = JSON.parse(resp.players)
 
 
                 }).receive("error", (resp) => {
@@ -135,16 +148,6 @@ const Rooms = {
         }
     },
 
-    sendMusicForm: function (musicName, musicArtist) {
-        if (this.currentChannel) {
-            this.currentChannel.push("music_form", { name: musicName, artist: musicArtist });
-            
-        }
-
-        
-        // retorna lista de msucias para o jogador, da api
-    },
-
     sendMusicSelection: function (musicId) {
         if (this.currentChannel) {
             this.currentChannel.push("music_selection", { id: musicId });
@@ -162,7 +165,6 @@ const Rooms = {
     setListenShout: function (func) {
 
         if (this.currentChannel) {
-            console.log("Listening to shout events");
             this.currentChannel.on("shout", payload => {
 
                 console.log("Received message", payload);
@@ -204,7 +206,7 @@ const Rooms = {
 
         if (this.currentChannel) {
             console.log("Listening to music quesses events");
-            this.currentChannel.on("music_quesses", payload => {
+            this.currentChannel.on("guesses", payload => {
 
                 console.log("Received music quesses", payload);
                 func(payload);
@@ -221,8 +223,7 @@ const Rooms = {
             this.currentChannel.off("shout");
             this.currentChannel.off("game");
             this.currentChannel.off("players");
-            this.currentChannel.off("musics");
-            this.currentChannel.off("music_quesses");
+            this.currentChannel.off("quesses");
         }
     },
 

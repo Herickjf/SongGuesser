@@ -178,8 +178,9 @@ defmodule SongappWeb.GameLive do
                                 <!-- inicio de songsInfo -->
                                     <div id="songs_box">
 
-                                    <div id="waiting_for_song" style="display: none;">
+                                    <div id="waiting_for_song">
                                     <h1>Start the Game!</h1>
+                                    <p>Wait for the host to start the game</p>
                                     <div class="btns">
                                     <button class="button btn_start">Start</button>
                                     <button class="button btn_exit">Exit</button>
@@ -194,7 +195,7 @@ defmodule SongappWeb.GameLive do
                                     <div id="while_playing_song"  style="display: none;">
                                     <h1>Which song?</h1>
 
-                                    <div class="songs">
+                                    <div class="songs" >
 
                                     <div class="song_found">
                                     <div class="cover"></div>
@@ -241,7 +242,7 @@ defmodule SongappWeb.GameLive do
 
                                     </div>
 
-                                    <div id="between_rounds_song" >
+                                    <div id="between_rounds_song" style="display: none;">
                                     <h1>Answers: </h1>
 
                                     <div class="songs">

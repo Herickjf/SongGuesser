@@ -19,7 +19,7 @@ defmodule Songapp.SongsApi do
   # end
 
   def buscar_palavra_aleatoria(linguagem, palavras_usadas) do
-    caminho_arquivo = "/songapp/priv/dados/#{linguagem}.txt"
+    caminho_arquivo = "/dados/#{linguagem}.txt"
 
     case File.read(caminho_arquivo) do
       {:ok, conteudo} ->
