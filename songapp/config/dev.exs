@@ -3,7 +3,7 @@ import Config
 # Configure your database
 config :songapp, Songapp.Repo,
   username: "postgres",
-  password: "postgres",
+  password: "luisreis",
   hostname: "localhost",
   database: "songapp_dev",
   stacktrace: true,

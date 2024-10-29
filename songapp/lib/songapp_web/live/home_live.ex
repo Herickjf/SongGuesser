@@ -27,13 +27,13 @@ defmodule SongappWeb.HomeLive do
       <%!-- <.flash_group flash={@flash} /> --%>
 
 <%!-- <!DOCTYPE html> --%>
-<html lang="en">
+<%!-- <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <%!-- <link rel="shortcut icon" href="/songapp/songapp/priv/static/images/logo.png" type="image/x-icon">
-    <link rel="stylesheet" href="/songapp/assets/css/app.css"> --%>
+    <link rel="shortcut icon" href="/songapp/songapp/priv/static/images/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="/songapp/assets/css/app.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,7 +42,7 @@ defmodule SongappWeb.HomeLive do
 
     <title>Song Guesser</title>
 </head>
-<body>
+<body> --%>
 
         <div id="selection_images">
             <h1>Choose an avatar:</h1>
@@ -236,8 +236,8 @@ defmodule SongappWeb.HomeLive do
 
 
     <a  id="change_to_gameScreen" style="visibility: hidden" href="#" phx-click="navigate" phx-value-page="game"></a>
-</body>
-</html>
+        <%!-- </body>
+        </html> --%>
 
 
 

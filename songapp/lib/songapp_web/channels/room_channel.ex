@@ -79,6 +79,7 @@ defmodule SongappWeb.RoomChannel do
   end
 
   # Manipular a mensagem enviada após o join, broadcastando os dados da lista de jogadores
+  @impl true
   def handle_info({:after_join, players_json}, socket) do
     broadcast!(socket, "players", %{players: players_json})
     {:noreply, socket}
