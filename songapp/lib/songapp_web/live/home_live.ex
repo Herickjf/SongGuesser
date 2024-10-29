@@ -234,6 +234,8 @@ defmodule SongappWeb.HomeLive do
         <!-- Fim da area de input -->
     </div>
 
+
+    <a  id="change_to_gameScreen" style="visibility: hidden" href="#" phx-click="navigate" phx-value-page="game"></a>
 </body>
 </html>
 

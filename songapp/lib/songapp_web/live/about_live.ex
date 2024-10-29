@@ -31,15 +31,15 @@ defmodule SongappWeb.AboutLive do
 
 
 
-    <!DOCTYPE html>
-<html lang="en">
-<head>
+    <%!-- <!DOCTYPE html> --%>
+<%!-- <html lang="en"> --%>
+<%!-- <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <%!-- <link rel="shortcut icon" href="/frontend/assets/logo.png" type="image/x-icon"> --%>
-    <%!-- <link rel="stylesheet" href="/css/app.css"> --%>
-    <%!-- <link rel="stylesheet" href="/css/aboutUs.css"> --%>
+    <link rel="shortcut icon" href="/frontend/assets/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/aboutUs.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,7 +47,7 @@ defmodule SongappWeb.AboutLive do
 
     <title>Song Guesser</title>
 </head>
-<body>
+<body> --%>
     <!-- início do header -->
     <header>
 
@@ -193,8 +193,8 @@ defmodule SongappWeb.AboutLive do
 
         </div>
     </section>
-</body>
-</html>
+<%!-- </body> --%>
+<%!-- </html> --%>
 
 
 

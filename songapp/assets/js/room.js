@@ -3,6 +3,11 @@ const Rooms = {
     currentChannel: null, // Variável para rastrear o canal atual
     socket: null, // Variável para rastrear o soquete
     eventsAdded: false, // Controle para adicionar eventos apenas uma vez
+    player: null, 
+    game: null,
+    players: null,
+    musics: null,
+    quess: null,
 
     joinRoom: function (roomCode, password, nickname, photoId) {
         console.log("Joining room: ", this.currentChannel, this.socket);
@@ -60,7 +65,7 @@ const Rooms = {
             return;
         }
 
-        console.log("Creating room", roomPW, roomRounds, roomMaxPlayers, roomLanguage, nickname, photoId);
+        // console.log("Creating room", roomPW, roomRounds, roomMaxPlayers, roomLanguage, nickname, photoId);
 
         if (this.currentChannel) {
             this.currentChannel.push("create_room", {
@@ -71,8 +76,7 @@ const Rooms = {
                 nickname: nickname,
                 photo_id: photoId
             }).receive("ok", (resp) => {
-                alert(`Room created with code: ${resp.room_code}`,
-                );
+                alert(`Room created with code: ${resp.room_code}`);
                 this.joinRoom(resp.room_code, roomPW, nickname, photoId);
 
                 return {"failed": false, "roomCode":resp.room_code}
@@ -85,6 +89,7 @@ const Rooms = {
                 });
         }
  
+        console.log("Pos tentativa de criar sala");
     },
 
     enterRoom: function (roomCode, roomPW, nickname, photoId) {
@@ -133,8 +138,10 @@ const Rooms = {
     sendMusicForm: function (musicName, musicArtist) {
         if (this.currentChannel) {
             this.currentChannel.push("music_form", { name: musicName, artist: musicArtist });
+            
         }
 
+        
         // retorna lista de msucias para o jogador, da api
     },
 

@@ -121,6 +121,20 @@ def get_room_by_code!(code), do: Repo.get_by(Songapp.Game.Room, code: code)
   end
 
   @doc """
+  Returns the list of players in a specific room.
+
+  ## Examples
+
+      iex> list_players_in_room(room_id)
+      [%Player{}, ...]
+
+  """
+  def list_players_in_room(room_id) do
+    from(p in Player, where: p.game_id == ^room_id)
+    |> Repo.all()
+  end
+
+  @doc """
   Gets a single player.
 
   Raises `Ecto.NoResultsError` if the Player does not exist.

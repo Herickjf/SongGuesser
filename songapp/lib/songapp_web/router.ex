@@ -11,6 +11,12 @@ defmodule SongappWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :api do
+    plug :accepts, ["json"]
+    # Para aceitar CORS de todas as rotas:
+    plug CORSPlug, origin: "*"
+  end
+
   scope "/", SongappWeb do
     pipe_through :browser
 
@@ -39,9 +45,12 @@ defmodule SongappWeb.Router do
   # end
 
   # Other scopes may use custom stacks.
-  # scope "/api", SongappWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", SongappWeb do
+    pipe_through :api
+
+    options "/search_song", PageController, :search_song
+    post "/search_song", PageController, :search_song
+  end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:songapp, :dev_routes) do

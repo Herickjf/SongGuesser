@@ -2,13 +2,15 @@ defmodule Songapp.Game.Player do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @derive {Jason.Encoder, only: [:nickname, :photo_id, :score, :status, :is_admin]}
+
   schema "players" do
     field :nickname, :string
     field :photo_id, :integer
     field :score, :integer, default: 0
     field :status, :string, default: "ready"
     field :is_admin, :boolean, default: false
-    belongs_to :game, Songapp.Game.Room # Relaciona com o jogo
+    field :game_id, :integer
 
     timestamps(type: :utc_datetime)
   end

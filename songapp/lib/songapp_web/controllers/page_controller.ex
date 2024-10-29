@@ -1,5 +1,6 @@
 defmodule SongappWeb.PageController do
   use SongappWeb, :controller
+  alias Songapp.SongsApi
 
   def roomstest(conn, _params) do
     # The home page is often custom made,
@@ -23,8 +24,13 @@ defmodule SongappWeb.PageController do
 #     render(conn, :gameScreen, layout: false)
 #   end
 
-def homePhoenix(conn, _params) do
+  def homePhoenix(conn, _params) do
     render(conn, :homePhoenix, layout: false)
+  end
+
+  def search_song(conn, params) do
+    %{"artist" => artist, "track" => track} = params
+    json(conn, SongsApi.buscar_musicas_deezer(artist, track))
   end
 
 end

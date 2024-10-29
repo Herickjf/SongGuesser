@@ -85,6 +85,7 @@ defmodule Songapp.SongsApi do
                       link: musica["link"],
                       #album: musica["album"]["title"],
                       #album_link: musica["album"]["link"],
+                      album_image: musica["album"]["cover"],
                       #artist_link: musica["artist"]["link"],
                       #cover: musica["album"]["cover"],
                       #duration: musica["duration"]
