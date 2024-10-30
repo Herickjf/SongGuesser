@@ -19,7 +19,8 @@ defmodule Songapp.SongsApi do
   # end
 
   def buscar_palavra_aleatoria(linguagem, palavras_usadas) do
-    caminho_arquivo = "/dados/#{linguagem}.txt"
+    caminho_arquivo = Path.expand("dados/#{linguagem}.txt", __DIR__)
+    IO.puts("Caminho do arquivo: #{caminho_arquivo}")
 
     case File.read(caminho_arquivo) do
       {:ok, conteudo} ->
@@ -44,13 +45,181 @@ defmodule Songapp.SongsApi do
         end
 
       {:error, _reason} ->
-        "Erro ao ler o arquivo"
+        caminho_arquivo
+        # "Erro ao ler o arquivo"
     end
   end
 
   @url_deezer "https://api.deezer.com/search"
   @url_vagalume "https://api.vagalume.com.br/search.php"
   @api_key "e0abe525994c81dee72054d2ebc34370"
+  @url_genius "https://api.genius.com/search"
+  @genius_key "lOyfiGyagQRmbbKwPv3RjgkecQ1HaPhLqrd2O9vUxr_sQKaBOd8Xy9rhrrpayWBW"
+  @header [{"Authorization", "Bearer #{@genius_key}"}]
+
+
+  defp extract_song_info(%{"response" => %{"hits" => hits}}) do
+    Enum.map(hits, fn hit ->
+      result = hit["result"]
+      %{
+        title: result["title"],
+        artist: result["primary_artist"]["name"],
+        release_date: result["release_date_for_display"],
+        song_url: result["url"]
+      }
+    end)
+  end
+  defp extract_song_info(_), do: []
+
+  defp extract_song_info2(%{"response" => %{"hits" => [hit | _]}}) do
+    result = hit["result"]
+
+    %{
+      title: result["title"],
+      artist: result["primary_artist"]["name"],
+      release_date: result["release_date_for_display"],
+      song_url: result["url"],
+    }
+  end
+
+  def buscar_letra_genius(nome_artista, nome_musica) do
+    query = URI.encode("#{nome_artista} #{nome_musica}")
+    url = "#{@url_genius}?q=#{query}"
+
+    case HTTPoison.get(url, @header) do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+        case Jason.decode(body) do
+          {:ok, %{"response" => %{"hits" => [primeiro_hit | _]}}} ->
+            result = primeiro_hit["result"]
+            song_url = result["url"]
+
+            # Busca a página de letras para extrair a letra
+            case HTTPoison.get(song_url) do
+              {:ok, %HTTPoison.Response{status_code: 200, body: lyrics_body}} ->
+                {:ok, document} = Floki.parse_document(lyrics_body)
+                lyrics = extract_lyrics(document)
+                {:ok, lyrics}
+
+              {:error, _reason} ->
+                {:error, "Erro ao buscar a letra no Genius"}
+            end
+
+          _ -> {:error, "Letra não encontrada no Genius"}
+        end
+
+      {:error, _reason} ->
+        {:error, "Erro ao conectar à API do Genius"}
+    end
+  end
+
+  defp handle_response(%{ "lyrics" => %{ "lyrics_body" => lyrics }}) do
+    # Se a letra está em ASCII, converta para texto legível
+    lyrics
+    |> String.to_charlist()        # Converte a string de ASCII para uma lista de inteiros
+    |> Enum.map(&(&1))             # Converte cada inteiro ASCII para seu caractere correspondente
+    |> List.to_string()            # Converte a lista de caracteres para uma string
+    |> IO.puts()                   # Exibe a letra convertida
+
+    {:ok, lyrics}
+
+  end
+
+  defp handle_response(%{"lyrics" => lyrics}) do
+    {:ok, lyrics}
+  end
+
+  defp handle_response(_), do: {:error, "Letra não encontrada"}
+
+  defp get_lyrics1(mp) do
+    song_name = mp[:title] <> " " <> mp[:artist]
+
+    encoded_query = URI.encode_www_form(song_name)
+    url = "#{@api_url}?q=#{encoded_query}"
+
+    IO.puts("Buscando letras para: #{song_name}")
+    IO.puts("URL de busca: #{url}")
+
+    case HTTPoison.get(url, @header, follow_redirect: true) do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+        with {:ok, decoded_body} <- Poison.decode(body),
+             %{"response" => %{"hits" => [hit | _]}} <- decoded_body,
+             result = hit["result"],
+             song_url = result["url"],
+             {:ok, %HTTPoison.Response{status_code: 200, body: lyrics_body}} <- HTTPoison.get(song_url),
+             {:ok, document} <- Floki.parse_document(lyrics_body) do
+
+          lyrics = extract_lyrics(document)
+
+          regex1 = ~r/\d+\sContributors/
+          regex2 = ~r/\d+Contributors/
+
+          [lyrics_final1 | _] = String.split(lyrics, regex1, parts: 2)
+          [lyrics_final1 | _] = String.split(lyrics_final1, regex2, parts: 2)
+          [lyrics_final1 | _] = String.split(lyrics_final1, "[Outro]", parts: 2)
+          [lyrics_final1 | _] = String.split(lyrics_final1, "Read More", parts: 2)
+
+          mapa = extract_song_info2(decoded_body)
+
+          IO.puts("\n\nArtista: #{mapa[:artist]}")
+          IO.puts("Título: #{mapa[:title]}")
+          IO.puts("\nLetra:\n\n #{lyrics_final1}")
+
+          {:ok, lyrics_final1}
+        else
+          error ->
+            IO.puts("Erro ao obter as letras: #{inspect(error)}")
+            {:error, "Não foi possível obter as letras."}
+        end
+
+      {:ok, %HTTPoison.Response{status_code: status_code, body: body}} ->
+        IO.puts("Erro HTTP: #{status_code}")
+        IO.puts("Corpo da Resposta: #{body}")
+        {:error, {:http_error, status_code, body}}
+
+      {:error, error} ->
+        IO.puts("Falha na requisição: #{inspect(error)}")
+        {:error, {:request_failed, error}}
+    end
+  end
+
+  defp extract_lyrics(document) do
+    # Tentar encontrar o seletor padrão
+    lyrics =
+      document
+      |> Floki.find(".lyrics")
+      |> Floki.text()
+      |> String.trim()
+
+    # Se não encontrar, tenta o contêiner mais recente
+    lyrics = if lyrics == "" do
+      document
+      |> Floki.find(".Lyrics__Container")
+      |> Enum.map(&Floki.text/1)
+      |> Enum.join("\n")
+      |> String.trim()
+    else
+      lyrics
+    end
+
+    # Se ainda não encontrar, tenta capturar todo o texto em divs e filtrar o que parece ser letra
+    lyrics = if lyrics == "" do
+      document
+      |> Floki.find("div")
+      |> Enum.map(&Floki.text/1)
+      |> Enum.filter(fn text -> String.contains?(text, "\n") end) # Filtro básico para tentar pegar blocos de letra
+      |> Enum.join("\n")
+      |> String.trim()
+    else
+      lyrics
+    end
+
+    # Filtrar textos indesejados que não fazem parte da letra
+    lyrics
+    |> String.split("\n")
+    |> Enum.reject(&String.contains?(&1, ["Sign Up", "Get tickets", "You might also like", "See Eminem Live", "Embed", "Cancel", "How to Format Lyrics", "Type out all lyrics", "Use section headers", "Use italics", "To learn more", "About", "Genius Annotation", "Share", "Q&A", "Find answers", "Ask a question", "Genius Answer", "It won’t appear", "When did", "Who wrote", "Greatish Hits", "Expand", "Credits", "Writer", "Release Date", "Real Love Baby Covers", "Real Love Baby Translations", "Tags", "Comments", "Sign Up", "Genius is the ultimate source", "Sign In", "Do Not Sell", "Terms of Use", "Verified Artists", "All Artists", "Hot Songs"]))
+    |> Enum.join("\n")
+  end
+
 
   # Função para validar parâmetros de entrada
   def validar_parametros(artista, musica) do
@@ -83,12 +252,9 @@ defmodule Songapp.SongsApi do
                       artist: musica["artist"]["name"],
                       song: musica["title"],
                       link: musica["link"],
-                      #album: musica["album"]["title"],
-                      #album_link: musica["album"]["link"],
-                      album_image: musica["album"]["cover"],
-                      #artist_link: musica["artist"]["link"],
-                      #cover: musica["album"]["cover"],
-                      #duration: musica["duration"]
+                      album_cover_link: musica["album"]["cover_medium"], # Link da capa do álbum (tamanho médio)
+                      music_preview: musica["preview"], # Link do preview da música
+                      music_id: musica["id"]
                     }
                   end)
 
@@ -138,10 +304,14 @@ defmodule Songapp.SongsApi do
           _ -> Jason.encode!(%{error: "Erro ao decodificar resposta do Vagalume"})
         end
 
-      {:ok, %HTTPoison.Response{status_code: status_code}} when status_code == 502 and tentativas > 0 ->
+      {:ok, %HTTPoison.Response{status_code: 502}} when tentativas > 0 ->
         # Espera 1 segundo antes de tentar novamente
         :timer.sleep(1000)
         buscar_letra_no_vagalume(nome_artista, nome_musica, tentativas - 1)
+
+      {:ok, %HTTPoison.Response{status_code: 502}} ->
+        # Caso esgote as tentativas no Vagalume, tenta buscar com a API do Genius
+        buscar_letra_genius(nome_artista, nome_musica)
 
       {:ok, %HTTPoison.Response{status_code: status_code}} when status_code != 200 ->
         Jason.encode!(%{error: "Erro HTTP #{status_code}: Problema ao acessar a API do Vagalume"})
@@ -184,18 +354,17 @@ defmodule Songapp.SongsApi do
                 }
               end
 
-            Jason.encode!(resultado)
 
           # Caso não consiga decodificar a resposta JSON, retorna um erro
-          _ -> Jason.encode!(%{error: "Erro ao decodificar resposta JSON"})
+          _ -> %{accepted: false, error: "Erro ao decodificar resposta JSON"}
         end
 
       # Caso não consiga buscar a letra, retorna um erro
       {:error, reason} ->
-        Jason.encode!(%{error: "Erro ao buscar letra no Vagalume: #{reason}"})
+        %{accepted: false, error: "Erro ao buscar letra no Vagalume: #{reason}"}
 
       _ ->
-        Jason.encode!(%{error: "Formato inesperado ao buscar letra no Vagalume"})
+        %{accepted: false, error: "Formato inesperado ao buscar letra no Vagalume"}
     end
   end
 end

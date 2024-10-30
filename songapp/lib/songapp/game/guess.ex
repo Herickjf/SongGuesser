@@ -17,7 +17,15 @@ defmodule Songapp.Game.Guess do
   @doc false
   def changeset(guess, attrs) do
     guess
-    |> cast(attrs, [:guess, :is_correct, :"default=false"])
-    |> validate_required([:guess, :is_correct, :"default=false"])
+  |> cast(attrs, [
+       :artist,
+       :song_name,
+       :is_correct,
+       :player_id,
+       :game_id,
+       :round_number,
+       :selected_music_id
+     ])
+    |> validate_required([:artist, :song_name, :player_id, :game_id, :round_number])
   end
 end

@@ -20,6 +20,7 @@ defmodule SongappWeb.Router do
   scope "/", SongappWeb do
     pipe_through :browser
 
+    live "/", HomeLive, :show
     live "/home", HomeLive, :show
     live "/about", AboutLive, :show
     live "/game", GameLive, :show

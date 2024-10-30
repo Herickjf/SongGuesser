@@ -28,9 +28,14 @@ const rankingBoxSong    = document.getElementById('ranking_box_song')
 // song touch
 const songs             = [...document.getElementsByClassName('song_found')]
 
-setTimeout(() => {
-    window.Rooms.setListenPlayers(updatePlayers)
-}, 1000)
+
+window.Rooms.setListenPlayers(updatePlayers)
+window.Rooms.setListenGame(updateRoom)
+window.Rooms.setListenMusicQuesses(updateGuesses)
+
+// Por padrão, o botão de nextRound e de start não é visível
+nextRoundBtn.style.visibility = 'hidden'
+startBtn.style.visibility = 'hidden'
 
 
 function copyLink(code){
@@ -61,13 +66,11 @@ async function runTimeBar(seconds){
         await new Promise(r => setTimeout(r, 1000));
     }
 
-    // Quando a barra chegar a 0, coleta e envia a musica selecionada, caso haja
-    let selected_song = document.getElementsByClassName('song_selected');
-    if(selected_song.length > 0){
-        let artist_name = selected_song[0].children[1].children[0].innerHTML;
-        let song_name = selected_song[0].children[1].children[1].innerHTML;
-        window.Rooms.sendMusicSelection(artist_name, song_name);
-    } 
+    let songs = [...document.getElementsByClassName('song_found')]
+    songs.forEach((el) => {
+        el.parentNode.removeChild(el)
+    })
+    
 }
 
 searchSong.addEventListener('click', () => {
@@ -100,13 +103,14 @@ searchSong.addEventListener('click', () => {
             [...document.getElementsByClassName("song_found")].forEach((song) => {
                 song.parentNode.removeChild(song)
             })
-
             let found = data.found
             found.forEach((song) => {
                 let songDiv = document.createElement('div')
                 songDiv.classList.add('song_found')
                 songDiv.innerHTML = `
-                    <div class="cover" style="background-image: url(${song.album_image})"></div>
+                    <div class="cover" style="background-image: url(${song.album_cover_link});
+                    background-size: cover;
+                    background-position:center"></div>
                     <div class="info">
                         <h2>${song.song}</h2>
                         <p>${song.artist}</p>
@@ -168,9 +172,10 @@ const cleanBoxes = () => {
 
 exitRoomBtn.forEach((el) => {
     el.addEventListener('click', () => {
-        console.log("exiting room...")
+        window.Rooms.getOut()
     })
 }) 
+
 startBtn.addEventListener('click', () => {
     // windows logics
     if(waitingForRound){
@@ -179,6 +184,8 @@ startBtn.addEventListener('click', () => {
         whilePlayingRound.style.display = 'flex'
         whilePlayingSong.style.display = 'flex'
     }
+
+    startRound()
 })
 nextRoundBtn.addEventListener('click', () => {
     // windows logics
@@ -213,6 +220,9 @@ function updateSongsButton(){
             }
             
             el.classList.add('song_selected')
+            let artist = el.getElementsByClassName('info')[0].getElementsByTagName('p')[0].innerHTML
+            let song = el.getElementsByClassName('info')[0].getElementsByTagName('h2')[0].innerHTML
+            window.Rooms.sendMusicSelection(artist, song)
         })
     })
 }
@@ -234,9 +244,26 @@ function updatePlayers(){
     let players = window.Rooms.getPlayers()
     let player = window.Rooms.getPlayer()
     let room = window.Rooms.getGame()
-    players.forEach((player) => {
-        console.log(player)
-    })
+
+    try{
+        if(player.is_admin){
+            nextRoundBtn.style.visibility = 'visible'
+            startBtn.style.visibility = 'visible'
+        }
+    }catch(e){
+        // Caso ocorra um erro, não faz nada
+    }
+
+    console.log(room)
+
+    try{
+        document.getElementById('room_code_exib').innerHTML = room.code
+        document.getElementById('players_max').innerHTML = room.max_players
+        document.getElementById('players_min').innerHTML = players.length
+    }catch(e){
+        // Caso ocorra um erro, não faz nada
+    }
+
     for(let i = 0; i < players.length; i++){
         for(let j = 0; j < players.length; j++){
             if(players[i].score > players[j].score){
@@ -249,34 +276,48 @@ function updatePlayers(){
 
     // Limpa a lista de jogadores já exibida
     try{
-        players_box = document.getElementById('players')
-        console.log(players_box)
-        if(players_box != undefined){
-            players_box.innerHTML = ''
-            players_box.children.forEach((child) => {
-                child.parentNode.removeChild(child);
+        let players_cards = [...document.getElementsByClassName('player')]
+        if(players_cards.length > 0){
+            players_cards.forEach((el) => {
+                el.parentNode.removeChild(el);
             })
         }
     }catch(e){
-        console.log("Erro ao limpar a lista de jogadores")
+        console.log(e)
     }
 
+    console.log(player)
     players.forEach((player) => {
         let playerDiv = document.createElement('div')
         playerDiv.classList.add('player')
-        playerDiv.innerHTML = `
-            <div class="profile" style="background-image: url(/frontend/assets/avatars/${player.photo_id}.png)"></div>
-            <div class="info">
-                <h2>${player.nickname}</h2>
-                <p>${player.score} points</p>
-            </div>
-        `
+
+        if(player.is_admin){
+            playerDiv.innerHTML = `
+                <div class="profile" id="host" style="background-image: url(/images/avatars/${player.photo_id}.png); 
+                background-size: cover;
+                background-position:center"><i class="fas fa-crown"></i></div>
+                <div class="info">
+                    <h2>${player.nickname}</h2>
+                    <p>${player.score} points</p>
+                </div>
+            `
+        }else{
+            playerDiv.innerHTML = `
+                <div class="profile" style="background-image: url(/images/avatars/${player.photo_id}.png);
+                background-size: cover;
+                background-position:center"></div>
+                <div class="info">
+                    <h2>${player.nickname}</h2>
+                    <p>${player.score} points</p>
+                </div>
+            `
+        }
         document.getElementById('players').appendChild(playerDiv)
     })
 
 }
 
-function updateRanking(ranking){
+function updateRanking(){
     /*
         Recebe uma lista de jogadores e configura o ranking da rodada
         Supondo que o parametro passado e uma lista de objetos com os seguintes atributos:
@@ -286,6 +327,17 @@ function updateRanking(ranking){
             "score": "pontuacao do jogador"
         }
     */
+
+    let players = window.Rooms.getPlayers()
+    let ranking = []
+    max = 3
+    for(let i = 0; i < players.length; i++){
+        ranking.push({
+            "nickname": players[i].nickname,
+            "avatar": players[i].photo_id,
+            "score": players[i].score
+        })
+    }
 
     // Ordena os jogadores com base em seus scores
     for(let i = 0; i < ranking.length; i++){
@@ -298,18 +350,24 @@ function updateRanking(ranking){
         }
     }
 
-    // Adiciona as imagens e as informacoes dos jogadores no ranking
-    document.getElementById('first_place_img').style.backgroundImage = `url(/frontend/assets/avatars/${ranking[0].avatar}.png)`
-    document.getElementById('first_place_name').innerHTML = ranking[0].nickname
-    document.getElementById('first_place_score').innerHTML = ranking[0].score + ' points'
+    try{
+        // Adiciona as imagens e as informacoes dos jogadores no ranking
+        document.getElementById('first_place_img').style.backgroundImage = `url(/images/avatars/${ranking[0].avatar}.png)`
+        document.getElementById('first_place_name').innerHTML = ranking[0].nickname
+        document.getElementById('first_place_score').innerHTML = ranking[0].score + ' points'
 
-    document.getElementById('second_place_img').style.backgroundImage = `url(/frontend/assets/avatars/${ranking[1].avatar}.png)`
-    document.getElementById('second_place_name').innerHTML = ranking[1].nickname
-    document.getElementById('second_place_score').innerHTML = ranking[1].score + ' points'
+    
+        document.getElementById('second_place_img').style.backgroundImage = `url(/images/avatars/${ranking[1].avatar}.png)`
+        document.getElementById('second_place_name').innerHTML = ranking[1].nickname
+        document.getElementById('second_place_score').innerHTML = ranking[1].score + ' points'
+    
+        document.getElementById('third_place_img').style.backgroundImage = `url(/images/avatars/${ranking[2].avatar}.png)`
+        document.getElementById('third_place_name').innerHTML = ranking[2].nickname
+        document.getElementById('third_place_score').innerHTML = ranking[2].score + ' points'
 
-    document.getElementById('third_place_img').style.backgroundImage = `url(/frontend/assets/avatars/${ranking[2].avatar}.png)`
-    document.getElementById('third_place_name').innerHTML = ranking[2].nickname
-    document.getElementById('third_place_score').innerHTML = ranking[2].score + ' points'
+    }catch(e){
+        // Caso ocorra um erro, é pq não tem pelo menos 3 jogadores
+    }
     
 }
 
@@ -325,9 +383,201 @@ function startRound(){
     waitingForSong.style.display = 'none'
     whilePlayingSong.style.display = 'flex'
     updateSongsButton()
+    window.Rooms.sendNextRoundOrder()
+}
+
+function updateRoom(){
+    let room = window.Rooms.getGame()
+    console.log("-----------------------")
+    console.log("Atualizando a sala", room)
+
+    if(room.status == 'waiting'){
+        // Se a sala estiver esperando, exibe a tela de espera
+        cleanBoxes()
+        waitingForRound.style.display = 'flex'
+    }else if(room.status == 'playing'){
+        // Se a sala estiver jogando, exibe a tela de jogo
+        cleanBoxes()
+        whilePlayingRound.style.display = 'flex'
+        whilePlayingSong.style.display = 'flex'
+        let round_words = [... document.getElementsByClassName('round_word')]
+        round_words.forEach((el) => {
+            el.innerHTML = room.room_word.toUpperCase()
+        })
+        runTimeBar(30)
+    }else if(room.status == 'between_rounds'){
+        // Se a sala estiver entre rodadas, exibe a tela de entre rodadas
+        cleanBoxes()
+        betweenRounds.style.display = 'flex'
+        betweenRoundsSong.style.display = 'flex'
+        updateGuesses()
+    }else if(room.status == 'ranking'){
+        // Se a sala estiver exibindo o ranking, exibe a tela de ranking
+        cleanBoxes()
+        rankingBoxRounds.style.display = 'flex'
+        rankingBoxSong.style.display = 'flex'
+        updateRanking()
+    }
+}
+
+function updateGuesses(){
+    let guesses = window.Rooms.getGuesses()
+    let players = window.Rooms.getPlayers()
+    
+
+    /*
+        Primeiramente, acumula os jogadores que colocaram a mesma musica
+        Com o formato:
+        [{
+            "song": "nome da musica",
+            "artist": "nome do artista",
+            "album_cover_link": "link da capa do album",
+            "players": ["jogador 1", "jogador 2", ...]
+        }]
+        },
+        ...        
+        ]
+    */
+
+    let guessLength = !guesses ? 0 : guesses.length
+    let acumulator = []
+    for(let i = 0; i < guessLength; i++){
+        // Passo 1: verifica se a musica ja foi acumulada
+        let found = false
+        for(let j = 0; j < acumulator.length; j++){
+            if(acumulator[j].song == guesses[i].song && acumulator[j].artist == guesses[i].artist){
+                acumulator[j].players.push(guesses[i].player)
+                found = true
+                break
+            }
+        }
+
+        // Passo 2: se a musica nao foi acumulada, acumula ela
+        let album_cover_link = ""
+        let song_preview = ""
+        fetch("http://localhost:4000/api/search_song", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "artist": guesses[i].artist,
+                "track": guesses[i].song_name
+            })
+        }).then(response => response.json())
+        .then(data => {
+            data = JSON.parse(data)
+            console.log("RESULTADO DO FETCH")
+            console.log(data)
+            if(data.valid == true && data.amount > 0){
+                album_cover_link = data.found[0].album_cover_link
+                song_preview = data.found[0].song_preview
+            }
+        })
+
+        if(!found){
+            acumulator.push({
+                "song": guesses[i].song_name,
+                "artist": guesses[i].artist,
+                "album_cover_link": album_cover_link,
+                "song_preview": song_preview,
+                "players": [guesses[i].player],
+                "is_correct": guesses[i].is_correct
+            })
+        }
+    }
+
+    /*
+        Com a lista acumulada, exibe na tela
+    */
+
+    let caixa = document.getElementsByClassName('results_songs_box')[0]
+
+    // Limpa a lista de musicas ja exibida
+    try{
+        let trash = [...document.getElementsByClassName('song_results')]
+        if(trash.length > 0){
+            trash.forEach((el) => {
+                el.parentNode.removeChild(el)
+            })
+        }
+    }catch(e){
+        // Caso ocorra um erro, não faz nada
+    }
+
+    console.log(acumulator)
+    acumulator.forEach((el)=>{
+        let songDiv = document.createElement('div')
+        let player_str = el.players.join(" e ")
+        songDiv.classList.add('song_results')
+        if(el.is_correct)
+            songDiv.classList.add('correct_song')
+        else
+            songDiv.classList.add('wrong_song')
+        
+        songDiv.innerHTML = `
+            <div class="cover" style="background: url(${el.album_cover_link}); background-size: cover; background-position: center"></div>
+            <div class="info">
+            <h6>${player_str}</h6>
+            <h2>${el.song}</h2>
+            <p>${el.artist}</p>
+            </div>
+        `
+        caixa.appendChild(songDiv)
+    })
+
+    updateResults()
+}
+
+function updateResults(){
+    let guesses = window.Rooms.getGuesses()
+    let player = window.Rooms.getPlayer()
+    
+    if(!guesses)
+        return
+    
+
+    let song_preview = ""
+    let album_cover_link = ""
+
+    // Informa pro jogador se ele acertou ou errou a musica
+    try{
+        guesses = [...guesses]
+    }catch(e){
+        guesses = [guesses]
+    
+    }
+
+    guesses.forEach((el) => {
+        if(el.player_id == player.id){
+            if(el.is_correct){
+                document.getElementById('isRight').innerHTML = 'RIIIIGHT!';
+            }else{
+                document.getElementById('isRight').innerHTML = 'WROOOONG!';
+            }
 
 
-    runTimeBar(20)
+            fetch("http://localhost:4000/api/search_song", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "artist": el.artist,
+                    "track": el.song_name
+                })
+            }).then(response => response.json())
+            .then(data => {
+                data = JSON.parse(data)
+                if(data.valid == true && data.amount > 0){
+                    album_cover_link = data.found[0].album_cover_link
+                    song_preview = data.found[0].song_preview
+                }
+            })
+
+            playSong(song_preview, album_cover_link, el.artist, el.song, el.is_correct)
+        }
+    })
 }
 
 updatePlayers()

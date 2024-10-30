@@ -8,6 +8,9 @@ const Rooms = {
     players: null,
     guesses: null,
 
+    getGuesses: function () {
+        return this.guesses;
+    },
     getPlayers: function () {
         return this.players;
     },
@@ -89,11 +92,12 @@ const Rooms = {
             }).receive("ok", (resp) => {
                 alert(`Room created with code: ${resp.room_code}`);
                 this.joinRoom(resp.room_code, roomPW, nickname, photoId);
+            
 
-                return {"failed": false, "roomCode":resp.room_code}
                 this.player = JSON.parse(resp.player)
                 this.game = JSON.parse(resp.room)
                 this.players = JSON.parse(resp.players)
+                return {"failed": false, "roomCode":resp.room_code}
 
 
                 }).receive("error", (resp) => {
@@ -125,7 +129,7 @@ const Rooms = {
         }
 
         this.joinRoom(roomCode, roomPW, nickname, photoId);
-        // returna ok ou error retorn {:ok, socket: {object} } ou {:error, reason: "error pra dar alert"}
+        // retorna ok ou error retorn {:ok, socket: {object} } ou {:error, reason: "error pra dar alert"}
 
 
     },
@@ -139,6 +143,7 @@ const Rooms = {
                 .receive("error", () => console.log(`Failed to leave room: ${roomCode}`));
         }
         this.joinRoom("lobby", '', '', '');
+        console.log("saiu da sala")
     },
 
     sendNextRoundOrder: function () {
@@ -148,9 +153,9 @@ const Rooms = {
         }
     },
 
-    sendMusicSelection: function (musicId) {
+    sendMusicSelection: function (artist, songName, music_id) {
         if (this.currentChannel) {
-            this.currentChannel.push("music_selection", { id: musicId });
+            this.currentChannel.push("music_selection", { artist: artist, song_name: songName });
         }
     },
 
@@ -183,7 +188,8 @@ const Rooms = {
             this.currentChannel.on("game", payload => {
 
                 console.log("Received game", payload);
-                func(payload);
+                this.game = JSON.parse(payload.room);
+                func();
 
                 // estado atualizado do jogo 
             });
@@ -196,7 +202,13 @@ const Rooms = {
             this.currentChannel.on("players", payload => {
 
                 console.log("Received players", payload);
-                func(payload);
+                this.players = JSON.parse(payload.players)
+                this.players.forEach((el) => {
+                    if (el.id == this.player.id) {
+                        this.player = el
+                    }
+                })
+                func();
                 // lista de playes na sala
             });
         }
@@ -209,7 +221,8 @@ const Rooms = {
             this.currentChannel.on("guesses", payload => {
 
                 console.log("Received music quesses", payload);
-                func(payload);
+                this.guesses = JSON.parse(payload.guesses)
+                func();
 
                 // recebe o palpite de music dos outros jogadores,
                 // em uma lista de musicas

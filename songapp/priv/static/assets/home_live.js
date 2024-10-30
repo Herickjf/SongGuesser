@@ -104,7 +104,7 @@ enterRoom.addEventListener('click', async () => {
     if(!nickNameRegex.test(nickname.value)){
         nickname.value = ""
         // "voltar" a tela
-        document.getElementById('create-room').style.display = 'none'
+        document.getElementById('enter-room').style.display = 'none'
         document.getElementById('credentials').style.display = 'flex'
         
         alert("Choose a nickname with letters and numbers only!")
@@ -143,9 +143,18 @@ enterRoom.addEventListener('click', async () => {
         "nickname": nickname.value
     }
 
-    let room = await window.Rooms.joinRoom(roomCode.value, password.value, nickname.value, avatar)
-    document.getElementById("change_to_gameScreen").click()
-    console.log("RECEBEU: ", room)
+    try{
+        let room = await window.Rooms.joinRoom(roomCode.value, password.value, nickname.value, avatar)
+        document.getElementById("change_to_gameScreen").click()
+    
+        console.log("RECEBEU: ", room)
+    }catch(e){
+        alert("Room was not found!")
+        document.getElementById('enter-room').style.display = 'none'
+        roomCode.value = ""
+        document.getElementById('credentials').style.display = 'flex'
+        return;
+    }
 });
 
 createRoom.addEventListener('click', () => {
@@ -221,13 +230,18 @@ createRoom.addEventListener('click', () => {
     let flagSelected = document.getElementsByClassName('selected')
     let language = ""
     
-    if(flagSelected[0].classList.contains('br')){
-        language = "portuguese"
-    }else if(flagSelected[0].classList.contains('es')){
-        language = "spanish"
-    }else{              
+    try{
+        if(flagSelected[0].classList.contains('br')){
+            language = "portuguese"
+        }else if(flagSelected[0].classList.contains('es')){
+            language = "spanish"
+        }else{              
+            language = "english"
+        }
+    }catch(e){
         language = "english"
     }
+    
     
     
     // coletar o avatar
@@ -243,8 +257,8 @@ createRoom.addEventListener('click', () => {
                 "\nRounds: " + nRounds +
                 "\nLanguage: " + language 
     )
-    let room = window.Rooms.createRoom(password.value, nRounds, max_players, language, nickname.value, avatar)
     
+    let room = window.Rooms.createRoom(password.value, nRounds, max_players, language, nickname.value, avatar)
     // if(room['failed']){
     //     alert(`Sala de código ${room['roomCode']} criada!`)
     // }else{

@@ -3,6 +3,7 @@ defmodule SongappWeb.RoomChannel do
 
   alias Songapp.RoomsManager
   alias Songapp.Game
+  alias Songapp.SongsApi
 
   def player_to_map(%Songapp.Game.Player{} = player) do
     %{
@@ -23,7 +24,9 @@ defmodule SongappWeb.RoomChannel do
       status: room.status,
       language: room.language,
       max_rounds: room.max_rounds,
-      current_round_number: room.current_round_number
+      max_players: room.max_players,
+      current_round_number: room.current_round_number,
+      room_word: room.round_word
     }
   end
 
@@ -53,12 +56,11 @@ defmodule SongappWeb.RoomChannel do
         socket
       ) do
     case RoomsManager.join_room(room_code, password, nickname, photo_id) do
-      {:ok, player, room} ->
+      {:ok, player, players, room} ->
         # Atribuir permanentemente as informações ao socket
         socket = assign(socket, :room, room) |> assign(:player, player)
 
         # Preparar os dados para serem enviados após o join
-        players = Game.list_players_in_room(room.id)
 
         players_json =
           players
@@ -82,6 +84,103 @@ defmodule SongappWeb.RoomChannel do
   @impl true
   def handle_info({:after_join, players_json}, socket) do
     broadcast!(socket, "players", %{players: players_json})
+    {:noreply, socket}
+  end
+
+  def handle_info({:end_round, room, player_socket}, socket) do
+    # Chama a função end_round com os parâmetros desejados
+
+    IO.puts("End round ----------------------------------------------")
+    # IO.inspect(room, label: "room")
+    # IO.inspect(player_socket, label: "player_socket")
+
+    is_end_round =
+      if room.current_round_number == room.max_rounds do
+        true
+      else
+        false
+      end
+
+    case Game.update_room(room, %{
+           status:
+             if is_end_round do
+               "end"
+             else
+               "between_rounds"
+             end
+         }) do
+      {:ok, room} ->
+        players = Game.list_players_in_room(room.id)
+
+        for player <- players do
+          points =
+            case Game.list_guesses_by_filters(player.id, room.id, room.current_round_number) do
+              [guess | _l] ->
+                result =
+                  SongsApi.verificar_palavra_na_letra(
+                    guess.artist,
+                    guess.song_name,
+                    room.round_word
+                  )
+
+                IO.inspect(result, label: "result verify word")
+
+                # Atribui pontos com base no resultado
+                points = if result.accepted, do: 10, else: 0
+
+                # Atualiza o `guess` com o resultado
+                Game.update_guess(guess, %{is_correct: result.accepted})
+                points
+
+              [] ->
+                IO.puts("No guesses found for player #{player.id} in the current round")
+                -5
+            end
+
+          # Atualiza o jogador com a pontuação correta
+          case Game.update_player(player, %{
+                 status: "between_rounds",
+                 score: player.score + points
+               }) do
+            {:ok, player} ->
+              {:ok, player, room}
+
+            {:error, _reason} ->
+              IO.puts("Failed to update player")
+          end
+        end
+
+        romm = Game.get_room_by_code!(room.code)
+        players = Game.list_players_in_room(room.id)
+
+        guesses =
+          Game.list_guesses_by_game_and_round(
+            room.id,
+            room.current_round_number
+          )
+
+        guesses_json =
+          guesses
+          |> Enum.map(&SongappWeb.RoomChannel.guess_to_map/1)
+          |> Jason.encode!()
+
+        room_json = Jason.encode!(SongappWeb.RoomChannel.room_to_map(room))
+
+        players_json =
+          players
+          |> Enum.map(&SongappWeb.RoomChannel.player_to_map/1)
+          |> Jason.encode!()
+
+        broadcast!(socket, "game", %{room: room_json})
+        broadcast!(socket, "players", %{players: players_json})
+        broadcast!(socket, "guesses", %{guesses: guesses_json})
+
+        {:ok, room, players, guesses}
+
+      {:error, _reason} ->
+        {:error, "Failed to update room"}
+    end
+
     {:noreply, socket}
   end
 
@@ -153,13 +252,15 @@ defmodule SongappWeb.RoomChannel do
   end
 
   @impl true
-  def handle_in("music_selection", %{"artist" => artist, "song_name" => song_name}, socket) do
+  def handle_in("music_selection", %{"artist" => artist, "song_name" => song_name, "music_id" => music_id }, socket) do
     player = socket.assigns[:player]
     room = socket.assigns[:room]
 
-    case RoomsManager.select_music(room, player, artist, song_name) do
+    case RoomsManager.select_music(room, player, artist, song_name, music_id) do
       {:ok, guess} ->
-        {:ok, guess}
+        g = guess_to_map(guess)
+        guess_json = Jason.encode!(g)
+        {:reply, {:ok, %{guess: guess_json}}, socket}
 
       {:error, reason} ->
         {:reply, {:error, reason}, socket}
@@ -170,26 +271,34 @@ defmodule SongappWeb.RoomChannel do
   def terminate(_reason, socket) do
     player = socket.assigns[:player]
     room = socket.assigns[:room]
+    IO.inspect(label: "player getout room")
 
     # Remove player from the room
-    Game.delete_player(player)
-    case Game.list_players_in_room(room.id) do
-      [] ->
-      RoomsManager.delete_room(room)
-      [new_admin | _] ->
-      Game.update_player(new_admin, %{is_admin: true})
+    if player do
+      Game.delete_player(player)
     end
-    Game.update_player(player, %{is_admin: true})
+
+    if room do
+      case Game.list_players_in_room(room.id) do
+        [] ->
+          Game.delete_room(room)
+
+        [new_admin | _] ->
+          Game.update_player(new_admin, %{is_admin: true})
+      end
+    end
 
     # Notify other players in the room
-    players = Game.list_players_in_room(room.id)
+    if room do
+      players = Game.list_players_in_room(room.id)
 
-    players_json =
-      players
-      |> Enum.map(&SongappWeb.RoomChannel.player_to_map/1)
-      |> Jason.encode!()
+      players_json =
+        players
+        |> Enum.map(&SongappWeb.RoomChannel.player_to_map/1)
+        |> Jason.encode!()
 
-    broadcast!(socket, "players", %{players: players_json})
+      broadcast!(socket, "players", %{players: players_json})
+    end
 
     :ok
   end

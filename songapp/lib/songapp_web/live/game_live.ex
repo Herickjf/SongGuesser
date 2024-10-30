@@ -60,21 +60,19 @@ defmodule SongappWeb.GameLive do
 
                         <!-- link pra outra sala -->
                             <div id="room_link">
-                            <p><span id="room_code_exib">12TF9M</span> &#8594; <a href="" id="link_button" alt="Copiar Link"><i class="fa fa-clone"></i></a></p>
+                            <p><span id="room_code_exib">12TF9M</span> &#8594; <label id="link_button" ><i class="fa fa-clone"></i></label></p>
                             </div>
 
                             <h1>Players (<span id="players_min"></span>/<span id="players_max"></span>)</h1>
 
-                            <div id="players">
-
-                            </div>
+                            <div id="players"></div>
                     </div>
                     <!-- fim de players -->
 
                         <!-- inicio de round -->
                             <div id="round_box" >
                             <div id="word_box">
-                            <h1>WORD</h1>
+                            <h1 class="round_word">WORD</h1>
                             </div>
 
                             <div id="waiting_for">
@@ -115,7 +113,7 @@ defmodule SongappWeb.GameLive do
                             <div id="between_rounds" style="display: none">
                             <div>
                             <p>For the word <span class="round_word">palavra</span> you are...</p>
-                            <h1 id="isRight">RIGHTT</h1>
+                            <h1 id="isRight">WROOOONG!</h1>
                             <br>
                             <p>Listen to a preview of this song on the player below</p>
                             </div>
@@ -142,7 +140,7 @@ defmodule SongappWeb.GameLive do
                                 </div>
                                 </div>
 
-                                <button class="button" id="btn_nextRound">Next Round</button>
+                                <p>Waiting for the host to call the next round...</p>
                                 </div>
 
                                 <div id="ranking_box" style="display: none;">
@@ -183,61 +181,23 @@ defmodule SongappWeb.GameLive do
                                     <p>Wait for the host to start the game</p>
                                     <div class="btns">
                                     <button class="button btn_start">Start</button>
-                                    <button class="button btn_exit">Exit</button>
+                                    <a href="#" phx-click="navigate" phx-value-page="home"><button class="button btn_exit">Exit</button></a>
+
                                     </div>
                                     </div>
 
                                     <div id="didnt_found" style="display: none;">
                                     <h1>No music found</h1>
-                                    <button class="button btn_exit">Exit</button>
+                                    <a href="#" phx-click="navigate" phx-value-page="home"><button class="button btn_exit">Exit</button></a>
                                     </div>
 
                                     <div id="while_playing_song"  style="display: none;">
                                     <h1>Which song?</h1>
 
-                                    <div class="songs" >
-
-                                    <div class="song_found">
-                                    <div class="cover"></div>
-                                    <div class="info">
-                                    <h2>Song title</h2>
-                                    <p>Artist name</p>
-                                    </div>
-                                    </div>
-
-                                    <div class="song_found">
-                                    <div class="cover"></div>
-                                    <div class="info">
-                                    <h2>Song title</h2>
-                                    <p>Artist name</p>
-                                    </div>
-                                    </div>
-                                    <div class="song_found">
-                                    <div class="cover"></div>
-                                    <div class="info">
-                                    <h2>Song title</h2>
-                                    <p>Artist name</p>
-                                    </div>
-                                    </div>
-                                    <div class="song_found">
-                                    <div class="cover"></div>
-                                    <div class="info">
-                                    <h2>Song title</h2>
-                                    <p>Artist name</p>
-                                    </div>
-                                    </div>
-                                    <div class="song_found">
-                                    <div class="cover"></div>
-                                    <div class="info">
-                                    <h2>Song title</h2>
-                                    <p>Artist name</p>
-                                    </div>
-                                    </div>
-
-                                    </div>
+                                    <div class="songs"></div>
 
                                     <div class="btns">
-                                    <button class="button btn_exit">Exit</button>
+                                    <a href="#" phx-click="navigate" phx-value-page="home"><button class="button btn_exit">Exit</button></a>
                                     </div>
 
                                     </div>
@@ -245,7 +205,7 @@ defmodule SongappWeb.GameLive do
                                     <div id="between_rounds_song" style="display: none;">
                                     <h1>Answers: </h1>
 
-                                    <div class="songs">
+                                    <div class="songs results_songs_box">
 
                                     <div class="song_results correct_song">
                                     <div class="cover"></div>
@@ -285,7 +245,7 @@ defmodule SongappWeb.GameLive do
 
                                     <div class="btns">
                                     <button class="button btn_next_round">Next round</button>
-                                    <button class="button btn_exit">Exit</button>
+                                    <a href="#" phx-click="navigate" phx-value-page="home"><button class="button btn_exit">Exit</button></a>
                                     </div>
                                     </div>
 
@@ -294,7 +254,7 @@ defmodule SongappWeb.GameLive do
 
                                     <div class="btns">
                                     <button class="button" id="btn_restart">Restart</button>
-                                    <button class="button btn_exit">Exit</button>
+                                    <a href="#" phx-click="navigate" phx-value-page="home"><button class="button btn_exit">Exit</button></a>
                                     </div>
                                     </div>
                                     </div>
@@ -321,3 +281,13 @@ defmodule SongappWeb.GameLive do
     {:noreply, push_redirect(socket, to: "/" <> page)}
   end
 end
+
+# <div id="chat_box">
+# <div id="text_area">
+#   <p><span>herick: </span>Oi, gente!</p>
+# </div>
+# <div id="message_box">
+#   <div id="enter_text"></div>
+#   <i class="fa fa-paper-plane"></i>
+# </div>
+# </div>
