@@ -8,7 +8,7 @@ import Config
 config :songapp, Songapp.Repo,
   username: "postgres",
   password: "postgres",
-  hostname: "localhost",
+  hostname: "15.228.220.61",
   database: "songapp_test#{System.get_env("MIX_TEST_PARTITION")}",
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: System.schedulers_online() * 2

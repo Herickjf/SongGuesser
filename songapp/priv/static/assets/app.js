@@ -6308,7 +6308,7 @@ removing illegal node: "${(childNode.outerHTML || childNode.nodeValue).trim()}"
       return this.socket;
     }
     connect() {
-      if (window.location.hostname === "localhost" && !this.isDebugDisabled()) {
+      if (window.location.hostname === "15.228.220.61" && !this.isDebugDisabled()) {
         this.enableDebug();
       }
       let doConnect = () => {

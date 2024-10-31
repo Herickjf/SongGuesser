@@ -13,7 +13,7 @@ config :songapp,
 
 # Configures the endpoint
 config :songapp, SongappWeb.Endpoint,
-  url: [host: "localhost"],
+  url: [host: "15.228.220.61"],
   adapter: Bandit.PhoenixAdapter,
   render_errors: [
     formats: [html: SongappWeb.ErrorHTML, json: SongappWeb.ErrorJSON],

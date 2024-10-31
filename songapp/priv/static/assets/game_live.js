@@ -58,7 +58,7 @@ export default function gameLive() {
 
     function copyLink(code) {
         // mudar string caso mude o link
-        var link = "http://localhost:4000/home?id=" + code;
+        var link = "http://15.228.220.61:4000/home?id=" + code;
 
         var tempInput = document.createElement("input");
         tempInput.value = link;
@@ -97,7 +97,7 @@ export default function gameLive() {
         let artist_name = document.getElementById('artist_name').value;
         let track_name = document.getElementById('track_name').value;
 
-        fetch('http://localhost:4000/api/search_song', {
+        fetch('http://15.228.220.61:4000/api/search_song', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -565,7 +565,7 @@ export default function gameLive() {
             // Passo 2: se a musica nao foi acumulada, acumula ela
             let album_cover_link = ""
             let song_preview = ""
-            fetch("http://localhost:4000/api/search_by_id", {
+            fetch("http://15.228.220.61:4000/api/search_by_id", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -671,7 +671,7 @@ export default function gameLive() {
                 }
 
 
-                fetch("http://localhost:4000/api/search_by_id", {
+                fetch("http://15.228.220.61:4000/api/search_by_id", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -724,7 +724,7 @@ export default function gameLive() {
                 let selectedMusicId = guesses[ind].selected_music_id
                 let gs = guesses[ind]
 
-                fetch("http://localhost:4000/api/search_by_id", {
+                fetch("http://15.228.220.61:4000/api/search_by_id", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

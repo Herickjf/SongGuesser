@@ -25,7 +25,7 @@ const rankingBoxSong    = document.getElementById('ranking_box_song')
 const songs             = [...document.getElementsByClassName('song_found')]
 
 function copyLink(code){
-    var link = "http://localhost:5500/frontend/index.html?id=" + code;
+    var link = "http://15.228.220.61:5500/frontend/index.html?id=" + code;
     
     var tempInput = document.createElement("input");
     tempInput.value = link;
