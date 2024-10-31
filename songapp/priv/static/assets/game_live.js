@@ -689,19 +689,16 @@ export default function gameLive() {
         //     nickname: player.nickname
         // }
         console.log("Received message", payload);
-        let msg = payload.body
-        let chat_area = document.getElementById('chat_area')
-        let player = payload.nickname
-        let chat = document.createElement('div')
-        chat.classList.add('chat')
+        let msg = payload.body;
+        let chat_area = document.getElementById('chat_area');
+        let player = payload.nickname;
+        let chat = document.createElement('p');
         chat.innerHTML = `
-        <p>
-        <span>${player}</span> :
-        ${msg}</p>
-    `
-        chat_area.appendChild(chat)
-        document.getElementById('msg_text').value = ""
-    })
+        <span>${player}</span> : ${msg}
+    `;
+        chat_area.appendChild(chat);
+        document.getElementById('msg_text').value = "";
+    });
 
     document.getElementById('send_msg').addEventListener('click', () => {
         let msg = document.getElementById('msg_text').value

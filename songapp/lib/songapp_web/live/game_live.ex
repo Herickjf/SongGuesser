@@ -267,7 +267,7 @@ defmodule SongappWeb.GameLive do
 
         <div id="chat_box">
           <div id="chat_area">
-            <p><span>herick: </span>Oi, genteeeeeeeeeeeeeeeeeeeeeeeeeeeeeee!</p>
+            <%!-- <p><span>herick: </span>Oi, genteeeeeeeeeeeeeeeeeeeeeeeeeeeeeee!</p>
             <p><span>herick: </span>Oi, gente!</p>
             <p><span>herick: </span>Oi, gente!</p>
             <p><span>herick: </span>Oi, gente!</p>
@@ -276,7 +276,7 @@ defmodule SongappWeb.GameLive do
             <p><span>herick: </span>Oi, gente!</p>
             <p><span>herick: </span>Oi, gente!</p>
             <p><span>herick: </span>Oi, gente!</p>
-            <p><span>herick: </span>Oi, gente!</p>
+            <p><span>herick: </span>Oi, gente!</p> --%>
           </div>
           <div id="message_box">
             <input type="text" id="msg_text" placeholder="Enter a message">
