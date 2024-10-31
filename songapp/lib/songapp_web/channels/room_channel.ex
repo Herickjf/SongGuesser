@@ -134,7 +134,7 @@ defmodule SongappWeb.RoomChannel do
 
               [] ->
                 IO.puts("No guesses found for player #{player.id} in the current round")
-                -5
+                0
             end
 
           # Atualiza o jogador com a pontuação correta

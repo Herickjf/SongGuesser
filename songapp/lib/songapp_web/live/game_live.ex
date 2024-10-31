@@ -59,7 +59,7 @@ defmodule SongappWeb.GameLive do
 
     <!-- link pra outra sala -->
     <div id="room_link">
-    <p><span id="room_code_exib"></span>  <i class="fa fa-long-arrow-right" style="color: #fff;"></i>  <a id="link_button" ><i class="fa-solid fa-copy"></i></a></p>
+    <p><span id="room_code_exib"></span>  <i class="fa fa-long-arrow-right" style="color: #fff;"></i>  <a id="link_button" ><i class="fa-sharp-duotone fa-solid fa-share-nodes"></i></a></p>
     </div>
 
     <h1>Players (<span id="players_min"></span>/<span id="players_max"></span>)</h1>
@@ -74,7 +74,7 @@ defmodule SongappWeb.GameLive do
     <h1 class="round_word">WORD</h1>
     </div>
 
-    <div id="waiting_for">
+    <div id="waiting_for" style="display: none;">
     <p>Waiting for the host to start</p>
     </div>
 
@@ -147,7 +147,7 @@ defmodule SongappWeb.GameLive do
     <p>Waiting for the host to call the next round...</p>
     </div>
 
-    <div id="ranking_box" style="display: none;">
+    <div id="ranking_box" >
     <div id="playersCards_box">
     <div class="playerCard" id="second_place">
     <div class="playerCard_img" id="second_place_img"></div>
@@ -170,7 +170,7 @@ defmodule SongappWeb.GameLive do
 
     <div>
     <p><span id="winner_name">Player</span> won with <span id="winner_points">n</span> points!</p>
-    <p id="congrat_msg">Congratulations!</p>
+    <h2 id="congrat_msg">Congratulations!</h2>
     </div>
     </div>
 
@@ -180,7 +180,7 @@ defmodule SongappWeb.GameLive do
     <!-- inicio de songsInfo -->
     <div id="songs_box">
 
-    <hr>
+    <%!-- <hr></hr> --%>
     <div id="waiting_for_song">
     <h1>Start the Game!</h1>
     <p>Wait for the host to start the game</p>
@@ -263,14 +263,35 @@ defmodule SongappWeb.GameLive do
     <a href="#" phx-click="navigate" phx-value-page="home"><button class="button btn_exit">Exit</button></a>
     </div>
     </div>
+
+
+        <div id="chat_box">
+          <div id="chat_area">
+            <p><span>herick: </span>Oi, genteeeeeeeeeeeeeeeeeeeeeeeeeeeeeee!</p>
+            <p><span>herick: </span>Oi, gente!</p>
+            <p><span>herick: </span>Oi, gente!</p>
+            <p><span>herick: </span>Oi, gente!</p>
+            <p><span>herick: </span>Oi, gente!</p>
+            <p><span>herick: </span>Oi, gente!</p>
+            <p><span>herick: </span>Oi, gente!</p>
+            <p><span>herick: </span>Oi, gente!</p>
+            <p><span>herick: </span>Oi, gente!</p>
+            <p><span>herick: </span>Oi, gente!</p>
+          </div>
+          <div id="message_box">
+            <input type="text" id="msg_text" placeholder="Enter a message">
+            <button id="send_msg" ><i class="fa-solid fa-paper-plane"></i></button>
+          </div>
+        </div>
+      </div>
     </div>
     <!-- fim de songsInfo -->
 
-    </div>
+
     <!-- final classe da sala -->
     </div>
-    <%!-- </body> --%>
-    <%!-- </html> --%>
+    <!-- </body> -->
+    <!-- </html> -->
 
     <div id="game_live" data-page="game_live" phx-hook="LoadSpecificJs"/>
 
