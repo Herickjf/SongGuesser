@@ -8,7 +8,6 @@ defmodule SongappWeb.HomeLive do
 
   def render(assigns) do
     ~H"""
-    <div id="home_live" data-page="home_live" phx-hook="LoadSpecificJs"/>
       <%!-- <h1>Home Page</h1> --%>
       <%!-- <nav> --%>
         <%!-- <a href="#" phx-click="navigate" phx-value-page="about">About</a> --%>
@@ -218,8 +217,8 @@ defmodule SongappWeb.HomeLive do
                     <p>Language:</p>
                     <div class="imgs">
                         <img class="flag" src="/images/flags/eua.png" alt="US flag">
-                        <img class="flag" src="/images/flags/brasil.png" alt="Brasil flag">
-                        <img class="flag" src="/images/flags/spain.png" alt="Spain flag">
+                        <img class="flag br" src="/images/flags/brasil.png" alt="Brasil flag">
+                        <img class="flag es" src="/images/flags/spain.png" alt="Spain flag">
                     </div>
                 </div>
 
@@ -239,6 +238,7 @@ defmodule SongappWeb.HomeLive do
         <%!-- </body>
         </html> --%>
 
+    <div id="home_live" data-page="home_live" phx-hook="LoadSpecificJs"/>
 
 
 

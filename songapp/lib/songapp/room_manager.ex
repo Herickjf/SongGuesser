@@ -83,7 +83,7 @@ defmodule Songapp.RoomsManager do
         room_json = Jason.encode!(SongappWeb.RoomChannel.room_to_map(room))
         broadcast!(socket, "game", %{room: room_json})
 
-        Process.send_after(self(), {:end_round, room, socket}, 15_000)
+        Process.send_after(self(), {:end_round, room, socket}, 30_000)
 
         {:ok, room}
 
@@ -107,6 +107,7 @@ defmodule Songapp.RoomsManager do
            selected_music_id: music_id,
          }) do
       {:ok, guess} ->
+IO.inspect(guess, label: "created guess ")
         {:ok, guess}
 
       {:error, changeset} ->

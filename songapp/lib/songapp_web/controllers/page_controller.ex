@@ -33,4 +33,9 @@ defmodule SongappWeb.PageController do
     json(conn, SongsApi.buscar_musicas_deezer(artist, track))
   end
 
+  def search_by_id(conn, params) do
+    %{"id" => id} = params
+    json(conn, SongsApi.buscar_info_musica_deezer(id))
+  end
+
 end

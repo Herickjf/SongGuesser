@@ -51,6 +51,9 @@ defmodule SongappWeb.Router do
 
     options "/search_song", PageController, :search_song
     post "/search_song", PageController, :search_song
+
+    options "/search_by_id", PageController, :search_by_id
+    post "/search_by_id", PageController, :search_by_id
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

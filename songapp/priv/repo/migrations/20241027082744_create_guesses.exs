@@ -9,7 +9,7 @@ defmodule Songapp.Repo.Migrations.CreateGuesses do
       add :player_id, references(:players, on_delete: :delete_all)  # Foreign key to players
       add :game_id, references(:rooms, on_delete: :delete_all)      # Foreign key to games/rooms
       add :round_number, :integer
-      add :selected_music_id, :integer, default: nil
+      add :selected_music_id, :bigint, default: nil
 
       timestamps(type: :utc_datetime)
     end

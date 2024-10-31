@@ -218,15 +218,13 @@ def get_room_by_code!(code), do: Repo.get_by(Songapp.Game.Room, code: code)
   alias Songapp.Game.Guess
 
   @doc """
-  Returns the list of guesses.
-
   ## Examples
 
       iex> list_guesses()
       [%Guess{}, ...]
 
-      """
-      def list_guesses do
+  """
+  def list_guesses do
         Repo.all(Guess)
       end
 
@@ -301,6 +299,7 @@ def get_room_by_code!(code), do: Repo.get_by(Songapp.Game.Room, code: code)
     |> Repo.update()
   end
 
+
   @doc """
   Deletes a guess.
 
@@ -308,13 +307,14 @@ def get_room_by_code!(code), do: Repo.get_by(Songapp.Game.Room, code: code)
 
       iex> delete_guess(guess)
       {:ok, %Guess{}}
+
       iex> delete_guess(guess)
       {:error, %Ecto.Changeset{}}
 
-      """
-      def delete_guess(%Guess{} = guess) do
-        Repo.delete(guess)
-      end
+  """
+  def delete_guess(%Guess{} = guess) do
+    Repo.delete(guess)
+  end
 
       @doc """
       Deletes guesses by game_id, player_id, and round_number.

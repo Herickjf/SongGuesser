@@ -48,6 +48,9 @@ body{
     border: 2px solid rgba(191, 126, 255, .2);
     border-radius: 10px;
 }
+.btns > a{
+    overflow: visible;
+}
 
 .content > #room > #players_box,
 .content > #room > #songs_box{
@@ -144,6 +147,7 @@ body{
     
     border-radius: 10px;
 }
+#room > #songs_box > #between_rounds_song > .songs> .song_results:hover,
 #room > #songs_box > #while_playing_song > .songs> .song_found:hover{
     background-color: rgba(205, 154, 255, .2);
     cursor: pointer;
@@ -189,6 +193,8 @@ body{
 /* PLAYERS */
 /* PLAYERS > ROOM_LINK */
 #room > #players_box > #room_link{
+    display: flex;
+    justify-content: center;
     background-color: #3d2d53;
     padding: 10px;
     width: 40%;
@@ -196,12 +202,21 @@ body{
     border-radius: 0 0 10px 10px;
 }
 #room > #players_box > #room_link > p{
+    display: flex;
+    gap: 10px;
+    align-items: center;
     font-weight: 600;
 }
 #room > #players_box > #room_link > p > a > i{
-    color: #BF7EFF;
+    color: #dba4ff;
     font-weight: 600px;
     font-size: 20px;
+}
+#room > #players_box > #room_link:hover > p:hover > a:hover > i:hover{
+    color: #BF7EFF;
+    cursor: pointer;
+    transform: scale(1.08);
+    transition: .1s;
 }
 /* PLAYERS > PLAYERSBOX */
 #room > #players_box > #players{
@@ -312,7 +327,8 @@ body{
     text-align: center;
 }
 /* ROUND > WHILE PLAYING */
-#room > #round_box > #waiting_for{
+#room > #round_box > #waiting_for,
+#room > #round_box > #between_rounds > #no_music_player_box{
     width: 100%;
     height: 100%;
     display: flex;
@@ -423,7 +439,7 @@ body{
     border-radius: 5px;
     border-style: solid;
     border-color: rgba(76, 60, 97, .7);
-    background: url(/images/creators/lucas.png);
+    /* background: url(/images/creators/lucas.png); */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -509,14 +525,17 @@ body{
 
 #room > #round_box > #ranking_box > #playersCards_box > #second_place{
     justify-content: center;
+    visibility: hidden;
 }
 
 #room > #round_box > #ranking_box > #playersCards_box > #first_place{
     justify-content: start;
+    visibility: hidden;
 }
 
 #room > #round_box > #ranking_box > #playersCards_box > #third_place{
     justify-content: center;
+    visibility: hidden;
 }
 
 #first_place_img{
@@ -551,3 +570,43 @@ body{
 
     font-size: 20px;
 }
+
+
+/* song player style */
+audio{
+    padding: 10px 0;
+    filter: invert(1);
+    transform: scale(0.90);
+}
+audio::-webkit-media-controls-panel{
+    background-color: rgb(124, 178, 71);
+}
+audio::-webkit-media-controls-play-button{
+    background-color: rgb(101, 154, 50);
+    border-radius: 50%;
+}
+audio::-webkit-media-controls-timeline{
+    border-radius: 40px;
+}
+audio::-webkit-media-controls-volume-slider{
+    background-color: rgba(82, 147, 17, .8);
+    border-radius: 40px;
+    /* padding: 0 10px; */
+}
+audio::-webkit-media-controls-mute-button{
+background-color: rgb(101, 154, 50);
+border-radius: 50%;
+}
+/* #room > #round_box > #between_rounds > #song_player{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    gap: 10px;
+    max-width: 300px;
+    width: 100%;
+    height: 250px;
+
+
+    background-color: rgba(255, 0, 0, 0.329);
+} */

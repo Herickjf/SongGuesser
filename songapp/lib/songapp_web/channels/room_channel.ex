@@ -171,9 +171,9 @@ defmodule SongappWeb.RoomChannel do
           |> Enum.map(&SongappWeb.RoomChannel.player_to_map/1)
           |> Jason.encode!()
 
-        broadcast!(socket, "game", %{room: room_json})
-        broadcast!(socket, "players", %{players: players_json})
-        broadcast!(socket, "guesses", %{guesses: guesses_json})
+        broadcast!(player_socket, "game", %{room: room_json})
+        broadcast!(player_socket, "players", %{players: players_json})
+        broadcast!(player_socket, "guesses", %{guesses: guesses_json})
 
         {:ok, room, players, guesses}
 
@@ -252,9 +252,19 @@ defmodule SongappWeb.RoomChannel do
   end
 
   @impl true
-  def handle_in("music_selection", %{"artist" => artist, "song_name" => song_name, "music_id" => music_id }, socket) do
-    player = socket.assigns[:player]
-    room = socket.assigns[:room]
+  def handle_in(
+        "music_selection",
+        %{"artist" => artist, "song_name" => song_name, "music_id" => music_id},
+        socket
+      ) do
+    player_socket = socket.assigns[:player]
+    room_socket = socket.assigns[:room]
+
+    room = Game.get_room!(room_socket.id)
+    player = Game.get_player!(player_socket.id)
+
+    # Update the player and room stored in the socket
+    socket = assign(socket, :player, player) |> assign(:room, room)
 
     case RoomsManager.select_music(room, player, artist, song_name, music_id) do
       {:ok, guess} ->
@@ -267,8 +277,18 @@ defmodule SongappWeb.RoomChannel do
     end
   end
 
+  def handle_in("disconnect", _payload, socket) do
+    end_connection("disconnect", socket)
+    {:noreply, socket}
+  end
+
   @impl true
   def terminate(_reason, socket) do
+    end_connection("terminate", socket)
+    {:ok, socket}
+  end
+
+  def end_connection(reason, socket) do
     player = socket.assigns[:player]
     room = socket.assigns[:room]
     IO.inspect(label: "player getout room")
@@ -301,5 +321,6 @@ defmodule SongappWeb.RoomChannel do
     end
 
     :ok
+    {:noreply, socket}
   end
 end

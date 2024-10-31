@@ -2,8 +2,7 @@
 
 export default function homeLive() {
     console.log("home_live.js loaded");
-}
-
+    
 /*
 JavaScript configurations for the frontend file 'index.html'
 */
@@ -38,18 +37,17 @@ fillCode(id);
 
 function removeFlagSelected(){
     // Remove qual bandeira estiver escolhida
-    let selected = document.getElementsByClassName("selected")
-    if(selected.length != 0){
-        selected = selected[0]
-        // console.log(selected.classList)
-        selected.classList.remove('selected')
-    }
+    let selected = [...document.getElementsByClassName("selected")]
+    selected.forEach((el) =>{
+        el.classList.remove('selected')
+    })
 }
 
-flags.forEach((el, i, flags) => {
+flags.forEach((el) => {
     el.addEventListener('click', ()=>{
         removeFlagSelected();
         el.classList.add('selected');
+        console.log(el.classList)
     });
 })
 
@@ -229,7 +227,8 @@ createRoom.addEventListener('click', () => {
     // Coleta e verificao da linguagem
     let flagSelected = document.getElementsByClassName('selected')
     let language = ""
-    
+
+
     try{
         if(flagSelected[0].classList.contains('br')){
             language = "portuguese"
@@ -240,9 +239,7 @@ createRoom.addEventListener('click', () => {
         }
     }catch(e){
         language = "english"
-    }
-    
-    
+    } 
     
     // coletar o avatar
     let avatarInput = document.getElementById('host_avatar')
@@ -290,3 +287,5 @@ images.forEach((el, i) => {
 // /////////////////////////////////////
 // Exportando as funcoes 
 // export { create_room_params, join_room_params };
+
+}

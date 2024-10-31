@@ -217,7 +217,7 @@ header>.logo>img{
   margin-bottom: 10px;
   border: 5px solid lightblue;
   margin-top: 10px;
-  background-image: url(images/avatars/1.png);
+  background-image: url(/images/avatars/1.png);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat
@@ -836,7 +836,7 @@ header>.logo>img{
 }
 
 #selection_images > #images div:nth-child(1){
-  background-image: url(/1.png)
+  background-image: url(/images/avatars/1.png)
 }
 
 #selection_images > #images div:nth-child(2){

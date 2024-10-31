@@ -24,19 +24,8 @@ defmodule Songapp.SongsApi do
 
     case File.read(caminho_arquivo) do
       {:ok, conteudo} ->
-        # Remove espaços em branco e caracteres de nova linha
-        palavras =
-          conteudo
-          |> String.split("\n")
-          |> Enum.map(&String.trim/1) # Limpa as palavras
-
-        # Remove palavras vazias
-        palavras_disponiveis = Enum.reject(palavras, &(&1 == ""))
-
-        # Filtra palavras usadas
-        palavras_filtradas = Enum.reject(palavras_disponiveis, fn palavra ->
-          palavra in palavras_usadas
-        end)
+        palavras = conteudo |> String.split("\n") |> Enum.map(&String.trim/1) |> Enum.reject(&(&1 == ""))
+        palavras_filtradas = Enum.reject(palavras, &(&1 in palavras_usadas))
 
         if length(palavras_filtradas) > 0 do
           Enum.random(palavras_filtradas)
@@ -44,9 +33,7 @@ defmodule Songapp.SongsApi do
           "Nenhuma palavra disponível"
         end
 
-      {:error, _reason} ->
-        caminho_arquivo
-        # "Erro ao ler o arquivo"
+      {:error, _reason} -> "Erro ao ler o arquivo"
     end
   end
 
@@ -285,121 +272,157 @@ defmodule Songapp.SongsApi do
     end
   end
 
-  def buscar_info_musica_deezer(id) do
-    # URL específica para buscar detalhes de uma música no Deezer usando o ID da música
-    url = "https://api.deezer.com/track/#{id}"
-
-    # Faz a requisição HTTP GET para a URL
-    case HTTPoison.get(url) do
-      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        # Decodifica o corpo da resposta JSON
-        case Jason.decode(body) do
-          {:ok, resultado_consulta} ->
-
-            # Cria o JSON com as informações desejadas
-            resultado = %{
-              album_link: resultado_consulta["album"]["cover_medium"],  # Link para a capa do álbum (tamanho médio)
-              music_preview: resultado_consulta["preview"]               # Link para o preview da música
-            }
-
-            %{valid: true, result: resultado}
-
-          {:ok, _} ->
-            %{valid: false, error: "Dados insuficientes retornados pela API do Deezer"}
-
-          _ ->
-            %{valid: false, error: "Erro ao decodificar a resposta do Deezer"}
-        end
-
-      {:ok, %HTTPoison.Response{status_code: status_code}} when status_code != 200 ->
-        %{valid: false, error: "Erro HTTP: #{status_code}"}
-
-      {:error, %HTTPoison.Error{reason: reason}} ->
-        %{valid: false, error: reason}
-    end
-  end
-
   # Função para buscar a letra da música no Vagalume
   def buscar_letra_no_vagalume(nome_artista, nome_musica, tentativas \\ 3) do
     url = "#{@url_vagalume}?art=#{URI.encode(nome_artista)}&mus=#{URI.encode(nome_musica)}&apikey=#{@api_key}"
 
     case HTTPoison.get(url) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+        IO.puts("Resposta da API Vagalume: #{body}")
         case Jason.decode(body) do
           {:ok, %{"mus" => [primeira_musica | _], "art" => %{"name" => artista_encontrado}}} ->
-            resultado = %{
+            {:ok, %{
               letra: primeira_musica["text"],
               link: primeira_musica["url"],
               nome_artista: artista_encontrado
-            }
+            }}
 
-            Jason.encode!(resultado)
+          {:ok, _} ->
+            IO.puts("Resposta JSON válida, mas estrutura inesperada: #{body}")
+            {:error, "Resposta JSON válida, mas estrutura inesperada."}
 
-          _ -> Jason.encode!(%{error: "Erro ao decodificar resposta do Vagalume"})
+          {:error, reason} ->
+            IO.puts("Erro ao decodificar JSON: #{inspect(reason)}\nResposta: #{body}")
+            {:error, "Erro ao decodificar resposta JSON: #{reason}"}
         end
 
       {:ok, %HTTPoison.Response{status_code: 502}} when tentativas > 0 ->
-        # Espera 1 segundo antes de tentar novamente
+        IO.puts("Erro 502. Tentando novamente...")
         :timer.sleep(1000)
         buscar_letra_no_vagalume(nome_artista, nome_musica, tentativas - 1)
 
-      {:ok, %HTTPoison.Response{status_code: 502}} ->
-        # Caso esgote as tentativas no Vagalume, tenta buscar com a API do Genius
-        buscar_letra_genius(nome_artista, nome_musica)
-
-      {:ok, %HTTPoison.Response{status_code: status_code}} when status_code != 200 ->
-        Jason.encode!(%{error: "Erro HTTP #{status_code}: Problema ao acessar a API do Vagalume"})
+      {:ok, %HTTPoison.Response{status_code: status_code, body: body}} ->
+        IO.puts("Erro HTTP #{status_code}: #{body}")
+        {:error, "Erro HTTP: #{status_code}"}
 
       {:error, %HTTPoison.Error{reason: reason}} ->
-        Jason.encode!(%{error: "Erro na solicitação HTTP: #{reason}"})
+        IO.puts("Erro na solicitação HTTP: #{inspect(reason)}")
+        {:error, "Erro na solicitação HTTP: #{reason}"}
     end
   end
+
+##############################################################################################################
+
+# Função para buscar a letra de uma música na API lyrics.ovh
+def get_lyrics(artist, song) do
+  artist_encoded = URI.encode(artist)
+  title_encoded = URI.encode(Regex.replace(~r/\([^)]*\)/, song, ""))
+
+  url = "#{@api_url}/#{artist_encoded}/#{title_encoded}"
+
+  case HTTPoison.get(url) do
+    {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+      case Jason.decode(body) do
+        {:ok, %{"lyrics" => lyrics}} -> {:ok, lyrics}
+        _ -> {:error, "Letra não encontrada"}
+      end
+
+    {:ok, %HTTPoison.Response{status_code: 404}} ->
+      {:error, "Letra não encontrada"}
+
+    {:error, %HTTPoison.Error{reason: reason}} ->
+      {:error, "Erro: #{reason}"}
+  end
+end
+
+defp get_lyrics_from_ovh(input) do
+  artist = input[:artist]
+  title = Regex.replace(~r/\([^)]*\)/, input[:title], "") # Remove conteúdo entre parênteses, se existir
+  url = "https://api.lyrics.ovh/v1/#{URI.encode(artist)}/#{URI.encode(title)}"
+
+  case HTTPoison.get(url) do
+    {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+      body
+      |> Jason.decode!()
+      |> handle_lyrics_response()
+
+    {:ok, %HTTPoison.Response{status_code: 404}} ->
+      {:error, "Letra não encontrada"}
+
+    {:error, %HTTPoison.Error{reason: reason}} ->
+      {:error, reason}
+  end
+end
+
+defp handle_lyrics_response(%{"lyrics" => lyrics}) do
+  {:ok, lyrics}
+end
+
+defp handle_lyrics_response(_), do: {:error, "Letra não encontrada"}
+
+
+##############################################################################################################
 
   # Função para verificar se uma palavra está na letra da música (com correspondência exata)
-  def verificar_palavra_na_letra(artista, musica, palavra) do
-    # Buscar a letra da música no Vagalume
-    case buscar_letra_no_vagalume(artista, musica) do
-      # Decodificar a resposta JSON
-      json_response when is_binary(json_response) ->
-        case Jason.decode(json_response) do
-          # Quando a letra é encontrada, extrair letra, link e nome do artista
-          {:ok, %{"letra" => letra, "link" => link_vagalume, "nome_artista" => nome_artista}} ->
-            # Substituir quebras de linha por espaços para evitar problemas com o \n
-            letra_normalizada = String.replace(letra, ~r/\n|\r/, " ")
+  # def verificar_palavra_na_letra(artista, musica, palavra) do
+  #   case buscar_letra_no_vagalume(artista, musica) do
+  #     {:ok, %{"letra" => letra, "link" => link_vagalume, "nome_artista" => nome_artista}} ->
+  #       letra_normalizada = String.replace(letra, ~r/\n|\r/, " ")
+  #       regex = ~r/\b#{Regex.escape(palavra)}\b/i
 
-            # Usar Regex para verificar correspondência exata da palavra
-            regex = ~r/\b#{Regex.escape(palavra)}\b[^\w]*|[^\w]*\b#{Regex.escape(palavra)}\b/i
-            IO.puts(palavra <> " -> " <> letra_normalizada)
+  #       if Regex.match?(regex, letra_normalizada) do
+  #         %{
+  #           accepted: true,
+  #           link_vagalume: link_vagalume,
+  #           lyrics: letra,
+  #           nome_musica: musica,
+  #           nome_artista: nome_artista
+  #         }
+  #       else
+  #         %{
+  #           accepted: false,
+  #           link_vagalume: link_vagalume
+  #         }
+  #       end
 
-            resultado =
-              if Regex.match?(regex, letra_normalizada) do
-                # Retornar todas as informações se a palavra estiver na letra
-                %{
-                  accepted: true,
-                  link_vagalume: link_vagalume,
-                  lyrics: letra,
-                  nome_musica: musica,
-                  nome_artista: nome_artista
-                }
-              else
-                # Se a palavra não estiver na letra, retornar apenas o link do Vagalume
-                %{
-                  accepted: false,
-                  link_vagalume: link_vagalume
-                }
-              end
+  #     {:error, reason} ->
+  #       %{
+  #         accepted: false,
+  #         error: "Erro ao buscar letra no Vagalume: #{reason}"
+  #       }
+  #   end
+  # end
 
+# Função para verificar se uma palavra está na letra da música (com correspondência exata)
+def verificar_palavra_na_letra(artista, musica, palavra) do
+  # Buscar a letra da música usando a função get_lyrics
+  case get_lyrics(artista, musica) do
+    {:ok, letra} ->
+      # Substituir quebras de linha por espaços para evitar problemas com \n
+      letra_normalizada = String.replace(letra, ~r/\n|\r/, " ")
 
-          # Caso não consiga decodificar a resposta JSON, retorna um erro
-          _ -> %{accepted: false, error: "Erro ao decodificar resposta JSON"}
-        end
+      # Usar Regex para verificar correspondência exata da palavra
+      regex = ~r/\b#{Regex.escape(palavra)}\b/i
 
-      # Caso não consiga buscar a letra, retorna um erro
-      {:error, reason} ->
-        %{accepted: false, error: "Erro ao buscar letra no Vagalume: #{reason}"}
+      if Regex.match?(regex, letra_normalizada) do
+        %{
+          accepted: true,
+          lyrics: letra,
+          nome_musica: musica,
+          nome_artista: artista
+        }
+      else
+        %{
+          accepted: false,
+          message: "A palavra '#{palavra}' não foi encontrada na letra."
+        }
+      end
 
-      _ ->
-        %{accepted: false, error: "Formato inesperado ao buscar letra no Vagalume"}
-    end
+    {:error, erro} ->
+      %{
+        accepted: false,
+        error: "Erro ao buscar letra: #{erro}"
+      }
   end
+end
 end
