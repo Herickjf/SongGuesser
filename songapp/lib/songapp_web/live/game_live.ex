@@ -74,7 +74,7 @@ defmodule SongappWeb.GameLive do
     <h1 class="round_word">WORD</h1>
     </div>
 
-    <div id="waiting_for" style="display: none;">
+    <div id="waiting_for">
     <p>Waiting for the host to start</p>
     </div>
 
@@ -85,12 +85,12 @@ defmodule SongappWeb.GameLive do
     <div id="inputs">
     <div class="input">
     <label for="artist_name">Artist name:</label>
-    <input type="text" id="artist_name" placeholder="Enter the artist name" maxlength="50"/>
+    <input class="enter_input" type="text" id="artist_name" placeholder="Enter the artist name" maxlength="50"/>
     </div>
 
     <div class="input">
     <label for="track_name">Song title:</label>
-    <input type="text" id="track_name" placeholder="Enter the song name" maxlength="100"/>
+    <input class="enter_input" type="text" id="track_name" placeholder="Enter the song name" maxlength="100"/>
     </div>
 
     </div>
@@ -127,27 +127,28 @@ defmodule SongappWeb.GameLive do
     <h6 id="artist_info"></h6>
     </div>
 
-    <div id="no_music_player_box" style="display: none;">
-    <p>You entered no music</p>
-    </div>
 
     <i class="fa fa-check-circle" id="symbol_isRight"></i>
     </div>
     </div>
 
     <div id="music_player">
-    <audio controls>
+    <audio id="audio" controls>
     <!-- Aqui contera a musica vinda do backend -->
 
-    <source src="#" type="audio/ogg">
-    </audio>
-    </div>
-    </div>
+      <source src="#" type="audio/ogg">
+      </audio>
+      </div>
+      </div>
 
-    <p>Waiting for the host to call the next round...</p>
-    </div>
+      </div>
 
-    <div id="ranking_box" >
+      <div id="no_music_player_box" style="display: none;">
+        <p>You entered no music</p>
+        <p>Waiting for the host to call the next round...</p>
+      </div>
+
+    <div id="ranking_box" style="display: none;">
     <div id="playersCards_box">
     <div class="playerCard" id="second_place">
     <div class="playerCard_img" id="second_place_img"></div>
@@ -259,7 +260,7 @@ defmodule SongappWeb.GameLive do
     <h1>Check the Results</h1>
 
     <div class="btns">
-    <button class="button" id="btn_restart">Restart</button>
+    <button class="button" id="btn_restart" style="display: none">Restart</button>
     <a href="#" phx-click="navigate" phx-value-page="home"><button class="button btn_exit">Exit</button></a>
     </div>
     </div>
@@ -269,17 +270,10 @@ defmodule SongappWeb.GameLive do
           <div id="chat_area">
             <%!-- <p><span>herick: </span>Oi, genteeeeeeeeeeeeeeeeeeeeeeeeeeeeeee!</p>
             <p><span>herick: </span>Oi, gente!</p>
-            <p><span>herick: </span>Oi, gente!</p>
-            <p><span>herick: </span>Oi, gente!</p>
-            <p><span>herick: </span>Oi, gente!</p>
-            <p><span>herick: </span>Oi, gente!</p>
-            <p><span>herick: </span>Oi, gente!</p>
-            <p><span>herick: </span>Oi, gente!</p>
-            <p><span>herick: </span>Oi, gente!</p>
             <p><span>herick: </span>Oi, gente!</p> --%>
           </div>
           <div id="message_box">
-            <input type="text" id="msg_text" placeholder="Enter a message">
+            <input class="enter_input" type="text" id="msg_text" placeholder="Enter a message">
             <button id="send_msg" ><i class="fa-solid fa-paper-plane"></i></button>
           </div>
         </div>

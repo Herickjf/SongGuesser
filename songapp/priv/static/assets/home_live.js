@@ -19,6 +19,7 @@ const changeImg         = [...document.getElementsByClassName('change_image')]
 const images            = [...document.getElementById('images').children]
 const selectImages      = document.getElementById('selection_images')
 
+const enterBtns = [...document.getElementsByClassName('enter_input')]
 
 // parametros e funcao para autofill
 const inputCode = document.getElementById('roomCode_input');
@@ -284,6 +285,25 @@ images.forEach((el, i) => {
     })
 })
 
+// evento de botão a partir do enter
+enterBtns.forEach((el) =>{
+    el.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            if(el.id == "nickname_input"){
+                document.getElementById('goto_createRoom').click()
+            }
+            else if(el.id == "roomCode_input"){
+                document.getElementById('goto_enterRoom').click()
+            }
+            else if(el.id == "password_input"){
+                document.getElementById('enterRoom').click()
+            }
+            else if(el.id == "create_password"){
+                document.getElementById('createRoom').click()
+            }
+        }
+    });
+})
 // /////////////////////////////////////
 // Exportando as funcoes 
 // export { create_room_params, join_room_params };

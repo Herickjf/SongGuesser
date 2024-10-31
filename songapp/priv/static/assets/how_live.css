@@ -39,3 +39,7 @@ section > #text_box::-webkit-scrollbar-thumb:hover {
 section > #text_box > h1{
     padding: 15px;
 }
+section > #text_box > p > b{
+    color: rgb(183, 115, 250);
+    font-weight: 600;
+}

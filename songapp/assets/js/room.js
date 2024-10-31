@@ -131,12 +131,20 @@ const Rooms = {
         }
     },
 
-    sendMessage: function (message) {
+    sendMessage: function (message, colorId) {
         if (this.currentChannel) {
-            this.currentChannel.push("shout", { body: message });
+            this.currentChannel.push("shout", { body: message, color_id: colorId });
         }
     },
 
+    // setListenShout: function (func) {
+    //     if (this.currentChannel) {
+    //         this.currentChannel.on("shout", payload => {
+    //             console.log("Received message", payload);
+    //             func(payload);
+    //         });
+    //     }
+    // },
     setListenShout: function (func) {
         if (this.currentChannel) {
             this.currentChannel.on("shout", payload => {

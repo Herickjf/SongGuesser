@@ -364,7 +364,7 @@ defmodule Songapp.SongsApi do
   defp handle_response(_), do: {:error, "Letra não encontrada"}
 
   defp buscar_letra_no_vagalume(nome_artista, nome_musica) do
-    url = "#{@url_vagalume}?art=#{URI.encode(nome_artista)}&mus=#{URI.encode(nome_musica)}&apikey=#{@api_key}"
+    url = "#{@url_vagalume}?art=#{URI.encode(nome_artista)}&mus=#{URI.encode(nome_musica)}&apikey=#{@vagalume_key}"
 
     # Faz a requisição HTTP para a URL
 
@@ -396,6 +396,7 @@ defmodule Songapp.SongsApi do
     case buscar_letra_no_vagalume(artista, musica) do
       {:ok, lyrics} ->
         letra_normalizada = String.replace(lyrics, ~r/\n|\r/, " ")
+        IO.puts("Api Vagalume Called")
         if Regex.scan(regex, letra_normalizada) != [] do
           %{accepted: true, lyrics: lyrics}
         else
@@ -405,6 +406,7 @@ defmodule Songapp.SongsApi do
       {:error, reason} ->
         case get_lyrics(artista, musica) do
           {:ok, lyrics} ->
+            IO.puts("Api LyricsOvh or Genius Called")
             letra_normalizada = String.replace(lyrics, ~r/\n|\r/, " ")
             if Regex.scan(regex, letra_normalizada) != [] do
               %{accepted: true, lyrics: lyrics}

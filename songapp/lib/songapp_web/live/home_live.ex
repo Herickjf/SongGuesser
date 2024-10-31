@@ -125,13 +125,13 @@ defmodule SongappWeb.HomeLive do
                 <!-- Input para o nome do usuario -->
                 <div class="input">
                     <label for="nickname_input">Nickname:</label>
-                    <input type="text" id="nickname_input" placeholder="Enter your nickname" maxlength="25">
+                    <input class="enter_input" type="text" id="nickname_input" placeholder="Enter your nickname" maxlength="25">
                 </div>
 
                 <!-- Input para o codigo da sala -->
                 <div class="input">
                     <label for="roomCode_input">Room code (to enter):</label>
-                    <input type="text" id="roomCode_input" placeholder="Enter the room code" maxlength="6">
+                    <input class="enter_input" type="text" id="roomCode_input" placeholder="Enter the room code" maxlength="6">
                 </div>
 
                 <div class="btns">
@@ -162,7 +162,7 @@ defmodule SongappWeb.HomeLive do
                 <!-- Input da senha para a sala -->
                 <div class="input">
                     <label for="password_input">Password:</label>
-                    <input type="text" id="password_input" maxlength="10" placeholder="Enter the room password">
+                    <input class="enter_input" type="text" id="password_input" maxlength="10" placeholder="Enter the room password">
                 </div>
 
                 <!-- Exibicao da bandeira que informa a linguagem da sala -->
@@ -195,20 +195,20 @@ defmodule SongappWeb.HomeLive do
                 <!-- Campo para criar uma senha para a sala -->
                 <div class="input">
                     <label for="create_password">Create password:</label>
-                    <input type="text" id="create_password" maxlength="10" placeholder="Create a password">
+                    <input class="enter_input" type="text" id="create_password" maxlength="10" placeholder="Create a password">
                 </div>
 
                 <div class="double_input ">
                     <!-- Input do maximo de jogadores permitido na sala -->
                     <div class="input last_input">
                         <label for="max_players">Max. players:</label>
-                        <input type="number" id="max_players" min="2" max="20" placeholder="2 - 20">
+                        <input class="enter_input" type="number" id="max_players" min="2" max="20" placeholder="2 - 20">
                     </div>
 
                     <!-- Input do numero de rodadas -->
                     <div class="input last_input">
                         <label for="rounds">Rounds:</label>
-                        <input type="number" id="rounds" min="3" max="15" placeholder="3 - 15">
+                        <input class="enter_input" type="number" id="rounds" min="3" max="15" placeholder="3 - 15">
                     </div>
                 </div>
 

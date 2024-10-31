@@ -217,7 +217,7 @@ defmodule SongappWeb.RoomChannel do
 
   # Função para enviar mensagens (shout) apenas para a sala correta
   @impl true
-  def handle_in("shout", %{"body" => body}, socket) do
+  def handle_in("shout", %{"body" => body, "color_id" => color_id }, socket) do
     player = socket.assigns[:player]
     # room = socket.assigns[:room]
 
@@ -226,7 +226,8 @@ defmodule SongappWeb.RoomChannel do
     # Broadcast apenas para usuários na mesma sala
     broadcast!(socket, "shout", %{
       body: body,
-      nickname: player.nickname
+      nickname: player.nickname,
+      color_id: color_id
     })
 
     {:noreply, socket}

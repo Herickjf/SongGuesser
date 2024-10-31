@@ -1,15 +1,16 @@
 export default function gameLive() {
     console.log("game_live.js loaded");
-
+    
     /*
-        JavaScript configurations for the frontend file 'gameScreen.html'
+    JavaScript configurations for the frontend file 'gameScreen.html'
     */
-    const linkButton = document.getElementById('link_button');
-    const searchSong = document.getElementById('search_song');
-    const exitRoomBtn = [...document.getElementsByClassName('btn_exit')]
-    const startBtn = [...document.getElementsByClassName('btn_start')][0]
-    const restartBtn = document.getElementById('btn_restart')
-    const nextRoundBtn = [...document.getElementsByClassName('btn_next_round')][0]
+   const linkButton = document.getElementById('link_button');
+   const searchSong = document.getElementById('search_song');
+   const exitRoomBtn = [...document.getElementsByClassName('btn_exit')]
+   const startBtn = [...document.getElementsByClassName('btn_start')][0]
+   const restartBtn = document.getElementById('btn_restart')
+   const nextRoundBtn = [...document.getElementsByClassName('btn_next_round')][0]
+   const enterBtns = [...document.getElementsByClassName('enter_input')]
 
     // divs for each match moment
     // round_box
@@ -28,8 +29,27 @@ export default function gameLive() {
     // song touch
     const songs = [...document.getElementsByClassName('song_found')]
     var returnedSongsList = []    // lista de musicas que o backend retorna a cada busca
-
-
+    // chat colors logics
+    const chatColors = [
+        '#D4C3E3', 
+        '#BFA3E0', 
+        '#E3D7F3', 
+        '#E0B0E0', 
+        '#C7A4D4', 
+        '#D7B2E6', 
+        '#D0A0E2', 
+        '#E5C3F5', 
+        '#D1A0D8',
+        '#E6E6FA', // Lavanda
+        '#D8BFD8', // Thistle
+        '#DDA0DD', // Plum
+        '#BA55D3',
+        '#4B2C91', 
+        '#1D0033', 
+        '#1A003C', 
+        '#120022'
+    ];
+    const colorId = Math.floor(Math.random() * chatColors.length);
 
     // Por padrão, o botão de nextRound e de start não é visível
     nextRoundBtn.style.visibility = 'hidden'
@@ -58,7 +78,7 @@ export default function gameLive() {
     async function runTimeBar(seconds) {
         // Recebe a barra de tempo
         let timebar = document.getElementById('timer_run');
-        timebar.style.width = '0%';
+        timebar.style.width = '100%';
 
         // A cada 1 segundo, diminui 100/seconds da barra, de maneira suave
         for (let i = seconds; i >= 0; i--) {
@@ -306,28 +326,52 @@ export default function gameLive() {
         }
 
         try {
-            players.forEach((player) => {
+            players.forEach((pl) => {
                 let playerDiv = document.createElement('div')
                 playerDiv.classList.add('player')
 
-                if (player.is_admin) {
+                let thisColor = '#e1c3ff';
+
+                if(pl.id == player.id){
+                    if(pl.is_admin){
+                        playerDiv.innerHTML = `
+                        <div class="profile" id="host" style="background-image: url(/images/avatars/${pl.photo_id}.png); 
+                        background-size: cover;
+                        background-position:center"><i class="fas fa-crown"></i></div>
+                        <div class="info">
+                            <h2 style="color: ${thisColor}; font-weight:600;">${pl.nickname}</h2>
+                            <p>${pl.score} points</p>
+                        </div>
+                        `
+                    }else{
+                        playerDiv.innerHTML = `
+                            <div class="profile" style="background-image: url(/images/avatars/${pl.photo_id}.png);
+                            background-size: cover;
+                            background-position:center"></div>
+                            <div class="info">
+                                <h2 style="color: ${thisColor}; font-weight:600;">${pl.nickname}</h2>
+                                <p>${pl.score} points</p>
+                            </div>
+                        `
+                    }
+                } else if (pl.is_admin) {
                     playerDiv.innerHTML = `
-                    <div class="profile" id="host" style="background-image: url(/images/avatars/${player.photo_id}.png); 
+                    <div class="profile" id="host" style="background-image: url(/images/avatars/${pl.photo_id}.png); 
                     background-size: cover;
                     background-position:center"><i class="fas fa-crown"></i></div>
                     <div class="info">
-                        <h2>${player.nickname}</h2>
-                        <p>${player.score} points</p>
+                        <h2>${pl.nickname}</h2>
+                        <p>${pl.score} points</p>
                     </div>
                 `
                 } else {
                     playerDiv.innerHTML = `
-                    <div class="profile" style="background-image: url(/images/avatars/${player.photo_id}.png);
+                    <div class="profile" style="background-image: url(/images/avatars/${pl.photo_id}.png);
                     background-size: cover;
                     background-position:center"></div>
                     <div class="info">
-                        <h2>${player.nickname}</h2>
-                        <p>${player.score} points</p>
+                        <h2>${pl.nickname}</h2>
+                        <p>${pl.score} points</p>
                     </div>
                 `
                 }
@@ -355,6 +399,18 @@ export default function gameLive() {
         let players = window.Rooms.getPlayers()
         let ranking = []
         let max = 3
+
+        // Ordena os jogadores com base em seus scores
+        for(let i = 0; i < players.length; i++){
+            for(let j = 0; j < players.length; j++){
+                if(players[i].score > players[j].score){
+                    let aux = players[i];
+                    players[i] = players[j];
+                    players[j] = aux;
+                }
+            }
+        }
+        
         for (let i = 0; i < players.length && max != 0; i++) {
             ranking.push({
                 "nickname": players[i].nickname,
@@ -364,16 +420,6 @@ export default function gameLive() {
             max--;
         }
 
-        // // Ordena os jogadores com base em seus scores
-        // for(let i = 0; i < ranking.length; i++){
-        //     for(let j = 0; j < ranking.length; j++){
-        //         if(ranking[i].score > ranking[j].score){
-        //             let aux = ranking[i];
-        //             ranking[i] = ranking[j];
-        //             ranking[j] = aux;
-        //         }
-        //     }
-        // }
 
         console.log("Ranking:")
         console.log(ranking)
@@ -419,6 +465,7 @@ export default function gameLive() {
         betweenRoundsSong.style.display = 'none'
         waitingForSong.style.display = 'none'
         whilePlayingSong.style.display = 'flex'
+
         updateSongsButton()
         window.Rooms.sendNextRoundOrder()
     }
@@ -435,8 +482,12 @@ export default function gameLive() {
         } else if (room.status == 'playing') {
             // Se a sala estiver jogando, exibe a tela de jogo
             cleanBoxes()
+            cleanSongsResults()
             whilePlayingRound.style.display = 'flex'
             whilePlayingSong.style.display = 'flex'
+            document.getElementById('artist_name').value = ''
+            document.getElementById('track_name').value = ''
+            document.getElementsByTagName('audio')[0].pause()
             let round_words = [...document.getElementsByClassName('round_word')]
             round_words.forEach((el) => {
                 el.innerHTML = room.room_word.toUpperCase()
@@ -449,6 +500,7 @@ export default function gameLive() {
             betweenRounds.style.display = 'flex'
             betweenRoundsSong.style.display = 'flex'
             updateGuesses()
+            updateResults()
         } else if (room.status == 'end') {
             // Se a sala estiver exibindo o ranking, exibe a tela de ranking
             cleanBoxes()
@@ -456,6 +508,7 @@ export default function gameLive() {
             betweenRoundsSong.style.display = 'flex'
             cleanSongsResults()
             updateGuesses()
+            betweenRounds.style.display = 'none'
         }
     }
 
@@ -590,9 +643,16 @@ export default function gameLive() {
     function updateResults() {
         let guesses = window.Rooms.getGuesses()
         let player = window.Rooms.getPlayer()
+        let room = window.Rooms.getGame()
 
-        if (!guesses)
+        console.log("Guesses: ", guesses)
+        if (guesses == null || guesses.length == 0) {
+            if (room.status != 'end')
+                betweenRounds.style.display = 'none'
+            no_music_box.style.display = 'flex'
+            console.log("Nenhuma musica foi escolhida")
             return
+        }
 
 
         // Informa pro jogador se ele acertou ou errou a musica
@@ -600,10 +660,9 @@ export default function gameLive() {
             guesses = [...guesses]
         } catch (e) {
             guesses = [guesses]
-
         }
 
-        guesses.forEach((el) => {
+        guesses.forEach((el, ind) => {
             if (el.player_id == player.id) {
                 if (el.is_correct) {
                     document.getElementById('isRight').innerHTML = 'RIIIIGHT!';
@@ -626,11 +685,22 @@ export default function gameLive() {
                         // console.log(data)
                         if (data.valid == true) {
                             playSong(data.result.music_preview, data.result.album_link, el.artist, el.song_name, el.is_correct)
+                            no_music_box.style.display = 'none'
+                            if(room.status != 'end')
+                                betweenRounds.style.display = 'flex'
                         } else {
                             alert("Erro ao buscar os dados da musica")
                         }
-                    })
 
+                        return
+                    })
+                return
+            } else if (ind == guesses.length - 1) {
+                // Caso o jogador não tenha escolhido nenhuma musica
+                // Exibe a mensagem de que ele não escolheu nenhuma musica
+                if (room.status != 'end')
+                    betweenRounds.style.display = 'none'
+                no_music_box.style.display = 'flex'
             }
         })
     }
@@ -668,6 +738,9 @@ export default function gameLive() {
                         // console.log(data)
                         if (data.valid == true) {
                             playSong(data.result.music_preview, data.result.album_link, artist, song, gs.is_correct)
+                            betweenRounds.style.display = 'flex'
+                            no_music_box.style.display = 'none'
+                            rankingBoxRounds.style.display = 'none'
                         } else {
                             alert("Erro ao buscar os dados da musica")
                         }
@@ -683,6 +756,22 @@ export default function gameLive() {
     window.Rooms.setListenMusicGuesses(updateGuesses)
 
 
+    // window.Rooms.setListenShout((payload) => {
+    //     // {
+    //     //     body: body,
+    //     //     nickname: player.nickname
+    //     // }
+    //     console.log("Received message", payload);
+    //     let msg = payload.body;
+    //     let chat_area = document.getElementById('chat_area');
+    //     let player = payload.nickname;
+    //     let chat = document.createElement('p');
+    //     chat.innerHTML = `
+    //     <span style="color:${chatColors[colorId]};">${player}</span> : ${msg}
+    // `;
+    //     chat_area.appendChild(chat);
+    //     document.getElementById('msg_text').value = "";
+    // });
     window.Rooms.setListenShout((payload) => {
         // {
         //     body: body,
@@ -690,11 +779,13 @@ export default function gameLive() {
         // }
         console.log("Received message", payload);
         let msg = payload.body;
+        let color = chatColors[payload.color_id];
+        console.log(color)
         let chat_area = document.getElementById('chat_area');
         let player = payload.nickname;
         let chat = document.createElement('p');
         chat.innerHTML = `
-        <span>${player}</span> : ${msg}
+        <span style="color:${color};">${player}</span> : ${msg}
     `;
         chat_area.appendChild(chat);
         document.getElementById('msg_text').value = "";
@@ -702,7 +793,25 @@ export default function gameLive() {
 
     document.getElementById('send_msg').addEventListener('click', () => {
         let msg = document.getElementById('msg_text').value
-        window.Rooms.sendMessage(msg)
+        if(msg != "")
+            window.Rooms.sendMessage(msg, colorId)
     })
 
+    // evento de botão a partir do enter
+    enterBtns.forEach((el) =>{
+        el.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                if(el.id == "msg_text"){
+                    document.getElementById('send_msg').click()
+                }
+                else if(el.id == "artist_name"){
+                    document.getElementById('track_name').focus()
+                }
+                else if(el.id == "track_name"){
+                    document.getElementById('search_song').click()
+                }
+            }
+        });
+    })
+        
 }

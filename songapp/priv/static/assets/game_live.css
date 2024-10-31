@@ -114,7 +114,7 @@ body{
     
     width: 90%;
     max-height: 510px;
-
+    
     overflow-y: auto;
 }
 #room > #songs_box > #between_rounds_song > .songs::-webkit-scrollbar,
@@ -231,7 +231,7 @@ body{
     
     width: 90%;
     max-height: 80%;
-
+    
     overflow-y: auto;
     /* overflow: visible; */
     
@@ -263,13 +263,13 @@ body{
     overflow: visible;
     
     width: 95%;
-
+    
     padding: 5px;
     border-radius: 20px;
 }
 #room > #players_box > #players > .player > .profile{
     background-color: rgb(207, 181, 232);
-
+    
     position: absolute;
     top: 3%;
     left: 0;
@@ -332,15 +332,19 @@ body{
 }
 /* ROUND > WHILE PLAYING */
 #room > #round_box > #waiting_for,
-#room > #round_box > #between_rounds > #no_music_player_box{
+#room > #round_box > #no_music_player_box{
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+#room > #round_box > #no_music_player_box{
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 20px;
+}
 #room > #round_box > #while_playing{
-    /* background-color: rgba(255, 0, 0, 0.311); */
     width: 100%;
     height: 100%;
     margin-top: 40px;
@@ -488,16 +492,14 @@ body{
 #room > #round_box > #ranking_box > #playersCards_box{
     width: 80%;
     height: 70%;
-    display: flex;
     gap: 10px;
-    flex-direction: inline;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
 }
 
 #room > #round_box > #ranking_box > #playersCards_box > .playerCard{
-    height: 70%;
-    width: 30%;
+    height: 100%;
+    width: auto;
 
     display: flex;
     flex-direction: column;
@@ -583,6 +585,8 @@ body{
     background-size: cover;
     border: 5px solid rgb(190, 101, 37);
 }
+
+
 /* host crown */
 #host{
     overflow: visible;
@@ -646,7 +650,7 @@ border-radius: 50%;
     padding: 5px;
     margin: 5px;
     border-radius: 10px;
-    border: 2px solid rgba(191, 126, 255, .3);
+    border: 2px solid #bf7eff4d;
 }
 #chat_box > #chat_area > p{
     word-wrap: break-word;
