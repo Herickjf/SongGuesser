@@ -11,7 +11,7 @@ SongGuesser is an online game created with the Phoenix framework (Elixir) that c
 ## Access
 
 The project is available online via AWS. To play, access:  
-[http://15.228.220.61:4000/](http://15.228.220.61:4000/)  
+[(http://15.228.220.61:4000/) ](http://3.143.143.141:4000/) 
 *The server may be temporarily unavailable. Please wait or try running it locally.*
 
 ## Requirements
