@@ -499,7 +499,6 @@ export default function gameLive() {
             cleanSongsResults()
             betweenRounds.style.display = 'flex'
             betweenRoundsSong.style.display = 'flex'
-            nextRoundBtn.style.display = 'none'
             updateGuesses()
             updateResults()
         } else if (room.status == 'end') {
@@ -507,6 +506,7 @@ export default function gameLive() {
             cleanBoxes()
             rankingBoxRounds.style.display = 'flex'
             // betweenRoundsSong.style.display = 'flex'
+            nextRoundBtn.style.display = 'none'
             cleanSongsResults()
             updateGuesses()
             betweenRounds.style.display = 'none'
