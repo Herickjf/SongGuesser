@@ -62,6 +62,7 @@ defmodule Songapp.MixProject do
       {:httpoison, "~> 2.2"},
       {:poison, "~> 6.0"},
       {:dotenv, "~> 3.0"},
+      {:dotenv_parser, "~> 2.0"},
       {:cors_plug, "~> 3.0"}
     ]
   end

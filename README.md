@@ -31,7 +31,7 @@ To set up and run the project locally, execute the following commands in the ter
 1. Clone the repository:
    ```bash
    git clone https://github.com/Herickjf/SongGuesser
-   cd SongGuesser/songapp
+   cd SongGuesser
    ```
 
 2. Install the dependencies:
