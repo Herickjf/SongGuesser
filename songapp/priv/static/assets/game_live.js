@@ -499,13 +499,14 @@ export default function gameLive() {
             cleanSongsResults()
             betweenRounds.style.display = 'flex'
             betweenRoundsSong.style.display = 'flex'
+            nextRoundBtn.style.display = 'none'
             updateGuesses()
             updateResults()
         } else if (room.status == 'end') {
             // Se a sala estiver exibindo o ranking, exibe a tela de ranking
             cleanBoxes()
             rankingBoxRounds.style.display = 'flex'
-            betweenRoundsSong.style.display = 'flex'
+            // betweenRoundsSong.style.display = 'flex'
             cleanSongsResults()
             updateGuesses()
             betweenRounds.style.display = 'none'
