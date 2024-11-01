@@ -195,7 +195,7 @@ createRoom.addEventListener('click', ()=>{
 
 updatePencilFunctions()
 
-fetch("http://15.228.220.61:4000/api/validate", {
+fetch("http://3.143.143.141:4000/api/validate", {
     method: "POST",
     headers: {
         "Content-Type": "application/json"

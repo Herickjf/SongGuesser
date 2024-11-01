@@ -4,7 +4,7 @@ import Config
 config :songapp, Songapp.Repo,
   username: "postgres",
   password: "postgres",
-  hostname: "15.228.220.61",
+  hostname: "localhost",
   database: "songapp_dev",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
